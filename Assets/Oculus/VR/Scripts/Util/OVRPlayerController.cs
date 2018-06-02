@@ -310,10 +310,10 @@ public class OVRPlayerController : MonoBehaviour
 
 		if (EnableLinearMovement)
 		{
-			bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || MoveUp;
-			bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || MoveLeft;
-			bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || MoveRight;
-			bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || MoveDown;
+			bool moveForward = false;//Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || MoveUp;
+			bool moveLeft = false;//Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || MoveLeft;
+			bool moveRight = false;//Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || MoveRight;
+			bool moveBack = false;//Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || MoveDown;
 
 			bool dpad_move = false;
 

@@ -20,18 +20,6 @@ public class CollisionTriggerZone : MonoBehaviour
 	public List<TriggerParams> Triggers;
 	public List<TriggerCustomActionParams> Actions;
 
-	// Use this for initialization
-	void Start()
-	{
-	
-	}
-	
-	// Update is called once per frame
-	public void Update()
-	{
-
-	}
-
 	public void OnTriggerEnter(Collider collisionObject) {
 		print ("Collision Detected enter");
 		if(collisionObject.tag == "Player")
@@ -43,7 +31,7 @@ public class CollisionTriggerZone : MonoBehaviour
 
 			for(int i = 0, count = Actions.Count; i < count; i++)
 			{
-				Actions[i].Parent.GetComponent<CustomAction>().Initiate();
+				Actions[i].Parent.GetComponent<CustomAction>().OnEnter();
 			}
 		}
 	}
