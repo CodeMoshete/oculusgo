@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 8b26166ecc916db4588e76847e0584df
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: 'Box01     '
     100002: Box01      1
@@ -1481,6 +1481,90 @@ ModelImporter:
     102950: Sphere09  10
     102952: Sphere09  11
     102954: //RootNode
+    102956: "Box01 \xFA   "
+    102958: "Box01 \xFA   01"
+    102960: "Box01 \xFA   02"
+    102962: "Box01 \xFA   03"
+    102964: "Box01 \xFA   04"
+    102966: "Box01 \xFA   05"
+    102968: "Box01 \xFA   06"
+    102970: "Box01 \xFA   07"
+    102972: "Box01 \xFA   08"
+    102974: "Box01 \xFA   09"
+    102976: "Box01 \xFA   10"
+    102978: "Box01 \xFA   11"
+    102980: "Box01 \u201C   "
+    102982: "Box01 \u201C   01"
+    102984: "Box01 \u201C   02"
+    102986: "Box01 \u201C   03"
+    102988: "Box01 \u201C   04"
+    102990: "Box01 \u201C   05"
+    102992: "Box01 \u201C   06"
+    102994: "Box01 \u201C   07"
+    102996: "Box01 \u201C   08"
+    102998: "Box01 \u201C   09"
+    103000: "Box01 \u201C   10"
+    103002: "Box01 \u201C   11"
+    103004: "Box02 \u201C   "
+    103006: "Box02 \u201C   01"
+    103008: "Box02 \u201C   02"
+    103010: "Box02 \u201C   03"
+    103012: "Box02 \u201C   04"
+    103014: "Box02 \u201C   05"
+    103016: "Box02 \u201C   06"
+    103018: "Box02 \u201C   07"
+    103020: "Box02 \u201C   08"
+    103022: "Box02 \u201C   09"
+    103024: "Box02 \u201C   10"
+    103026: "Box02 \u201C   11"
+    103028: "Box03 \xF9   "
+    103030: "Box03 \xF9   01"
+    103032: "Box03 \xF9   02"
+    103034: "Box03 \xF9   03"
+    103036: "Box03 \xF9   04"
+    103038: "Box03 \xF9   05"
+    103040: "Box03 \xF9   06"
+    103042: "Box03 \xF9   07"
+    103044: "Box03 \xF9   08"
+    103046: "Box03 \xF9   09"
+    103048: "Box03 \xF9   10"
+    103050: "Box03 \xF9   11"
+    103052: "Box03 \u201C   "
+    103054: "Box03 \u201C   01"
+    103056: "Box03 \u201C   02"
+    103058: "Box03 \u201C   03"
+    103060: "Box03 \u201C   04"
+    103062: "Box03 \u201C   05"
+    103064: "Box03 \u201C   06"
+    103066: "Box03 \u201C   07"
+    103068: "Box03 \u201C   08"
+    103070: "Box03 \u201C   09"
+    103072: "Box03 \u201C   10"
+    103074: "Box03 \u201C   11"
+    103076: "Box04 \xF9   "
+    103078: "Box04 \xF9   01"
+    103080: "Box04 \xF9   02"
+    103082: "Box04 \xF9   03"
+    103084: "Box04 \xF9   04"
+    103086: "Box04 \xF9   05"
+    103088: "Box04 \xF9   06"
+    103090: "Box04 \xF9   07"
+    103092: "Box04 \xF9   08"
+    103094: "Box04 \xF9   09"
+    103096: "Box04 \xF9   10"
+    103098: "Box04 \xF9   11"
+    103100: "Sphere05 \xE3"
+    103102: "Sphere05 \xE301"
+    103104: "Sphere05 \xE302"
+    103106: "Sphere05 \xE303"
+    103108: "Sphere05 \xE304"
+    103110: "Sphere05 \xE305"
+    103112: "Sphere05 \xE306"
+    103114: "Sphere05 \xE307"
+    103116: "Sphere05 \xE308"
+    103118: "Sphere05 \xE309"
+    103120: "Sphere05 \xE310"
+    103122: "Sphere05 \xE311"
     400000: 'Box01     '
     400002: Box01      1
     400004: Box01     01
@@ -2959,6 +3043,90 @@ ModelImporter:
     402950: Sphere09  10
     402952: Sphere09  11
     402954: //RootNode
+    402956: "Box01 \xFA   "
+    402958: "Box01 \xFA   01"
+    402960: "Box01 \xFA   02"
+    402962: "Box01 \xFA   03"
+    402964: "Box01 \xFA   04"
+    402966: "Box01 \xFA   05"
+    402968: "Box01 \xFA   06"
+    402970: "Box01 \xFA   07"
+    402972: "Box01 \xFA   08"
+    402974: "Box01 \xFA   09"
+    402976: "Box01 \xFA   10"
+    402978: "Box01 \xFA   11"
+    402980: "Box01 \u201C   "
+    402982: "Box01 \u201C   01"
+    402984: "Box01 \u201C   02"
+    402986: "Box01 \u201C   03"
+    402988: "Box01 \u201C   04"
+    402990: "Box01 \u201C   05"
+    402992: "Box01 \u201C   06"
+    402994: "Box01 \u201C   07"
+    402996: "Box01 \u201C   08"
+    402998: "Box01 \u201C   09"
+    403000: "Box01 \u201C   10"
+    403002: "Box01 \u201C   11"
+    403004: "Box02 \u201C   "
+    403006: "Box02 \u201C   01"
+    403008: "Box02 \u201C   02"
+    403010: "Box02 \u201C   03"
+    403012: "Box02 \u201C   04"
+    403014: "Box02 \u201C   05"
+    403016: "Box02 \u201C   06"
+    403018: "Box02 \u201C   07"
+    403020: "Box02 \u201C   08"
+    403022: "Box02 \u201C   09"
+    403024: "Box02 \u201C   10"
+    403026: "Box02 \u201C   11"
+    403028: "Box03 \xF9   "
+    403030: "Box03 \xF9   01"
+    403032: "Box03 \xF9   02"
+    403034: "Box03 \xF9   03"
+    403036: "Box03 \xF9   04"
+    403038: "Box03 \xF9   05"
+    403040: "Box03 \xF9   06"
+    403042: "Box03 \xF9   07"
+    403044: "Box03 \xF9   08"
+    403046: "Box03 \xF9   09"
+    403048: "Box03 \xF9   10"
+    403050: "Box03 \xF9   11"
+    403052: "Box03 \u201C   "
+    403054: "Box03 \u201C   01"
+    403056: "Box03 \u201C   02"
+    403058: "Box03 \u201C   03"
+    403060: "Box03 \u201C   04"
+    403062: "Box03 \u201C   05"
+    403064: "Box03 \u201C   06"
+    403066: "Box03 \u201C   07"
+    403068: "Box03 \u201C   08"
+    403070: "Box03 \u201C   09"
+    403072: "Box03 \u201C   10"
+    403074: "Box03 \u201C   11"
+    403076: "Box04 \xF9   "
+    403078: "Box04 \xF9   01"
+    403080: "Box04 \xF9   02"
+    403082: "Box04 \xF9   03"
+    403084: "Box04 \xF9   04"
+    403086: "Box04 \xF9   05"
+    403088: "Box04 \xF9   06"
+    403090: "Box04 \xF9   07"
+    403092: "Box04 \xF9   08"
+    403094: "Box04 \xF9   09"
+    403096: "Box04 \xF9   10"
+    403098: "Box04 \xF9   11"
+    403100: "Sphere05 \xE3"
+    403102: "Sphere05 \xE301"
+    403104: "Sphere05 \xE302"
+    403106: "Sphere05 \xE303"
+    403108: "Sphere05 \xE304"
+    403110: "Sphere05 \xE305"
+    403112: "Sphere05 \xE306"
+    403114: "Sphere05 \xE307"
+    403116: "Sphere05 \xE308"
+    403118: "Sphere05 \xE309"
+    403120: "Sphere05 \xE310"
+    403122: "Sphere05 \xE311"
     2300000: 'Box01     '
     2300002: Box01      1
     2300004: Box01     01
@@ -4283,6 +4451,90 @@ ModelImporter:
     2302642: Sphere09  09
     2302644: Sphere09  10
     2302646: Sphere09  11
+    2302648: "Box01 \xFA   "
+    2302650: "Box01 \xFA   01"
+    2302652: "Box01 \xFA   02"
+    2302654: "Box01 \xFA   03"
+    2302656: "Box01 \xFA   04"
+    2302658: "Box01 \xFA   05"
+    2302660: "Box01 \xFA   06"
+    2302662: "Box01 \xFA   07"
+    2302664: "Box01 \xFA   08"
+    2302666: "Box01 \xFA   09"
+    2302668: "Box01 \xFA   10"
+    2302670: "Box01 \xFA   11"
+    2302672: "Box01 \u201C   "
+    2302674: "Box01 \u201C   01"
+    2302676: "Box01 \u201C   02"
+    2302678: "Box01 \u201C   03"
+    2302680: "Box01 \u201C   04"
+    2302682: "Box01 \u201C   05"
+    2302684: "Box01 \u201C   06"
+    2302686: "Box01 \u201C   07"
+    2302688: "Box01 \u201C   08"
+    2302690: "Box01 \u201C   09"
+    2302692: "Box01 \u201C   10"
+    2302694: "Box01 \u201C   11"
+    2302696: "Box02 \u201C   "
+    2302698: "Box02 \u201C   01"
+    2302700: "Box02 \u201C   02"
+    2302702: "Box02 \u201C   03"
+    2302704: "Box02 \u201C   04"
+    2302706: "Box02 \u201C   05"
+    2302708: "Box02 \u201C   06"
+    2302710: "Box02 \u201C   07"
+    2302712: "Box02 \u201C   08"
+    2302714: "Box02 \u201C   09"
+    2302716: "Box02 \u201C   10"
+    2302718: "Box02 \u201C   11"
+    2302720: "Box03 \xF9   "
+    2302722: "Box03 \xF9   01"
+    2302724: "Box03 \xF9   02"
+    2302726: "Box03 \xF9   03"
+    2302728: "Box03 \xF9   04"
+    2302730: "Box03 \xF9   05"
+    2302732: "Box03 \xF9   06"
+    2302734: "Box03 \xF9   07"
+    2302736: "Box03 \xF9   08"
+    2302738: "Box03 \xF9   09"
+    2302740: "Box03 \xF9   10"
+    2302742: "Box03 \xF9   11"
+    2302744: "Box03 \u201C   "
+    2302746: "Box03 \u201C   01"
+    2302748: "Box03 \u201C   02"
+    2302750: "Box03 \u201C   03"
+    2302752: "Box03 \u201C   04"
+    2302754: "Box03 \u201C   05"
+    2302756: "Box03 \u201C   06"
+    2302758: "Box03 \u201C   07"
+    2302760: "Box03 \u201C   08"
+    2302762: "Box03 \u201C   09"
+    2302764: "Box03 \u201C   10"
+    2302766: "Box03 \u201C   11"
+    2302768: "Box04 \xF9   "
+    2302770: "Box04 \xF9   01"
+    2302772: "Box04 \xF9   02"
+    2302774: "Box04 \xF9   03"
+    2302776: "Box04 \xF9   04"
+    2302778: "Box04 \xF9   05"
+    2302780: "Box04 \xF9   06"
+    2302782: "Box04 \xF9   07"
+    2302784: "Box04 \xF9   08"
+    2302786: "Box04 \xF9   09"
+    2302788: "Box04 \xF9   10"
+    2302790: "Box04 \xF9   11"
+    2302792: "Sphere05 \xE3"
+    2302794: "Sphere05 \xE301"
+    2302796: "Sphere05 \xE302"
+    2302798: "Sphere05 \xE303"
+    2302800: "Sphere05 \xE304"
+    2302802: "Sphere05 \xE305"
+    2302804: "Sphere05 \xE306"
+    2302806: "Sphere05 \xE307"
+    2302808: "Sphere05 \xE308"
+    2302810: "Sphere05 \xE309"
+    2302812: "Sphere05 \xE310"
+    2302814: "Sphere05 \xE311"
     3300000: 'Box01     '
     3300002: Box01      1
     3300004: Box01     01
@@ -5607,6 +5859,90 @@ ModelImporter:
     3302642: Sphere09  09
     3302644: Sphere09  10
     3302646: Sphere09  11
+    3302648: "Box01 \xFA   "
+    3302650: "Box01 \xFA   01"
+    3302652: "Box01 \xFA   02"
+    3302654: "Box01 \xFA   03"
+    3302656: "Box01 \xFA   04"
+    3302658: "Box01 \xFA   05"
+    3302660: "Box01 \xFA   06"
+    3302662: "Box01 \xFA   07"
+    3302664: "Box01 \xFA   08"
+    3302666: "Box01 \xFA   09"
+    3302668: "Box01 \xFA   10"
+    3302670: "Box01 \xFA   11"
+    3302672: "Box01 \u201C   "
+    3302674: "Box01 \u201C   01"
+    3302676: "Box01 \u201C   02"
+    3302678: "Box01 \u201C   03"
+    3302680: "Box01 \u201C   04"
+    3302682: "Box01 \u201C   05"
+    3302684: "Box01 \u201C   06"
+    3302686: "Box01 \u201C   07"
+    3302688: "Box01 \u201C   08"
+    3302690: "Box01 \u201C   09"
+    3302692: "Box01 \u201C   10"
+    3302694: "Box01 \u201C   11"
+    3302696: "Box02 \u201C   "
+    3302698: "Box02 \u201C   01"
+    3302700: "Box02 \u201C   02"
+    3302702: "Box02 \u201C   03"
+    3302704: "Box02 \u201C   04"
+    3302706: "Box02 \u201C   05"
+    3302708: "Box02 \u201C   06"
+    3302710: "Box02 \u201C   07"
+    3302712: "Box02 \u201C   08"
+    3302714: "Box02 \u201C   09"
+    3302716: "Box02 \u201C   10"
+    3302718: "Box02 \u201C   11"
+    3302720: "Box03 \xF9   "
+    3302722: "Box03 \xF9   01"
+    3302724: "Box03 \xF9   02"
+    3302726: "Box03 \xF9   03"
+    3302728: "Box03 \xF9   04"
+    3302730: "Box03 \xF9   05"
+    3302732: "Box03 \xF9   06"
+    3302734: "Box03 \xF9   07"
+    3302736: "Box03 \xF9   08"
+    3302738: "Box03 \xF9   09"
+    3302740: "Box03 \xF9   10"
+    3302742: "Box03 \xF9   11"
+    3302744: "Box03 \u201C   "
+    3302746: "Box03 \u201C   01"
+    3302748: "Box03 \u201C   02"
+    3302750: "Box03 \u201C   03"
+    3302752: "Box03 \u201C   04"
+    3302754: "Box03 \u201C   05"
+    3302756: "Box03 \u201C   06"
+    3302758: "Box03 \u201C   07"
+    3302760: "Box03 \u201C   08"
+    3302762: "Box03 \u201C   09"
+    3302764: "Box03 \u201C   10"
+    3302766: "Box03 \u201C   11"
+    3302768: "Box04 \xF9   "
+    3302770: "Box04 \xF9   01"
+    3302772: "Box04 \xF9   02"
+    3302774: "Box04 \xF9   03"
+    3302776: "Box04 \xF9   04"
+    3302778: "Box04 \xF9   05"
+    3302780: "Box04 \xF9   06"
+    3302782: "Box04 \xF9   07"
+    3302784: "Box04 \xF9   08"
+    3302786: "Box04 \xF9   09"
+    3302788: "Box04 \xF9   10"
+    3302790: "Box04 \xF9   11"
+    3302792: "Sphere05 \xE3"
+    3302794: "Sphere05 \xE301"
+    3302796: "Sphere05 \xE302"
+    3302798: "Sphere05 \xE303"
+    3302800: "Sphere05 \xE304"
+    3302802: "Sphere05 \xE305"
+    3302804: "Sphere05 \xE306"
+    3302806: "Sphere05 \xE307"
+    3302808: "Sphere05 \xE308"
+    3302810: "Sphere05 \xE309"
+    3302812: "Sphere05 \xE310"
+    3302814: "Sphere05 \xE311"
     4300000: Box02
     4300002: Sphere02  01
     4300004: Sphere01
@@ -6931,58 +7267,466 @@ ModelImporter:
     4302642: Cylinder640
     4302644: Sphere02  44
     4302646: Sphere02
+    4302648: "Box04 \xF9   "
+    4302650: "Box03 \xF9   "
+    4302652: "Box01 \u201C   "
+    4302654: "Box02 \u201C   "
+    4302656: "Box03 \u201C   "
+    4302658: "Box01 \xFA   "
+    4302660: "Sphere05 \xE3"
+    4302662: "Box04 \xF9   01"
+    4302664: "Box03 \xF9   01"
+    4302666: "Box01 \u201C   01"
+    4302668: "Box02 \u201C   01"
+    4302670: "Box03 \u201C   01"
+    4302672: "Sphere05 \xE301"
+    4302674: "Box01 \xFA   01"
+    4302676: "Box04 \xF9   02"
+    4302678: "Box03 \xF9   02"
+    4302680: "Box01 \u201C   02"
+    4302682: "Box02 \u201C   02"
+    4302684: "Box03 \u201C   02"
+    4302686: "Box01 \xFA   02"
+    4302688: "Sphere05 \xE302"
+    4302690: "Box04 \xF9   03"
+    4302692: "Box03 \xF9   03"
+    4302694: "Box01 \u201C   03"
+    4302696: "Box02 \u201C   03"
+    4302698: "Box03 \u201C   03"
+    4302700: "Sphere05 \xE303"
+    4302702: "Box01 \xFA   03"
+    4302704: "Box04 \xF9   04"
+    4302706: "Box03 \xF9   04"
+    4302708: "Box01 \u201C   04"
+    4302710: "Box02 \u201C   04"
+    4302712: "Box03 \u201C   04"
+    4302714: "Box01 \xFA   05"
+    4302716: "Sphere05 \xE304"
+    4302718: "Box04 \xF9   05"
+    4302720: "Box03 \xF9   05"
+    4302722: "Box01 \u201C   05"
+    4302724: "Box02 \u201C   05"
+    4302726: "Box03 \u201C   05"
+    4302728: "Sphere05 \xE305"
+    4302730: "Box01 \xFA   06"
+    4302732: "Box04 \xF9   06"
+    4302734: "Box03 \xF9   06"
+    4302736: "Box01 \u201C   06"
+    4302738: "Box02 \u201C   06"
+    4302740: "Box03 \u201C   06"
+    4302742: "Box01 \xFA   07"
+    4302744: "Sphere05 \xE307"
+    4302746: "Box04 \xF9   07"
+    4302748: "Box03 \xF9   07"
+    4302750: "Box01 \u201C   07"
+    4302752: "Box02 \u201C   07"
+    4302754: "Box03 \u201C   07"
+    4302756: "Box01 \xFA   04"
+    4302758: "Sphere05 \xE306"
+    4302760: "Box04 \xF9   08"
+    4302762: "Box03 \xF9   08"
+    4302764: "Box01 \u201C   08"
+    4302766: "Box02 \u201C   08"
+    4302768: "Box03 \u201C   08"
+    4302770: "Box01 \xFA   09"
+    4302772: "Sphere05 \xE308"
+    4302774: "Box04 \xF9   09"
+    4302776: "Box03 \xF9   09"
+    4302778: "Box01 \u201C   09"
+    4302780: "Box02 \u201C   09"
+    4302782: "Box03 \u201C   09"
+    4302784: "Sphere05 \xE309"
+    4302786: "Box01 \xFA   10"
+    4302788: "Box04 \xF9   10"
+    4302790: "Box03 \xF9   10"
+    4302792: "Box01 \u201C   10"
+    4302794: "Box02 \u201C   10"
+    4302796: "Box03 \u201C   10"
+    4302798: "Box01 \xFA   11"
+    4302800: "Sphere05 \xE311"
+    4302802: "Box04 \xF9   11"
+    4302804: "Box03 \xF9   11"
+    4302806: "Box01 \u201C   11"
+    4302808: "Box02 \u201C   11"
+    4302810: "Box03 \u201C   11"
+    4302812: "Box01 \xFA   08"
+    4302814: "Sphere05 \xE310"
     7400000: Take 001
     9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: a3ee64683fed0914a8d9a06bffef8d50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 02 - Default
+    second: {fileID: 2100000, guid: b6404173b9a0814458a7b6a166a67aa1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 03 - Default
+    second: {fileID: 2100000, guid: 9f19f082f81b28c498448365e76cd017, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 03 - Defaultdfhr6h
+    second: {fileID: 2100000, guid: 9aa5c420d7ec9044ebad7eebc2b114c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 04 - Default
+    second: {fileID: 2100000, guid: 6169c2cfd946a93468377b29b06df6b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 07 - Default
+    second: {fileID: 2100000, guid: 77a40436ef043274db400ad8e01a7186, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 08 - Default
+    second: {fileID: 2100000, guid: 4f554a09bc7c8e643aabd48a15a3061e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 09 - Default
+    second: {fileID: 2100000, guid: acb38d8a889b62e40b2a1673df0ae0e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 10 - Default
+    second: {fileID: 2100000, guid: 3455f35e7ea0ad3439cf2136d2e9841f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 11 - Default
+    second: {fileID: 2100000, guid: 0e3292ecefbf94f4ca2eae43f94ebde9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13 - Default
+    second: {fileID: 2100000, guid: 1e4a43aa76efea247a80f149d4ae18c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13 - Default4t34
+    second: {fileID: 2100000, guid: a1651ca836aa1be4ebf08a994b160467, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13 - Default4t344
+    second: {fileID: 2100000, guid: a1651ca836aa1be4ebf08a994b160467, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13 - Default4t3490u8
+    second: {fileID: 2100000, guid: a1651ca836aa1be4ebf08a994b160467, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 14 - Default
+    second: {fileID: 2100000, guid: 9f19f082f81b28c498448365e76cd017, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 14 - Defaultaw4t3ta
+    second: {fileID: 2100000, guid: b42ecf53f4b221849853c18d97875c78, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 15 - Default
+    second: {fileID: 2100000, guid: 42c5155124f7a1d4f8ebee6480e1282d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 15 - Defaultawf34f34
+    second: {fileID: 2100000, guid: e76c05402b7821a48aa8dc872e3b9027, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 16 - Default
+    second: {fileID: 2100000, guid: 80d86fe283603954ba5c740835e4d4a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 17 - Default
+    second: {fileID: 2100000, guid: 3455f35e7ea0ad3439cf2136d2e9841f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 19 - Default
+    second: {fileID: 2100000, guid: 02617b35db6f3ce4993ca07d22d32e84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 20 - Default
+    second: {fileID: 2100000, guid: 9c3ee6410fb7e1c4e8d3b24aebfa779b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 21 - Default
+    second: {fileID: 2100000, guid: e1cbc9934d9944744ac6483aabefa812, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default
+    second: {fileID: 2100000, guid: 01e82c221208a4d4281c63d08c63b2af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #0'
+    second: {fileID: 2100000, guid: 2d030b4fb6b24674ea59e6bfc568a8a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #1'
+    second: {fileID: 2100000, guid: 42c5155124f7a1d4f8ebee6480e1282d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #25'
+    second: {fileID: 2100000, guid: bfc0f188052f791479bf458e10f03d54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #26'
+    second: {fileID: 2100000, guid: 2d04bfabebfbc4348b7661e34a895ee5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #27'
+    second: {fileID: 2100000, guid: 46822cc09fcf3bf47ba0aa2707608d28, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #28'
+    second: {fileID: 2100000, guid: 0ae4bb048a3fcaf4c933037930f940a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #29'
+    second: {fileID: 2100000, guid: 4f554a09bc7c8e643aabd48a15a3061e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #30'
+    second: {fileID: 2100000, guid: e0174cf5236abc446a6c1b33505ee38c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #31'
+    second: {fileID: 2100000, guid: 9f19f082f81b28c498448365e76cd017, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #32'
+    second: {fileID: 2100000, guid: 5646a8e9a211b434580c0702d107375b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #33'
+    second: {fileID: 2100000, guid: 6c9f071a702231c4b80758ae3dcded73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #34'
+    second: {fileID: 2100000, guid: 42c5155124f7a1d4f8ebee6480e1282d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #35'
+    second: {fileID: 2100000, guid: 25b5fe378a3b40f4c853ab14cdf7d4e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #36'
+    second: {fileID: 2100000, guid: 42c5155124f7a1d4f8ebee6480e1282d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #37'
+    second: {fileID: 2100000, guid: 876df4168a179364987f2e21ea0198c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #38'
+    second: {fileID: 2100000, guid: 4714dace6122c3543a1e5036517bc228, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #39'
+    second: {fileID: 2100000, guid: 9f19f082f81b28c498448365e76cd017, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #40'
+    second: {fileID: 2100000, guid: b8172aac449d43a4d939ec8d1e201d37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #41'
+    second: {fileID: 2100000, guid: 3965f7ac355f11b4ebbb38b5c74a8265, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #42'
+    second: {fileID: 2100000, guid: ec0fa55da0f90d04fbe4c9d0dc0a054a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #43'
+    second: {fileID: 2100000, guid: b8172aac449d43a4d939ec8d1e201d37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #44'
+    second: {fileID: 2100000, guid: 43c8d0c9d4437e04c97d52b5e917888a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #45'
+    second: {fileID: 2100000, guid: ad96f5d5c86089b4f8375aa460971c0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #46'
+    second: {fileID: 2100000, guid: 4017ba926aa898f478de5548d4a6a8d0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #47'
+    second: {fileID: 2100000, guid: 5b3ce395b400874469984d9cd58f3bdf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #48'
+    second: {fileID: 2100000, guid: 86658d89ca910d24f9c7ed063dd82737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #49'
+    second: {fileID: 2100000, guid: 46b807965bc2b554ab86717fb0e89abe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #50'
+    second: {fileID: 2100000, guid: ba538167cece5b543a782165cf203a3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #51'
+    second: {fileID: 2100000, guid: 9f19f082f81b28c498448365e76cd017, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #52'
+    second: {fileID: 2100000, guid: d8acad56c12023f4fbb688eb4f6ee91a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #53'
+    second: {fileID: 2100000, guid: 4549ad09e76f4a04db3b0e789f91286c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #54'
+    second: {fileID: 2100000, guid: fad12bd55be477e4d814667a27b0a126, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #55'
+    second: {fileID: 2100000, guid: 42c5155124f7a1d4f8ebee6480e1282d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #56'
+    second: {fileID: 2100000, guid: 2cdb0da32c0f91c4a91f0b80a3ce3ea1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 0b10a233f9c86bc489aed49397986ef3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
+    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationActionData
+public class AnimationActionData : CustomAction
 {
 	public List<string> StringTriggers;
 	public List<Animator> StringTriggerObjects;
@@ -33,7 +33,7 @@ public class AnimationActionData
 			for (int i = 0; i < count; ++i)
 			{
 				Animator currentAnimator = IntTriggerObjects [i];
-				currentAnimator.SetInteger (IntTriggerNames[i], IntTriggers [i]);
+                currentAnimator.SetInteger(IntTriggerNames[i], IntTriggers[i]);
 			}
 		}
 

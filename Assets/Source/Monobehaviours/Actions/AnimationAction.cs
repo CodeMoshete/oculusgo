@@ -1,50 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationActionData
+public class AnimationAction : CustomAction
 {
-	public List<string> StringTriggers;
-	public List<Animator> StringTriggerObjects;
+    [System.Serializable]
+    public struct IntTrigger
+    {
+        public Animator Target;
+        public string Key;
+        public int Value;
+    }
 
-	public List<int> IntTriggers;
-	public List<string> IntTriggerNames;
-	public List<Animator> IntTriggerObjects;
+    [System.Serializable]
+    public struct BoolTrigger
+    {
+        public Animator Target;
+        public string Key;
+        public bool Value;
+    }
 
-	public List<bool> BoolTriggers;
-	public List<string> BoolTriggerNames;
-	public List<Animator> BoolTriggerObjects;
+    [System.Serializable]
+    public struct StringTrigger
+    {
+        public string Trigger;
+        public Animator Target;
+    }
 
-	public override void Initiate()
-	{
-		int count = StringTriggers.Count;
-		if (count == StringTriggerObjects.Count)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				Animator currentAnimator = StringTriggerObjects [i];
-				currentAnimator.SetTrigger (StringTriggers [i]);
-			}
-		}
+    public List<IntTrigger> IntTriggers;
+    public List<BoolTrigger> BoolTriggers;
+    public List<StringTrigger> StringTriggers;
 
-		count = IntTriggers.Count;
-		if (count == IntTriggerObjects.Count)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				Animator currentAnimator = IntTriggerObjects [i];
-				currentAnimator.SetInteger (IntTriggerNames[i], IntTriggers [i]);
-			}
-		}
+    public override void Initiate()
+    {
+        int count = IntTriggers.Count;
+        for (int i = 0; i < count; ++i)
+        {
+            IntTriggers[i].Target.SetInteger(IntTriggers[i].Key, IntTriggers[i].Value);
+        }
 
-		count = BoolTriggers.Count;
-		if (count == BoolTriggerObjects.Count)
-		{
-			for (int i = 0; i < count; ++i)
-			{
-				Animator currentAnimator = BoolTriggerObjects [i];
-				currentAnimator.SetBool (BoolTriggerNames[i], BoolTriggers [i]);
-			}
-		}
-	}
+        count = BoolTriggers.Count;
+        for (int i = 0; i < count; ++i)
+        {
+            BoolTriggers[i].Target.SetBool(BoolTriggers[i].Key, BoolTriggers[i].Value);
+        }
+
+        count = StringTriggers.Count;
+        for (int i = 0; i < count; ++i)
+        {
+            StringTriggers[i].Target.SetTrigger(StringTriggers[i].Trigger);
+        }
+    }
 }

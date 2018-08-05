@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameObjectFade : CustomAction {
-
+public class GameObjectFade : CustomAction
+{
 	public enum FadeOperation
 	{
 		FadeOut,

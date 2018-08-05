@@ -1,36 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 
 public class OculusGoControls : MonoBehaviour
 {
+    public Text ConsoleLine;
+	public GameObject Ui;
 	public float Sensitivity = 1f;
 
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
 	private Vector3 lastMousePos;
-	private GameObject ui;
 
 	private bool isMouseCameraActive;
 
 	void Start () 
 	{
 		bodyObject = GameObject.Find ("OVRPlayerController").GetComponent<OVRPlayerController>();
-		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "OVRCameraRig").transform;
-		ui = GameObject.Find ("Canvas");
+		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "OVRCameraRig").transform; 
 	}
 	
 	void Update () 
 	{
 		OVRInput.Controller activeController = OVRInput.GetActiveController();
 		Vector2 primaryTouchpad = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
-		bool isPressed = OVRInput.Get (OVRInput.Button.One);
+		bool isPressed = OVRInput.Get (OVRInput.Button.PrimaryTouchpad);
 
-		bool MoveUp = isPressed && primaryTouchpad.y > 1 || Input.GetKey(KeyCode.W);
-		bool MoveDown = isPressed && primaryTouchpad.y < -1 || Input.GetKey(KeyCode.S);
-		bool MoveLeft = isPressed && primaryTouchpad.x < -1 || Input.GetKey(KeyCode.A);
-		bool MoveRight = isPressed && primaryTouchpad.x > 1 || Input.GetKey(KeyCode.D);
+		bool MoveUp = isPressed && primaryTouchpad.y > 0.33 || Input.GetKey(KeyCode.W);
+		bool MoveDown = isPressed && primaryTouchpad.y < -0.33 || Input.GetKey(KeyCode.S);
+		bool MoveLeft = isPressed && primaryTouchpad.x < -0.33 || Input.GetKey(KeyCode.A);
+		bool MoveRight = isPressed && primaryTouchpad.x > 0.33 || Input.GetKey(KeyCode.D);
+
+        //Log("V: " + primaryTouchpad.y + ", H: " + primaryTouchpad.x + ", Dn: " + isPressed);
 
 		if (MoveUp)
 		{
@@ -53,9 +56,11 @@ public class OculusGoControls : MonoBehaviour
 		bodyObject.transform.eulerAngles = euler;
 
 		bool isTriggerPressed = OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger);
+        //Log("Trigger: " + isTriggerPressed);
 		if (isTriggerPressed || Input.GetKeyDown(KeyCode.U))
 		{
-			ui.SetActive (!ui.activeSelf);
+			Ui.SetActive (!Ui.activeSelf);
+            Log("UI Active: " + Ui.activeSelf);
 		}
 
 		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.D))
@@ -86,4 +91,13 @@ public class OculusGoControls : MonoBehaviour
 				}
 		}
 	}
+
+    private void Log(string message)
+    {
+        if (ConsoleLine != null)
+        {
+            ConsoleLine.text = message;
+        }
+        Debug.Log(message);
+    }
 }
