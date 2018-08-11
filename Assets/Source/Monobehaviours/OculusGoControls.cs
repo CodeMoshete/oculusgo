@@ -6,20 +6,29 @@ using Utils;
 
 public class OculusGoControls : MonoBehaviour
 {
+    public float BackgroundCameraScale = 1f;
+
     public Text ConsoleLine;
 	public GameObject Ui;
 	public float Sensitivity = 1f;
 
+    private Transform backgroundCamera;
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
 	private Vector3 lastMousePos;
 
+    private Vector3 lastPlayerPosition;
+
 	private bool isMouseCameraActive;
 
-	void Start () 
-	{
+	void Start ()
+    {
 		bodyObject = GameObject.Find ("OVRPlayerController").GetComponent<OVRPlayerController>();
-		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "OVRCameraRig").transform; 
+        backgroundCamera = GameObject.Find("OVRCameraRigBackground").transform;
+        backgroundCamera.transform.localScale = 
+            new Vector3(BackgroundCameraScale, BackgroundCameraScale, BackgroundCameraScale);
+		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "TrackingSpace").transform;
+        lastPlayerPosition = cameraObject.transform.position;
 	}
 	
 	void Update () 
@@ -66,7 +75,6 @@ public class OculusGoControls : MonoBehaviour
 		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.D))
 		{
 			isMouseCameraActive = !isMouseCameraActive;
-			Debug.Log ("Mouse camera controls active: " + isMouseCameraActive);
 		}
 
 		if (isMouseCameraActive)
@@ -90,7 +98,13 @@ public class OculusGoControls : MonoBehaviour
 					cameraObject.eulerAngles = euler;
 				}
 		}
-	}
+
+        Vector3 moveDist = (cameraObject.transform.position - lastPlayerPosition) * BackgroundCameraScale;
+        backgroundCamera.position += moveDist;
+        backgroundCamera.rotation = cameraObject.transform.rotation;
+        lastPlayerPosition = cameraObject.transform.position;
+        //Debug.Log(backgroundCamera.eulerAngles.y + ", " + cameraObject.transform.eulerAngles.y);
+    }
 
     private void Log(string message)
     {
