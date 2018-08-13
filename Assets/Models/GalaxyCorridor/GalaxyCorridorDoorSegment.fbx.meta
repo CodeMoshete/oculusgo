@@ -25,6 +25,8 @@ ModelImporter:
     100038: Plane43
     100040: StraightDoor
     100042: Wall16
+    100044: Socket1
+    100046: Socket2
     400000: Box193
     400002: Box194
     400004: Box195
@@ -47,6 +49,8 @@ ModelImporter:
     400038: Plane43
     400040: StraightDoor
     400042: Wall16
+    400044: Socket1
+    400046: Socket2
     2100000: 01 - Default.002
     2100002: 03 - Default.002
     2100004: No Name
@@ -68,6 +72,8 @@ ModelImporter:
     2300026: Plane33
     2300028: Plane34
     2300030: Plane43
+    2300032: Socket1
+    2300034: Socket2
     3300000: Box193
     3300002: Box194
     3300004: Box195
@@ -84,6 +90,8 @@ ModelImporter:
     3300026: Plane33
     3300028: Plane34
     3300030: Plane43
+    3300032: Socket1
+    3300034: Socket2
     4300000: Plane43
     4300002: ChamferBox77
     4300004: ChamferBox76
@@ -100,6 +108,9 @@ ModelImporter:
     4300026: Plane33
     4300028: ChamferBox51
     4300030: Plane32
+    4300032: Socket2
+    4300034: Socket1
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1

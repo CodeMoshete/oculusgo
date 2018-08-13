@@ -11,6 +11,8 @@ ModelImporter:
     100010: Plane44
     100012: Plane44.001
     100014: Plane44.002
+    100016: Socket1
+    100018: Socket2
     400000: Divider13
     400002: //RootNode
     400004: InteriorWall02
@@ -19,6 +21,8 @@ ModelImporter:
     400010: Plane44
     400012: Plane44.001
     400014: Plane44.002
+    400016: Socket1
+    400018: Socket2
     2100000: No Name
     2100002: 01 - Default.002
     2100004: 03 - Default.002
@@ -30,14 +34,21 @@ ModelImporter:
     2300002: Plane44
     2300004: Plane44.001
     2300006: Plane44.002
+    2300008: Socket1
+    2300010: Socket2
     3300000: New Geometry
     3300002: Plane44
     3300004: Plane44.001
     3300006: Plane44.002
+    3300008: Socket1
+    3300010: Socket2
     4300000: New Geometry
     4300002: Plane44
     4300004: Plane44.001
     4300006: Plane44.002
+    4300008: Socket2
+    4300010: Socket1
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
