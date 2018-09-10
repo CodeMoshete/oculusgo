@@ -6,7 +6,7 @@ public class FlockController : MonoBehaviour {
 
 	private const float MIN_COHESION_DIST = 20000.0f;
 	private const float MAX_COHESION_DIST = 40000.0f;
-	private const float AVOIDANCE_DIST = 30000.0f;
+	private const float AVOIDANCE_DIST = 25f;
 	private const float AIM_VARIATION = 150.0f;
 	public int numToSpawn = 20;
 	public int spawnAreaDims = 5;
@@ -130,7 +130,7 @@ public class FlockController : MonoBehaviour {
 		}
 
 		flocker.GetComponent<ShipFlocker>().Rotate(desiredVelocity.x, desiredVelocity.y, desiredVelocity.z);
-		flocker.transform.Translate(new Vector3(0.0f, 0.0f, flocker.GetComponent<ShipFlocker>().MaxSpeed));
+		flocker.transform.Translate(new Vector3(0.0f, 0.0f, flocker.GetComponent<ShipFlocker>().MaxSpeed * Time.deltaTime));
 	}
 
 	void processFlockerAttack(GameObject flocker)

@@ -32,7 +32,7 @@ public class TorpedoScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		innerCont.LookAt(player.transform.position);
-		this.transform.Translate(velocity);
+		this.transform.Translate(velocity * Time.deltaTime);
 		torpBack.Rotate(zRotationBack);
 		torpFront.Rotate(zRotationFront);
 

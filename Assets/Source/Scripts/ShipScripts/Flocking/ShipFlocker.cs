@@ -100,7 +100,7 @@ public class ShipFlocker : MonoBehaviour {
 		{
 			Destroy(collisionObject.gameObject);
 			GameObject explosion = (GameObject)Instantiate(Resources.Load("ExplosionLD"), collisionObject.transform.position, Quaternion.identity);
-			explosion.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
+			//explosion.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
 		}
 	}
 	
