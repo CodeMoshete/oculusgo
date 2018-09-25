@@ -1,16 +1,27 @@
 fileFormatVersion: 2
 guid: 5d00244b9b07cf04e88d2bee1c2a7d0c
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: ChamferBox64
     100002: //RootNode
     100004: Socket1
     100006: Socket2
+    100008: Camera
+    100010: ChamferBox64.001
+    100012: ChamferBox64.002
+    100014: Lamp
+    100016: RightTurn
     400000: ChamferBox64
     400002: //RootNode
     400004: Socket1
     400006: Socket2
+    400008: Camera
+    400010: ChamferBox64.001
+    400012: ChamferBox64.002
+    400014: Lamp
+    400016: RightTurn
+    2000000: Camera
     2100000: 01 - Default.002
     2100002: 03 - Default.002
     2100004: 01 - Defaultwe.002
@@ -20,12 +31,19 @@ ModelImporter:
     2300000: ChamferBox64
     2300002: Socket1
     2300004: Socket2
+    2300006: ChamferBox64.001
+    2300008: ChamferBox64.002
     3300000: ChamferBox64
     3300002: Socket1
     3300004: Socket2
+    3300006: ChamferBox64.001
+    3300008: ChamferBox64.002
     4300000: ChamferBox64
     4300002: Socket2
     4300004: Socket1
+    4300006: ChamferBox64.002
+    4300008: ChamferBox64.001
+    10800000: Lamp
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -66,7 +84,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -78,6 +96,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

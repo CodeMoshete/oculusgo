@@ -1,58 +1,59 @@
 fileFormatVersion: 2
-guid: fe5cfa4d751e5824c9138a7ab1a1e6fe
+guid: 677984b9f17924649b6e8e9756a62739
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Divider13
-    100002: //RootNode
-    100004: InteriorWall02
-    100006: New Geometry
-    100008: Wall20
-    100010: Plane44
-    100012: Plane44.001
-    100014: Plane44.002
-    100016: Socket1
-    100018: Socket2
-    100020: Plane44.003
-    400000: Divider13
-    400002: //RootNode
-    400004: InteriorWall02
-    400006: New Geometry
-    400008: Wall20
-    400010: Plane44
-    400012: Plane44.001
-    400014: Plane44.002
-    400016: Socket1
-    400018: Socket2
-    400020: Plane44.003
-    2100000: No Name
+    100000: Camera
+    100002: ChamferBox64
+    100004: ChamferBox64.001
+    100006: ChamferBox64.002
+    100008: //RootNode
+    100010: Lamp
+    100012: RightTurn
+    100014: Socket1
+    100016: Socket2
+    100018: ChamferBox64.003
+    100020: ChamferBox64.004
+    400000: Camera
+    400002: ChamferBox64
+    400004: ChamferBox64.001
+    400006: ChamferBox64.002
+    400008: //RootNode
+    400010: Lamp
+    400012: RightTurn
+    400014: Socket1
+    400016: Socket2
+    400018: ChamferBox64.003
+    400020: ChamferBox64.004
+    2000000: Camera
+    2100000: 03 - Default.002
     2100002: 01 - Default.002
-    2100004: 03 - Default.002
-    2100006: 01 - Defaultwe.002
-    2100008: 07 - Default.002
-    2100010: 08 - Default.002
-    2100012: 09 - Default.002
-    2300000: New Geometry
-    2300002: Plane44
-    2300004: Plane44.001
-    2300006: Plane44.002
-    2300008: Socket1
-    2300010: Socket2
-    2300012: Plane44.003
-    3300000: New Geometry
-    3300002: Plane44
-    3300004: Plane44.001
-    3300006: Plane44.002
-    3300008: Socket1
-    3300010: Socket2
-    3300012: Plane44.003
-    4300000: New Geometry
-    4300002: Plane44
-    4300004: Plane44.001
-    4300006: Plane44.002
+    2100004: 01 - Defaultwe.002
+    2100006: 07 - Default.002
+    2100008: 08 - Default.002
+    2100010: 09 - Default.002
+    2300000: ChamferBox64
+    2300002: ChamferBox64.001
+    2300004: ChamferBox64.002
+    2300006: Socket1
+    2300008: Socket2
+    2300010: ChamferBox64.003
+    2300012: ChamferBox64.004
+    3300000: ChamferBox64
+    3300002: ChamferBox64.001
+    3300004: ChamferBox64.002
+    3300006: Socket1
+    3300008: Socket2
+    3300010: ChamferBox64.003
+    3300012: ChamferBox64.004
+    4300000: ChamferBox64.002
+    4300002: ChamferBox64.001
+    4300004: ChamferBox64
+    4300006: Socket1
     4300008: Socket2
-    4300010: Socket1
-    4300012: Plane44.003
+    4300010: ChamferBox64.003
+    4300012: ChamferBox64.004
+    10800000: Lamp
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
