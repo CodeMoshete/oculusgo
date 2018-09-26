@@ -43,11 +43,13 @@ public class PhaserScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collisionObject) {
-		if(collisionObject.tag != "Torpedo" && Launcher != collisionObject.gameObject)
+		if(collisionObject.tag != "Torpedo" && 
+            collisionObject.tag != "Phaser" && 
+            Launcher != collisionObject.gameObject)
 		{
 			Vector3 endPos = transform.Find("EndPt").transform.position;
 			GameObject explosion = (GameObject)Instantiate(Resources.Load("ExplosionLD"), endPos, Quaternion.identity);
-			explosion.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+			explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
 			shouldDestroy = true;
 		}
 	}

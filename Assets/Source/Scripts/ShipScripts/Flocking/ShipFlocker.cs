@@ -98,10 +98,10 @@ public class ShipFlocker : MonoBehaviour {
 	void OnTriggerEnter(Collider collisionObject) {
 		if(collisionObject.tag == "Torpedo" && collisionObject.gameObject.GetComponent<TorpedoScript>().Launcher != this.gameObject)
 		{
-			Destroy(collisionObject.gameObject);
+            Destroy(collisionObject.gameObject);
 			GameObject explosion = (GameObject)Instantiate(Resources.Load("ExplosionLD"), collisionObject.transform.position, Quaternion.identity);
-			//explosion.transform.localScale = new Vector3(10.0f, 10.0f, 10.0f);
-		}
+            explosion.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        }
 	}
 	
 	// Update is called once per frame
