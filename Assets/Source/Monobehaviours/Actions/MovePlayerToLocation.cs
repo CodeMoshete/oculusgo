@@ -3,9 +3,12 @@ using System.Collections;
 
 public class MovePlayerToLocation : CustomAction {
 
-	public GameObject Player;
+    public float Delay;
+    public GameObject Player;
 	public GameObject TargetPosition;
 	public float InitialVelocity;
+    public MovePlayerToLocation InheritedVelocity;
+    public bool disablePrevious;
 	public float Acceleration;
 
 	private bool isActive;
@@ -14,21 +17,32 @@ public class MovePlayerToLocation : CustomAction {
 	{
 		isActive = true;
 		Player.GetComponent<CharacterController>().enabled = false;
+        if (InheritedVelocity != null)
+        {
+            InitialVelocity = InheritedVelocity.InitialVelocity;
+        }
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if(isActive)
 		{
-			InitialVelocity += Acceleration;
+            if (Delay > 0f)
+            {
+                Delay -= Time.deltaTime;
+                return;
+            }
+
+			InitialVelocity += Acceleration * Time.deltaTime;
 			Vector3 vectorToTarget = TargetPosition.transform.position - Player.transform.position;
 
-			if(vectorToTarget.magnitude < InitialVelocity)
+			if(vectorToTarget.sqrMagnitude < InitialVelocity * InitialVelocity)
 			{
 				Player.transform.position = TargetPosition.transform.position;
 				isActive = false;
-				InitialVelocity = 0f;
-			}
+                Player.GetComponent<CharacterController>().enabled = true;
+            }
 			else
 			{
 				Vector3 nextPos = (vectorToTarget).normalized * InitialVelocity;
