@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class FlockController : MonoBehaviour {
 
-	private const float MIN_COHESION_DIST = 20000.0f;
-	private const float MAX_COHESION_DIST = 40000.0f;
+	private const float MIN_COHESION_DIST = 64.0f;
+	private const float MAX_COHESION_DIST = 900.0f;
 	private const float AVOIDANCE_DIST = 25f;
 	private const float AIM_VARIATION = 1.0f;
 	public int numToSpawn = 20;
