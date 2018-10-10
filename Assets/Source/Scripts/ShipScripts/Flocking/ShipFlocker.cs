@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShipFlocker : MonoBehaviour {
-
+public class ShipFlocker : MonoBehaviour
+{
 	public float TurnSpeed = 0.01f;
 	public float MaxPitch = 70.0f;
 	public float Acceleration = 0.1f;

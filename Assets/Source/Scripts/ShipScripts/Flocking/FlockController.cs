@@ -1,8 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs;
+using Unity.Collections;
 
-public class FlockController : MonoBehaviour {
+public struct FindCenterJob : IJob
+{
+    public NativeArray<Vector3> FlockerPositions;
+    public NativeArray<Vector3> Result;
+
+    public void Execute()
+    {
+        int flockSize = FlockerPositions.Length;
+        Vector3 Center = Vector3.zero;
+
+        for (int i = 0; i < flockSize;  ++i)
+        {
+            Center += FlockerPositions[i];
+        }
+
+        Center /= flockSize;
+
+        Result[0] = Center;
+    }
+}
+
+public struct FlockMovementJob : IJobParallelFor
+{
+    public void Execute(int i)
+    {
+
+    }
+}
+
+public class FlockController : MonoBehaviour
+{
 
 	private const float MIN_COHESION_DIST = 64.0f;
 	private const float MAX_COHESION_DIST = 900.0f;
@@ -14,7 +46,7 @@ public class FlockController : MonoBehaviour {
 	public List<string> possibleSpawns;
 	public Vector3 spawnOrientation = new Vector3(0.0f, 0.0f, 0.0f);
 	private int numInFlock;
-	private ArrayList fullFlock;
+	private List<GameObject> fullFlock;
 	private Vector3 flockCenter;
 	private GameObject flockTarget;
 	private GameObject attackTarget;
@@ -35,7 +67,7 @@ public class FlockController : MonoBehaviour {
 
 		int numPossibleSpawns = possibleSpawns.Count;
 
-		fullFlock = new ArrayList();
+		fullFlock = new List<GameObject>();
 		for(int i=0; i<numToSpawn; i++) 
 		{
 			Vector3 spawnPosition = new Vector3(transform.position.x + Random.Range(-spawnAreaDims,spawnAreaDims),
@@ -58,8 +90,8 @@ public class FlockController : MonoBehaviour {
 		updateFlockCenter();
 		for(int i=0; i<numInFlock; i++)
 		{
-			processFlockerMovement((GameObject)fullFlock[i]);
-			processFlockerAttack((GameObject)fullFlock[i]);
+			processFlockerMovement(fullFlock[i]);
+			processFlockerAttack(fullFlock[i]);
 		}
 
 		processFlockerAttack(attackTarget);
@@ -68,17 +100,22 @@ public class FlockController : MonoBehaviour {
 
 	void updateFlockCenter()
 	{
-		flockCenter = Vector3.zero;
-		for(int i=0; i<numInFlock; i++)
-		{
-			flockCenter.x += ((GameObject)fullFlock[i]).transform.position.x;
-			flockCenter.y += ((GameObject)fullFlock[i]).transform.position.y;
-			flockCenter.z += ((GameObject)fullFlock[i]).transform.position.z;
-		}
+        NativeArray<Vector3> positions = new NativeArray<Vector3>(numInFlock, Allocator.TempJob);
+        NativeArray<Vector3> result = new NativeArray<Vector3>(1, Allocator.TempJob);
 
-		flockCenter.x /= numInFlock;
-		flockCenter.y /= numInFlock;
-		flockCenter.z /= numInFlock;
+        for (int i = 0; i < numInFlock; i++)
+        {
+            positions[i] = fullFlock[i].transform.position;
+        }
+
+        FindCenterJob jobData = new FindCenterJob();
+        jobData.FlockerPositions = positions;
+        jobData.Result = result;
+        JobHandle handle = jobData.Schedule();
+        handle.Complete();
+        flockCenter = result[0];
+        positions.Dispose();
+        result.Dispose();
 	}
 
 	void processFlockerMovement(GameObject flocker)
@@ -136,7 +173,7 @@ public class FlockController : MonoBehaviour {
 	void processFlockerAttack(GameObject flocker)
 	{
 		bool isBadGuy = flocker == attackTarget;
-		GameObject target = (isBadGuy) ? (GameObject)fullFlock[Random.Range(0,numToSpawn-1)] : attackTarget;
+		GameObject target = (isBadGuy) ? fullFlock[Random.Range(0,numToSpawn-1)] : attackTarget;
 		ShipFlocker flockComp = flocker.GetComponent<ShipFlocker>();
 		bool shootPhasers = ((flockComp.PhaserShotsPerMinute/60.0f) * (Time.deltaTime)) > Random.Range(0.0f, 1.0f);
 		if(shootPhasers)
