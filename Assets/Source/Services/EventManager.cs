@@ -14,6 +14,7 @@ public class EventManager
 	public void AddListener(EventId evt, EventCallback callback)
     {
         if (callbacks == null)
+
         {
             callbacks = new Dictionary<EventId, List<EventCallback>>();
         }
