@@ -100,8 +100,8 @@ public class OculusGoControls : MonoBehaviour
 		}
 
         Vector3 moveDist = (cameraObject.transform.position - lastPlayerPosition) * BackgroundCameraScale;
-        backgroundCamera.position += moveDist;
-        backgroundCamera.rotation = cameraObject.transform.rotation;
+        backgroundCamera.localPosition += moveDist;
+        backgroundCamera.localRotation = cameraObject.transform.rotation;
         lastPlayerPosition = cameraObject.transform.position;
         //Debug.Log(backgroundCamera.eulerAngles.y + ", " + cameraObject.transform.eulerAngles.y);
     }

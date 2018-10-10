@@ -4,6 +4,7 @@ public class LookAtObjectTrigger : MonoBehaviour
 {
     public Camera Camera;
     public CustomAction OnLookAt;
+    public CustomAction OnLookAway;
     public CustomAction OnInteract;
 
     private bool isColliding;
@@ -32,6 +33,10 @@ public class LookAtObjectTrigger : MonoBehaviour
         }
         else if (isColliding)
         {
+            if (OnLookAway != null)
+            {
+                OnLookAway.Initiate();
+            }
             isColliding = false;
         }
 
