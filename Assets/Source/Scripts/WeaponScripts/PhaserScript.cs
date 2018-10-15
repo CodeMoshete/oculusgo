@@ -48,7 +48,11 @@ public class PhaserScript : MonoBehaviour {
             Launcher != collisionObject.gameObject)
 		{
 			Vector3 endPos = transform.Find("EndPt").transform.position;
-			GameObject explosion = (GameObject)Instantiate(Resources.Load("ExplosionLD"), endPos, Quaternion.identity);
+
+			GameObject explosion = 
+                Instantiate<GameObject>(
+                    Resources.Load<GameObject>("ExplosionLD"), endPos, Quaternion.identity);
+
 			explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
 			shouldDestroy = true;
 		}
