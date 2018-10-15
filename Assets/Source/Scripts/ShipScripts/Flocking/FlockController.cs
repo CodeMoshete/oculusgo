@@ -1,29 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
 using Unity.Collections;
-
-public struct FindCenterJob : IJob
-{
-    public NativeArray<Vector3> FlockerPositions;
-    public NativeArray<Vector3> Result;
-
-    public void Execute()
-    {
-        int flockSize = FlockerPositions.Length;
-        Vector3 Center = Vector3.zero;
-
-        for (int i = 0; i < flockSize;  ++i)
-        {
-            Center += FlockerPositions[i];
-        }
-
-        Center /= flockSize;
-
-        Result[0] = Center;
-    }
-}
 
 public class FlockController : MonoBehaviour
 {
@@ -55,6 +33,8 @@ public class FlockController : MonoBehaviour
 	private Vector3 flockCenter;
 	private GameObject flockTarget;
 	private FlockerRef attackTarget;
+
+    private bool isUsingJobs = true;
 
 	// Use this for initialization
 	void Start () {
@@ -94,8 +74,16 @@ public class FlockController : MonoBehaviour
 		}
 		flockTarget = GameObject.Find("FlockTarget");
 		numInFlock = numToSpawn;
+
+        Service.EventManager.AddListener(EventId.DebugToggleJobs, ToggleJobs);
 	}
 	
+    private bool ToggleJobs(object cookie)
+    {
+        isUsingJobs = (bool)cookie;
+        return true;
+    }
+
 	// Update is called once per frame
 	void Update () {
 		updateFlockCenter();
@@ -262,99 +250,152 @@ public class FlockController : MonoBehaviour
 	
 	Vector3 applySeek(FlockerRef flocker, Vector3 target)
 	{
-		ShipFlocker flockComp = flocker.FlockerComp;
-		float turnSpd = flockComp.TurnSpeed;
-		Vector3 directionVector = flocker.Transform.position - target;
-		Vector3 orientation = flockComp.localEulerAngles;
-
-		float yawDegrees = 
-            Mathf.DeltaAngle(orientation.y, 
-            (Mathf.Atan2(directionVector.x, directionVector.z) / (Mathf.PI/180))) + 180;
-
-		float desiredYawRotation = flockComp.localEulerAngles.y;
-
-		if(yawDegrees <= 180)
-			desiredYawRotation = Mathf.Min(yawDegrees, turnSpd);
-
-		else if(yawDegrees > 180)
-			desiredYawRotation = Mathf.Max(-yawDegrees, -turnSpd);
-
-
-		float desiredPitchRotation = 0;
-
-        if (flocker.Transform.position.y > target.y && 
-            ((flockComp.localEulerAngles.x > 180) || 
-            (flockComp.localEulerAngles.x < flockComp.MaxPitch)))
+        if (isUsingJobs)
         {
-            desiredPitchRotation = turnSpd / 3;
+            NativeArray<Vector3> result = new NativeArray<Vector3>(1, Allocator.TempJob);
+            FlockerSeekJob jobData = new FlockerSeekJob();
+            jobData.FlockerPosition = flocker.Transform.position;
+            jobData.EulerAngles = flocker.Transform.localEulerAngles;
+            jobData.TargetPosition = target;
+            jobData.MaxPitch = flocker.FlockerComp.MaxPitch;
+            jobData.TurnSpeed = flocker.FlockerComp.TurnSpeed;
+            jobData.Result = result;
+            JobHandle handle = jobData.Schedule();
+            handle.Complete();
+            Vector3 retVec = result[0];
+            result.Dispose();
+            return retVec;
         }
-        else if (flocker.Transform.position.y < target.y && 
-            (flockComp.localEulerAngles.x < 180) || 
-            (flockComp.localEulerAngles.x > (360.0f - flockComp.MaxPitch)))
+        else
         {
-            desiredPitchRotation = -turnSpd / 3;
+            ShipFlocker flockComp = flocker.FlockerComp;
+            float turnSpd = flockComp.TurnSpeed;
+            Vector3 directionVector = flocker.Transform.position - target;
+            Vector3 orientation = flockComp.localEulerAngles;
+
+            float yawDegrees =
+                Mathf.DeltaAngle(orientation.y,
+                (Mathf.Atan2(directionVector.x, directionVector.z) / (Mathf.PI / 180))) + 180;
+
+            float desiredYawRotation = flockComp.localEulerAngles.y;
+            if (yawDegrees <= 180)
+                desiredYawRotation = Mathf.Min(yawDegrees, turnSpd);
+            else if (yawDegrees > 180)
+                desiredYawRotation = Mathf.Max(-yawDegrees, -turnSpd);
+
+            float desiredPitchRotation = 0;
+
+            if (flocker.Transform.position.y > target.y &&
+                ((flockComp.localEulerAngles.x > 180) ||
+                (flockComp.localEulerAngles.x < flockComp.MaxPitch)))
+            {
+                desiredPitchRotation = turnSpd / 3;
+            }
+            else if (flocker.Transform.position.y < target.y &&
+                (flockComp.localEulerAngles.x < 180) ||
+                (flockComp.localEulerAngles.x > (360.0f - flockComp.MaxPitch)))
+            {
+                desiredPitchRotation = -turnSpd / 3;
+            }
+
+            Vector3 retVec = new Vector3(desiredPitchRotation, desiredYawRotation, 0.0f);
+
+            return retVec;
         }
-
-		Vector3 retVec = new Vector3(desiredPitchRotation, desiredYawRotation, 0.0f);
-
-		return retVec;
 	}
 
 	Vector3 applyFlee(FlockerRef flocker, Vector3 target)
 	{
-		ShipFlocker flockComp = flocker.FlockerComp;
-		float turnSpd = flockComp.TurnSpeed;
-		Vector3 directionVector = flocker.Transform.position - target;
-		Vector3 orientation = flockComp.localEulerAngles;
-		
-		float yawDegrees = 
-            Mathf.DeltaAngle(orientation.y, 
-            (Mathf.Atan2(directionVector.x, directionVector.z) / (Mathf.PI/180))) + 180;
-
-		float desiredYawRotation = flockComp.localEulerAngles.y;
-		if(yawDegrees >= 180)
-			desiredYawRotation = Mathf.Min(yawDegrees, turnSpd);
-		
-		else if(yawDegrees < 180)
-			desiredYawRotation = Mathf.Max(-yawDegrees, -turnSpd);
-		
-		
-		float desiredPitchRotation = 0;
-
-        if (flocker.Transform.position.y < target.y && 
-            ((flockComp.localEulerAngles.x > 180) || 
-            (flockComp.localEulerAngles.x < flockComp.MaxPitch)))
+        if (isUsingJobs)
         {
-            desiredPitchRotation = turnSpd / 3;
+            NativeArray<Vector3> result = new NativeArray<Vector3>(1, Allocator.TempJob);
+            FlockerFleeJob jobData = new FlockerFleeJob();
+            jobData.FlockerPosition = flocker.Transform.position;
+            jobData.EulerAngles = flocker.Transform.localEulerAngles;
+            jobData.TargetPosition = target;
+            jobData.MaxPitch = flocker.FlockerComp.MaxPitch;
+            jobData.TurnSpeed = flocker.FlockerComp.TurnSpeed;
+            jobData.Result = result;
+            JobHandle handle = jobData.Schedule();
+            handle.Complete();
+            Vector3 retVec = result[0];
+            result.Dispose();
+            return retVec;
         }
-        else if (flocker.Transform.position.y > target.y &&
-            (flockComp.localEulerAngles.x < 180) ||
-            (flockComp.localEulerAngles.x > (360.0f - flockComp.MaxPitch)))
+        else
         {
-            desiredPitchRotation = -turnSpd / 3;
-        }
-		
-		Vector3 retVec = new Vector3(desiredPitchRotation, desiredYawRotation, 0.0f);
-		
-		return retVec;
-	}
+            ShipFlocker flockComp = flocker.FlockerComp;
+            float turnSpd = flockComp.TurnSpeed;
+            Vector3 directionVector = flocker.Transform.position - target;
+            Vector3 orientation = flockComp.localEulerAngles;
 
-	Vector3 getAvoidanceVector(FlockerRef flocker)
+            float yawDegrees =
+                Mathf.DeltaAngle(orientation.y,
+                (Mathf.Atan2(directionVector.x, directionVector.z) / (Mathf.PI / 180))) + 180;
+
+            float desiredYawRotation = flockComp.localEulerAngles.y;
+            if (yawDegrees >= 180)
+                desiredYawRotation = Mathf.Min(yawDegrees, turnSpd);
+            else if (yawDegrees < 180)
+                desiredYawRotation = Mathf.Max(-yawDegrees, -turnSpd);
+
+            float desiredPitchRotation = 0;
+
+            if (flocker.Transform.position.y < target.y &&
+                ((flockComp.localEulerAngles.x > 180) ||
+                (flockComp.localEulerAngles.x < flockComp.MaxPitch)))
+            {
+                desiredPitchRotation = turnSpd / 3;
+            }
+            else if (flocker.Transform.position.y > target.y &&
+                (flockComp.localEulerAngles.x < 180) ||
+                (flockComp.localEulerAngles.x > (360.0f - flockComp.MaxPitch)))
+            {
+                desiredPitchRotation = -turnSpd / 3;
+            }
+
+            Vector3 retVec = new Vector3(desiredPitchRotation, desiredYawRotation, 0.0f);
+
+            return retVec;
+        }
+    }
+
+    Vector3 getAvoidanceVector(FlockerRef flocker)
 	{
-		if(attackTarget.Transform != null)
-		{
-			Vector3 fpos = flocker.Transform.position;
-			Vector3 bpos = attackTarget.Transform.position;
-			Vector3 distVec = fpos - bpos;
-			float sqrDist = 
-                (Mathf.Pow(distVec.x,2) + Mathf.Pow(distVec.y,2) + Mathf.Pow(distVec.z,2));
+        if (isUsingJobs)
+        {
+            NativeArray<Vector3> result = new NativeArray<Vector3>(1, Allocator.TempJob);
+            FlockerAvoidanceJob jobData = new FlockerAvoidanceJob();
+            jobData.FlockerPosition = flocker.Transform.position;
+            jobData.EulerAngles = flocker.Transform.localEulerAngles;
+            jobData.TargetPosition = attackTarget.Transform.position;
+            jobData.Result = result;
+            jobData.MaxPitch = flocker.FlockerComp.MaxPitch;
+            jobData.TurnSpeed = flocker.FlockerComp.TurnSpeed;
+            jobData.AvoidanceDistance = AVOIDANCE_DIST;
+            JobHandle handle = jobData.Schedule();
+            handle.Complete();
+            Vector3 retVec = result[0];
+            result.Dispose();
+            return retVec;
+        }
+        else
+        {
+            if (attackTarget.Transform != null)
+            {
+                Vector3 fpos = flocker.Transform.position;
+                Vector3 bpos = attackTarget.Transform.position;
+                Vector3 distVec = fpos - bpos;
+                float sqrDist =
+                    (Mathf.Pow(distVec.x, 2) + Mathf.Pow(distVec.y, 2) + Mathf.Pow(distVec.z, 2));
 
-			if(sqrDist <= AVOIDANCE_DIST)
-				return applyFlee(flocker, attackTarget.Transform.position);
-	    }
+                if (sqrDist <= AVOIDANCE_DIST)
+                    return applyFlee(flocker, attackTarget.Transform.position);
+            }
 
-		return Vector3.zero;
-	}
+            return Vector3.zero;
+        }
+    }
 
 	private void updateFlockerBehaviorWeights(FlockerRef flocker)
 	{

@@ -2,7 +2,8 @@
 
 public enum EventId
 {
-    ShowTriggerPrompt
+    ShowTriggerPrompt,
+    DebugToggleJobs
 }
 
 public delegate bool EventCallback(object cookie);

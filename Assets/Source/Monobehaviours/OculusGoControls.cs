@@ -10,6 +10,7 @@ public class OculusGoControls : MonoBehaviour
 
     public Text ConsoleLine;
 	public GameObject Ui;
+    public GameObject DebugUi;
 	public float Sensitivity = 1f;
 
     private Transform backgroundCamera;
@@ -20,6 +21,7 @@ public class OculusGoControls : MonoBehaviour
     private Vector3 lastPlayerPosition;
 
 	private bool isMouseCameraActive;
+    private bool isJobsActive = true;
 
 	void Start ()
     {
@@ -68,11 +70,23 @@ public class OculusGoControls : MonoBehaviour
         //Log("Trigger: " + isTriggerPressed);
 		if (isTriggerPressed || Input.GetKeyDown(KeyCode.U))
 		{
-			Ui.SetActive (!Ui.activeSelf);
-            Log("UI Active: " + Ui.activeSelf);
+			DebugUi.SetActive (!DebugUi.activeSelf);
+            Log("UI Active: " + DebugUi.activeSelf);
 		}
 
-		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.D))
+        if (DebugUi.activeSelf && 
+            (Input.GetKeyDown(KeyCode.J) || 
+            (OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad) && 
+            Mathf.Abs(primaryTouchpad.y) < 0.33f &&
+            Mathf.Abs(primaryTouchpad.x) < 0.33f)))
+        {
+            isJobsActive = !isJobsActive;
+            Log("Jobs activated: " + isJobsActive);
+            Service.EventManager.SendEvent(EventId.DebugToggleJobs, isJobsActive);
+        }
+
+
+        if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.D))
 		{
 			isMouseCameraActive = !isMouseCameraActive;
 		}
