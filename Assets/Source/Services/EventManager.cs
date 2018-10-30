@@ -3,6 +3,8 @@
 public enum EventId
 {
     ShowTriggerPrompt,
+    ShowPromptText,
+    HidePromptText,
     DebugToggleJobs
 }
 

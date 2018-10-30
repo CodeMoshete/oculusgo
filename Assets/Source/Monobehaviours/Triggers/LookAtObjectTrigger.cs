@@ -50,4 +50,9 @@ public class LookAtObjectTrigger : MonoBehaviour
             }
         }
     }
+
+    public void OnDisable()
+    {
+        isColliding = false;
+    }
 }

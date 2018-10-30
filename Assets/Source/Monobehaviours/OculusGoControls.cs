@@ -23,6 +23,8 @@ public class OculusGoControls : MonoBehaviour
 	private bool isMouseCameraActive;
     private bool isJobsActive = true;
 
+    private UpdateManager updateManager;
+
 	void Start ()
     {
 		bodyObject = GameObject.Find ("OVRPlayerController").GetComponent<OVRPlayerController>();
@@ -31,10 +33,15 @@ public class OculusGoControls : MonoBehaviour
             new Vector3(BackgroundCameraScale, BackgroundCameraScale, BackgroundCameraScale);
 		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "TrackingSpace").transform;
         lastPlayerPosition = cameraObject.transform.position;
-	}
+
+        updateManager = Service.UpdateManager;
+
+    }
 	
 	void Update () 
 	{
+        float dt = Time.deltaTime;
+
 		OVRInput.Controller activeController = OVRInput.GetActiveController();
 		Vector2 primaryTouchpad = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
 		bool isPressed = OVRInput.Get (OVRInput.Button.PrimaryTouchpad);
@@ -48,21 +55,21 @@ public class OculusGoControls : MonoBehaviour
 
 		if (MoveUp)
 		{
-			bodyObject.transform.Translate (new Vector3 (0f, 0f, 1f * Time.deltaTime));
+			bodyObject.transform.Translate (new Vector3 (0f, 0f, 1f * dt));
 		}
 		else if (MoveDown)
 		{
-			bodyObject.transform.Translate (new Vector3 (0f, 0f, -1f * Time.deltaTime));
+			bodyObject.transform.Translate (new Vector3 (0f, 0f, -1f * dt));
 		}
 
 		Vector3 euler = bodyObject.transform.eulerAngles;
 		if (MoveLeft)
 		{
-			euler.y -= 75f * Time.deltaTime;
+			euler.y -= 75f * dt;
 		}
 		else if (MoveRight)
 		{
-			euler.y += 75f * Time.deltaTime;
+			euler.y += 75f * dt;
 		}
 		bodyObject.transform.eulerAngles = euler;
 
@@ -102,7 +109,6 @@ public class OculusGoControls : MonoBehaviour
 				{
 					Vector3 mouseDelta = lastMousePos - Input.mousePosition;
 					lastMousePos = Input.mousePosition;
-					float dt = Time.deltaTime;
 					euler = bodyObject.transform.eulerAngles;
 					euler.y += dt * -mouseDelta.x * Sensitivity;
 					bodyObject.transform.eulerAngles = euler;
@@ -118,6 +124,8 @@ public class OculusGoControls : MonoBehaviour
         backgroundCamera.localRotation = cameraObject.transform.rotation;
         lastPlayerPosition = cameraObject.transform.position;
         //Debug.Log(backgroundCamera.eulerAngles.y + ", " + cameraObject.transform.eulerAngles.y);
+
+        updateManager.Update(dt);
     }
 
     private void Log(string message)
