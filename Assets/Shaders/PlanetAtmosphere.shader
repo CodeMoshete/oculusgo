@@ -49,13 +49,26 @@
 			
 			inline fixed4 LightingTF3(EditorSurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
 			{
-				fixed4 c;
 				float NdotL = min(_GlareIntensity, dot(s.Normal, lightDir));
 				if(NdotL > 0)
 				{
 					NdotL = pow(NdotL, _GlareFocus);
 				}
-				c.rgb = NdotL;
+
+				float dotResult = dot(normalize(viewDir), s.Normal) / 2;
+				fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult, 1)).rgb;
+				float a =NdotL;
+				if (dotResult > _RampThreshold)
+				{
+					a *= pow((_AlphaPadding - dotResult), _AlphaContrast) * _AlphaMult * ramp;
+				}
+				else
+				{
+					a = 0;
+				}
+
+				fixed4 c = fixed4(NdotL, NdotL, NdotL, a);
+
 				return c;
 			}
 			
@@ -64,7 +77,7 @@
 				o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb * _Color.rgb;
 				
 				float dotResult = dot(normalize(IN.viewDir), o.Normal) / 2;
-				fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult)).rgb;
+				fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult, 1)).rgb;
 				if(dotResult > _RampThreshold)
 				{
 					o.Alpha = pow((_AlphaPadding - dotResult), _AlphaContrast) * _AlphaMult * ramp;

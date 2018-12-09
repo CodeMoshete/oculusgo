@@ -92,10 +92,10 @@ public class OculusGoControls : MonoBehaviour
             Service.EventManager.SendEvent(EventId.DebugToggleJobs, isJobsActive);
         }
 
-
         if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.D))
 		{
 			isMouseCameraActive = !isMouseCameraActive;
+            Debug.Log("Debug controls active: " + isMouseCameraActive);
 		}
 
 		if (isMouseCameraActive)
