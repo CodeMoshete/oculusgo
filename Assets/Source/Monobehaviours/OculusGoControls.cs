@@ -75,8 +75,9 @@ public class OculusGoControls : MonoBehaviour
 
 		bool isTriggerPressed = OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger);
         //Log("Trigger: " + isTriggerPressed);
-		if (isTriggerPressed || Input.GetKeyDown(KeyCode.U))
-		{
+        // if (isTriggerPressed || Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
+        {
 			DebugUi.SetActive (!DebugUi.activeSelf);
             Log("UI Active: " + DebugUi.activeSelf);
 		}
