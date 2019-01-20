@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MovePlayerToLocation : CustomAction {
 
@@ -9,6 +8,7 @@ public class MovePlayerToLocation : CustomAction {
 	public float InitialVelocity;
     public MovePlayerToLocation InheritedVelocity;
     public bool disablePrevious;
+    public bool IsInstantaneous;
 	public float Acceleration;
 
 	private bool isActive;
@@ -28,6 +28,12 @@ public class MovePlayerToLocation : CustomAction {
     {
 		if(isActive)
 		{
+            if (IsInstantaneous)
+            {
+                FinishMovement();
+                return;
+            }
+
             if (Delay > 0f)
             {
                 Delay -= Time.deltaTime;
@@ -39,9 +45,7 @@ public class MovePlayerToLocation : CustomAction {
 
 			if(vectorToTarget.sqrMagnitude < InitialVelocity * InitialVelocity)
 			{
-				Player.transform.position = TargetPosition.transform.position;
-				isActive = false;
-                Player.GetComponent<CharacterController>().enabled = true;
+                FinishMovement();
             }
 			else
 			{
@@ -51,4 +55,11 @@ public class MovePlayerToLocation : CustomAction {
 			}
 		}
 	}
+
+    private void FinishMovement()
+    {
+        Player.transform.position = TargetPosition.transform.position;
+        isActive = false;
+        Player.GetComponent<CharacterController>().enabled = true;
+    }
 }

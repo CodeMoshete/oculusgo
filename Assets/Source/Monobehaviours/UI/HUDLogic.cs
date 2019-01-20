@@ -15,6 +15,13 @@ public class HUDLogic : MonoBehaviour
         Service.EventManager.AddListener(EventId.HidePromptText, HidePromptTextFromEvent);
     }
 
+    public void OnDestroy()
+    {
+        Service.EventManager.RemoveListener(EventId.ShowTriggerPrompt, ShowTriggerPress);
+        Service.EventManager.RemoveListener(EventId.ShowPromptText, ShowPromptText);
+        Service.EventManager.RemoveListener(EventId.HidePromptText, HidePromptTextFromEvent);
+    }
+
     public bool ShowTriggerPress(object cookie)
     {
         bool show = (bool)cookie;
