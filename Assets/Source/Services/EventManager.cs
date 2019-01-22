@@ -5,10 +5,12 @@ public enum EventId
     ShowTriggerPrompt,
     ShowPromptText,
     HidePromptText,
-    DebugToggleJobs
+    DebugToggleJobs,
+    DebugToggleConsole
 }
 
 public delegate bool EventCallback(object cookie);
+
 
 public class EventManager
 {

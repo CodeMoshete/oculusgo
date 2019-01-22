@@ -41,4 +41,13 @@
             return timerMananager;
         }
     }
+
+    // Manually set services
+    public static PlayerData PlayerData
+    {
+        get
+        {
+            return PlayerData.Instance;
+        }
+    }
 }

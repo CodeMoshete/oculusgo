@@ -9,14 +9,13 @@ public class OculusGoControls : MonoBehaviour
     public float BackgroundCameraScale = 1f;
 
     public Text ConsoleLine;
-	public GameObject Ui;
-    public GameObject DebugUi;
 	public float Sensitivity = 1f;
 
     private Transform backgroundCamera;
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
 	private Vector3 lastMousePos;
+    private bool isDebugMenuActive;
 
     private Vector3 lastPlayerPosition;
 
@@ -74,15 +73,13 @@ public class OculusGoControls : MonoBehaviour
 		bodyObject.transform.eulerAngles = euler;
 
 		bool isTriggerPressed = OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger);
-        //Log("Trigger: " + isTriggerPressed);
-        // if (isTriggerPressed || Input.GetKeyDown(KeyCode.U))
         if (Input.GetKeyDown(KeyCode.U))
         {
-			DebugUi.SetActive (!DebugUi.activeSelf);
-            Log("UI Active: " + DebugUi.activeSelf);
+            isDebugMenuActive = !isDebugMenuActive;
+            Service.EventManager.SendEvent(EventId.DebugToggleConsole, isDebugMenuActive);
 		}
 
-        if (DebugUi.activeSelf && 
+        if (isDebugMenuActive && 
             (Input.GetKeyDown(KeyCode.J) || 
             (OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad) && 
             Mathf.Abs(primaryTouchpad.y) < 0.33f &&
