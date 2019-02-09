@@ -19,12 +19,14 @@
     {
         get
         {
+            return updateManager;
+        }
+        set
+        {
             if (updateManager == null)
             {
-                updateManager = new UpdateManager();
+                updateManager = value;
             }
-
-            return updateManager;
         }
     }
 

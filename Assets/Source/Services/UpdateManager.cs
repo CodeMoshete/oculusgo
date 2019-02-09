@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class UpdateManager
+public class UpdateManager : MonoBehaviour
 {
     private HashSet<Action<float>> updateObservers;
+
+    public void Start()
+    {
+        Service.UpdateManager = this;
+    }
 
     public UpdateManager()
     {
@@ -23,8 +29,9 @@ public class UpdateManager
         }
     }
 
-    public void Update(float dt)
+    public void Update()
     {
+        float dt = Time.deltaTime;
         foreach(Action<float> observer in updateObservers)
         {
             observer.Invoke(dt);

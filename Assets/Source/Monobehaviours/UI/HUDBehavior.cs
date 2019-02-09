@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utils;
 
 public class HUDBehavior : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class HUDBehavior : MonoBehaviour
 
 	public void Start ()
     {
+        if (PlayerCamera == null)
+        {
+            GameObject playerContainer = GameObject.Find("OVRPlayerController");
+            PlayerCamera = UnityUtils.FindGameObject(playerContainer, "CenterEyeAnchor").transform;
+        }
         hudReference = (new GameObject()).transform;
         hudReference.parent = PlayerCamera;
         hudReference.transform.localPosition = HUD_TARGET_OFFSET;

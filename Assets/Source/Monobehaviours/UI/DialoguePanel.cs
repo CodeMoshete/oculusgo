@@ -3,29 +3,34 @@ using UnityEngine.UI;
 
 public class DialoguePanel : MonoBehaviour
 {
+    public GameObject Panel;
     public TextReveal DialogueText;
     public Image IconImage;
     public Animator Animator;
     public GameObject PingEffect;
 
     private bool isTransitioning;
+    private bool isShowingDialogue;
 
 	private void Start ()
     {
         Service.EventManager.AddListener(EventId.ShowDialogueText, ShowDialogueText);
-	}
+        Service.EventManager.AddListener(EventId.DialogueTextDismissed, HideDialogueText);
+    }
 
     private void OnDestroy()
     {
         Service.EventManager.RemoveListener(EventId.ShowDialogueText, ShowDialogueText);
+        Service.EventManager.RemoveListener(EventId.DialogueTextDismissed, HideDialogueText);
     }
 
     private bool ShowDialogueText(object cookie)
     {
-        if (gameObject.activeSelf && !isTransitioning)
+        if (!isShowingDialogue && !isTransitioning)
         {
+            isShowingDialogue = true;
             isTransitioning = true;
-            gameObject.SetActive(true);
+            Panel.SetActive(true);
             Animator.SetBool("IsVisible", true);
             Service.TimerManager.CreateTimer(0.5f, TransitionInComplete, null);
         }
@@ -41,8 +46,9 @@ public class DialoguePanel : MonoBehaviour
 
     private bool HideDialogueText(object cookie)
     {
-        if (gameObject.activeSelf && !isTransitioning)
+        if (isShowingDialogue && !isTransitioning)
         {
+            isShowingDialogue = false;
             isTransitioning = true;
             Animator.SetBool("IsVisible", false);
             Service.TimerManager.CreateTimer(0.5f, TransitionOutComplete, null);
@@ -53,7 +59,7 @@ public class DialoguePanel : MonoBehaviour
     private void TransitionOutComplete(object cookie)
     {
         isTransitioning = false;
-        gameObject.SetActive(false);
+        Panel.SetActive(false);
     }
 
     private void TriggerPing()
