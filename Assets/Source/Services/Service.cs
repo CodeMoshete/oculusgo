@@ -50,4 +50,13 @@
             return PlayerData.Instance;
         }
     }
+
+    public static ControlsManager Controls
+    {
+        get
+        {
+            return ControlsManager.Instance;
+        }
+    }
+
 }
