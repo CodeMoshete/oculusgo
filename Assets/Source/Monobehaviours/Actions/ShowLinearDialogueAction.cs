@@ -1,21 +1,43 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class LinearDialogueData
+{
+    public Sprite CharacterIcon;
+    public string DialogueText;
+    public float ShowDelay;
+    public float ShowDuration;
+}
 
 public class ShowLinearDialogueAction : CustomAction
 {
     public bool LockMovement;
-    public float TimeDelay;
-    public List<string> Dialogues;
+    public List<LinearDialogueData> Dialogues;
     public CustomAction OnComplete;
+
+    private LinearDialogueData currentDialogueStep;
 
     private int dialogueIndex;
 
     public override void Initiate()
     {
         dialogueIndex = 0;
-        ShowNextDialogue();
+        if (dialogueIndex < Dialogues.Count - 1)
+        {
+            LinearDialogueData nextDialogue = Dialogues[0];
+            if (nextDialogue.ShowDelay > 0f)
+            {
+                Service.TimerManager.CreateTimer(nextDialogue.ShowDelay, ShowNextDialogue, null);
+            }
+        }
+        else
+        {
+            ShowNextDialogue(null);
+        }
     }
 
-    private void ShowNextDialogue()
+    private void ShowNextDialogue(object cookie)
     {
         bool isLastDialogue = dialogueIndex == Dialogues.Count - 1;
 
@@ -28,9 +50,10 @@ public class ShowLinearDialogueAction : CustomAction
             Service.Controls.SetTriggerObserver(OnTrigger);
         }
 
-        if (TimeDelay > 0f)
+        currentDialogueStep = Dialogues[dialogueIndex];
+        if (currentDialogueStep.ShowDuration > 0f)
         {
-            Service.TimerManager.CreateTimer(TimeDelay, OnTimeExpired, null);
+            Service.TimerManager.CreateTimer(currentDialogueStep.ShowDuration, OnTimeExpired, null);
         }
 
         Service.EventManager.SendEvent(EventId.ShowDialogueText, Dialogues[dialogueIndex]);
@@ -44,18 +67,34 @@ public class ShowLinearDialogueAction : CustomAction
 
     private void OnTrigger(TriggerUpdate update)
     {
-        if (update.TriggerClicked && TimeDelay <= 0)
+        if (update.TriggerClicked && currentDialogueStep.ShowDuration <= 0)
         {
-            TriggerContinue();
+            CheckNextStartTime();
         }
     }
 
     private void OnTimeExpired(object cookie)
     {
-        TriggerContinue();
+        CheckNextStartTime();
     }
 
-    private void TriggerContinue()
+    private void CheckNextStartTime()
+    {
+        if (dialogueIndex < Dialogues.Count - 1)
+        {
+            LinearDialogueData nextDialogue = Dialogues[dialogueIndex + 1];
+            if (nextDialogue.ShowDelay > 0f)
+            {
+                Service.EventManager.SendEvent(EventId.DialogueTextDismissed, null);
+                Service.TimerManager.CreateTimer(nextDialogue.ShowDelay, TriggerContinue, null);
+                return;
+            }
+        }
+
+        TriggerContinue(null);
+    }
+
+    private void TriggerContinue(object cookie)
     {
         bool isDone = dialogueIndex == Dialogues.Count;
 
@@ -78,7 +117,7 @@ public class ShowLinearDialogueAction : CustomAction
         }
         else
         {
-            ShowNextDialogue();
+            ShowNextDialogue(null);
         }
     }
 }

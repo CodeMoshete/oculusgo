@@ -26,6 +26,7 @@ public class DialoguePanel : MonoBehaviour
 
     private bool ShowDialogueText(object cookie)
     {
+        LinearDialogueData data = (LinearDialogueData)cookie;
         if (!isShowingDialogue && !isTransitioning)
         {
             isShowingDialogue = true;
@@ -35,7 +36,8 @@ public class DialoguePanel : MonoBehaviour
             Service.TimerManager.CreateTimer(0.5f, TransitionInComplete, null);
         }
         TriggerPing();
-        DialogueText.text = (string)cookie;
+        IconImage.sprite = data.CharacterIcon;
+        DialogueText.text = data.DialogueText;
         return true;
     }
 
