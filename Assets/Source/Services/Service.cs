@@ -14,22 +14,6 @@
         }
     }
 
-    private static UpdateManager updateManager;
-    public static UpdateManager UpdateManager
-    {
-        get
-        {
-            return updateManager;
-        }
-        set
-        {
-            if (updateManager == null)
-            {
-                updateManager = value;
-            }
-        }
-    }
-
     private static TimerManager timerMananager;
     public static TimerManager TimerManager
     {
@@ -61,4 +45,11 @@
         }
     }
 
+    public static UpdateManager UpdateManager
+    {
+        get
+        {
+            return UpdateManager.Instance;
+        }
+    }
 }

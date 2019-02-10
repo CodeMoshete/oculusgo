@@ -6,9 +6,39 @@ public class UpdateManager : MonoBehaviour
 {
     private HashSet<Action<float>> updateObservers;
 
+    private static UpdateManager instance;
+    public static UpdateManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject EngineObj = GameObject.Find("Engine");
+                if (EngineObj == null)
+                {
+                    EngineObj = GameObject.Instantiate(new GameObject("Engine"));
+                }
+                instance = EngineObj.AddComponent<UpdateManager>();
+            }
+
+            return instance;
+        }
+    }
+
     public void Start()
     {
-        Service.UpdateManager = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public void OnDestroy()
+    {
+        if (this == instance)
+        {
+            instance = null;
+        }
     }
 
     public UpdateManager()
