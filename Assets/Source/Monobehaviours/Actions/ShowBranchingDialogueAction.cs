@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class DialogueOption
@@ -17,10 +18,34 @@ public class DialogueOption
 public class ShowBranchingDialogueAction : CustomAction
 {
     public string Prompt;
+    public Sprite ProfileImage;
+    public float ShowDelay;
     public List<DialogueOption> Options;
 
     public override void Initiate()
     {
-        // Service.Ui.ShowBranchingDialogue(Prompt, Options);
+        if (ShowDelay > 0f)
+        {
+            Service.TimerManager.CreateTimer(ShowDelay, OnShowReady, null);
+        }
+        else
+        {
+            Service.EventManager.SendEvent(EventId.ShowChoiceDialogue, this);
+        }
+    }
+
+    private void OnShowReady(object cookie)
+    {
+        Service.EventManager.SendEvent(EventId.ShowChoiceDialogue, this);
+    }
+
+    public void OnOptionSelected(int optionIndex)
+    {
+        Service.EventManager.SendEvent(EventId.ChoiceDialogueDismissed, null);
+        DialogueOption selectedOption = Options[optionIndex];
+        if (selectedOption.OnSelected != null)
+        {
+            selectedOption.OnSelected.Initiate();
+        }
     }
 }

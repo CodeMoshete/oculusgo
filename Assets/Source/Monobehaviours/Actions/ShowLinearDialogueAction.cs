@@ -80,9 +80,9 @@ public class ShowLinearDialogueAction : CustomAction
 
     private void CheckNextStartTime()
     {
-        if (dialogueIndex < Dialogues.Count - 1)
+        if (dialogueIndex < Dialogues.Count)
         {
-            LinearDialogueData nextDialogue = Dialogues[dialogueIndex + 1];
+            LinearDialogueData nextDialogue = Dialogues[dialogueIndex];
             if (nextDialogue.ShowDelay > 0f)
             {
                 Service.EventManager.SendEvent(EventId.DialogueTextDismissed, null);

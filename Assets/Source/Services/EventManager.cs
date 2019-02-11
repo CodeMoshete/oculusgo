@@ -8,7 +8,9 @@ public enum EventId
     DebugToggleJobs,
     DebugToggleConsole,
     ShowDialogueText,
-    DialogueTextDismissed
+    DialogueTextDismissed,
+    ShowChoiceDialogue,
+    ChoiceDialogueDismissed
 }
 
 public delegate bool EventCallback(object cookie);
