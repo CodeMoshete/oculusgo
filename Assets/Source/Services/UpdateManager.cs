@@ -25,25 +25,17 @@ public class UpdateManager : MonoBehaviour
         }
     }
 
+    public UpdateManager()
+    {
+        updateObservers = new HashSet<Action<float>>();
+    }
+
     public void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
-    }
-
-    public void OnDestroy()
-    {
-        if (this == instance)
-        {
-            instance = null;
-        }
-    }
-
-    public UpdateManager()
-    {
-        updateObservers = new HashSet<Action<float>>();
     }
 
     public void AddObserver(Action<float> observer)

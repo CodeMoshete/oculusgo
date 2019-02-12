@@ -33,7 +33,12 @@ public class OculusGoControls : MonoBehaviour
 
         Service.Controls.SetTouchObserver(TouchUpdate);
     }
-	
+
+    private void OnDestroy()
+    {
+        Service.Controls.RemoveTouchObserver(TouchUpdate);
+    }
+
     private void TouchUpdate(TouchpadUpdate update)
     {
         float dt = Time.deltaTime;

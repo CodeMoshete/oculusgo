@@ -30,6 +30,10 @@ public class ShowLinearDialogueAction : CustomAction
             {
                 Service.TimerManager.CreateTimer(nextDialogue.ShowDelay, ShowNextDialogue, null);
             }
+            else
+            {
+                ShowNextDialogue(null);
+            }
         }
         else
         {
@@ -103,9 +107,7 @@ public class ShowLinearDialogueAction : CustomAction
             Service.Controls.RemoveTouchObserver(OnTouch);
             Service.Controls.RemoveTriggerObserver(OnTrigger);
 
-            if (isDone &&
-                !(OnComplete is ShowBranchingDialogueAction) &&
-                !(OnComplete is ShowLinearDialogueAction))
+            if (isDone)
             {
                 Service.EventManager.SendEvent(EventId.DialogueTextDismissed, null);
             }
