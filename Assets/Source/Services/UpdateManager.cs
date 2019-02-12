@@ -28,15 +28,16 @@ public class UpdateManager : MonoBehaviour
     public UpdateManager()
     {
         updateObservers = new HashSet<Action<float>>();
+        instance = this;
     }
 
-    public void Start()
+    /*public void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-    }
+    }*/
 
     public void AddObserver(Action<float> observer)
     {
