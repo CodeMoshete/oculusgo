@@ -33,6 +33,12 @@ public class MultiDialoguePanel : MonoBehaviour
         Service.EventManager.AddListener(EventId.ChoiceDialogueDismissed, HideMultiDialogue);
     }
 
+    public void OnDestroy()
+    {
+        Service.EventManager.RemoveListener(EventId.ShowChoiceDialogue, ShowMultiDialogue);
+        Service.EventManager.RemoveListener(EventId.ChoiceDialogueDismissed, HideMultiDialogue);
+    }
+
     private bool ShowMultiDialogue(object cookie)
     {
         if (!isShowingDialogue && !isTransitioning)
@@ -65,13 +71,12 @@ public class MultiDialoguePanel : MonoBehaviour
 
     private void OnTouchUpdate(TouchpadUpdate update)
     {
-        if (!update.TouchpadPressState && currentOptionIndex >= 0)
+        if (update.TouchpadPosition == Vector2.zero && currentOptionIndex >= 0)
         {
             currentOptionIndex = -1;
             SetOptionHighlighted(currentOptionIndex);
         }
-
-        if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.5f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.5f && 
             currentOptionIndex != 0)
         {
             SetOptionHighlighted(0);

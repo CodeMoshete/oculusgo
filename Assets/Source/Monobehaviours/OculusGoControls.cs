@@ -32,11 +32,22 @@ public class OculusGoControls : MonoBehaviour
         lastPlayerPosition = cameraObject.transform.position;
 
         Service.Controls.SetTouchObserver(TouchUpdate);
+        Service.Controls.SetBackButtonObserver(BackUpdate);
     }
 
     private void OnDestroy()
     {
         Service.Controls.RemoveTouchObserver(TouchUpdate);
+        Service.Controls.RemoveBackButtonObserver(BackUpdate);
+    }
+
+    private void BackUpdate(BackButtonUpdate update)
+    {
+        if (update.BackButtonClicked)
+        {
+            isDebugMenuActive = !isDebugMenuActive;
+            Service.EventManager.SendEvent(EventId.DebugToggleConsole, isDebugMenuActive);
+        }
     }
 
     private void TouchUpdate(TouchpadUpdate update)
