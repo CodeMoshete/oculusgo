@@ -55,10 +55,11 @@ public class OculusGoControls : MonoBehaviour
         float dt = Time.deltaTime;
 
         bool isPressed = update.TouchpadPressState;
+        bool isPressedThisFrame = update.TouchpadClicked;
         bool MoveUp = isPressed && update.TouchpadPosition.y > 0.33;
         bool MoveDown = isPressed && update.TouchpadPosition.y < -0.33;
-        bool MoveLeft = isPressed && update.TouchpadPosition.x < -0.33;
-        bool MoveRight = isPressed && update.TouchpadPosition.x > 0.33;
+        bool MoveLeft = isPressedThisFrame && update.TouchpadPosition.x < -0.33;
+        bool MoveRight = isPressedThisFrame && update.TouchpadPosition.x > 0.33;
 
         //Log("V: " + primaryTouchpad.y + ", H: " + primaryTouchpad.x + ", Dn: " + isPressed);
 
@@ -72,15 +73,20 @@ public class OculusGoControls : MonoBehaviour
         }
 
         Vector3 euler = bodyObject.transform.eulerAngles;
-        if (MoveLeft)
+        if (!MoveUp && !MoveDown)
         {
-            euler.y -= 75f * dt;
+            if (MoveLeft)
+            {
+                // euler.y -= 75f * dt;
+                euler.y -= 45f;
+            }
+            else if (MoveRight)
+            {
+                // euler.y += 75f * dt;
+                euler.y += 45f;
+            }
+            bodyObject.transform.eulerAngles = euler;
         }
-        else if (MoveRight)
-        {
-            euler.y += 75f * dt;
-        }
-        bodyObject.transform.eulerAngles = euler;
 
 #if UNITY_EDITOR
         if (isMouseCameraActive)
@@ -89,8 +95,7 @@ public class OculusGoControls : MonoBehaviour
             {
                 lastMousePos = Input.mousePosition;
             }
-            else
-                if (Input.GetMouseButton(1))
+            else if (Input.GetMouseButton(1))
             {
                 Vector3 mouseDelta = lastMousePos - Input.mousePosition;
                 lastMousePos = Input.mousePosition;

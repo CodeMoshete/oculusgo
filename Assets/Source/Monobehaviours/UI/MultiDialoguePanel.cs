@@ -76,22 +76,22 @@ public class MultiDialoguePanel : MonoBehaviour
             currentOptionIndex = -1;
             SetOptionHighlighted(currentOptionIndex);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.5f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.4f && 
             currentOptionIndex != 0)
         {
             SetOptionHighlighted(0);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_2) > 0.5f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_2) > 0.4f && 
             currentOptionIndex != 1)
         {
             SetOptionHighlighted(1);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_3) > 0.5f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_3) > 0.4f && 
             currentOptionIndex != 2)
         {
             SetOptionHighlighted(2);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_4) > 0.5f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_4) > 0.4f && 
             currentOptionIndex != 3)
         {
             SetOptionHighlighted(3);
