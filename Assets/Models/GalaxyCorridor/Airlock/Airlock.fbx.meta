@@ -1,0 +1,259 @@
+fileFormatVersion: 2
+guid: 950179f4cc91ba942b72c2f03c86e754
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Lamp
+    100004: Plane35
+    100006: Plane35.014
+    100008: Plane35.022
+    100010: Plane35.023
+    100012: Plane35.024
+    100014: Plane35.025
+    100016: Plane35.026
+    100018: Plane35.027
+    100020: Plane35.028
+    100022: Plane35.029
+    100024: Plane35.030
+    100026: Plane35.031
+    100028: Plane35.032
+    100030: Plane35.033
+    100032: Plane35.034
+    100034: Plane35.035
+    100036: Plane35.036
+    100038: Plane35.037
+    100040: Plane35.038
+    100042: Plane35.039
+    100044: Plane35.040
+    100046: Plane35.041
+    100048: Point.001
+    100050: Point.002
+    100052: Plane35.045
+    100054: Plane35.046
+    100056: Plane35.047
+    100058: Plane35.048
+    100060: Plane35.049
+    100062: Plane35.050
+    100064: Plane35.051
+    100066: Plane35.052
+    100068: Plane35.053
+    400000: //RootNode
+    400002: Lamp
+    400004: Plane35
+    400006: Plane35.014
+    400008: Plane35.022
+    400010: Plane35.023
+    400012: Plane35.024
+    400014: Plane35.025
+    400016: Plane35.026
+    400018: Plane35.027
+    400020: Plane35.028
+    400022: Plane35.029
+    400024: Plane35.030
+    400026: Plane35.031
+    400028: Plane35.032
+    400030: Plane35.033
+    400032: Plane35.034
+    400034: Plane35.035
+    400036: Plane35.036
+    400038: Plane35.037
+    400040: Plane35.038
+    400042: Plane35.039
+    400044: Plane35.040
+    400046: Plane35.041
+    400048: Point.001
+    400050: Point.002
+    400052: Plane35.045
+    400054: Plane35.046
+    400056: Plane35.047
+    400058: Plane35.048
+    400060: Plane35.049
+    400062: Plane35.050
+    400064: Plane35.051
+    400066: Plane35.052
+    400068: Plane35.053
+    2100000: 09 - Default.001
+    2100002: 13 - Default.001
+    2100004: 01 - Default.001
+    2100006: 01 - Defaultwe
+    2300000: Plane35
+    2300002: Plane35.014
+    2300004: Plane35.022
+    2300006: Plane35.023
+    2300008: Plane35.024
+    2300010: Plane35.025
+    2300012: Plane35.026
+    2300014: Plane35.027
+    2300016: Plane35.028
+    2300018: Plane35.029
+    2300020: Plane35.030
+    2300022: Plane35.031
+    2300024: Plane35.032
+    2300026: Plane35.033
+    2300028: Plane35.034
+    2300030: Plane35.035
+    2300032: Plane35.036
+    2300034: Plane35.037
+    2300036: Plane35.038
+    2300038: Plane35.039
+    2300040: Plane35.040
+    2300042: Plane35.041
+    2300044: Plane35.045
+    2300046: Plane35.046
+    2300048: Plane35.047
+    2300050: Plane35.048
+    2300052: Plane35.049
+    2300054: Plane35.050
+    2300056: Plane35.051
+    2300058: Plane35.052
+    2300060: Plane35.053
+    3300000: Plane35
+    3300002: Plane35.014
+    3300004: Plane35.022
+    3300006: Plane35.023
+    3300008: Plane35.024
+    3300010: Plane35.025
+    3300012: Plane35.026
+    3300014: Plane35.027
+    3300016: Plane35.028
+    3300018: Plane35.029
+    3300020: Plane35.030
+    3300022: Plane35.031
+    3300024: Plane35.032
+    3300026: Plane35.033
+    3300028: Plane35.034
+    3300030: Plane35.035
+    3300032: Plane35.036
+    3300034: Plane35.037
+    3300036: Plane35.038
+    3300038: Plane35.039
+    3300040: Plane35.040
+    3300042: Plane35.041
+    3300044: Plane35.045
+    3300046: Plane35.046
+    3300048: Plane35.047
+    3300050: Plane35.048
+    3300052: Plane35.049
+    3300054: Plane35.050
+    3300056: Plane35.051
+    3300058: Plane35.052
+    3300060: Plane35.053
+    4300000: Plane35.041
+    4300002: Plane35.040
+    4300004: Plane35.039
+    4300006: Plane35.032
+    4300008: Plane35.038
+    4300010: Plane35.037
+    4300012: Plane35.036
+    4300014: Plane35.035
+    4300016: Plane35.034
+    4300018: Plane35.033
+    4300020: Plane35.031
+    4300022: Plane35.030
+    4300024: Plane35.029
+    4300026: Plane35.028
+    4300028: Plane35.027
+    4300030: Plane35.026
+    4300032: Plane35.025
+    4300034: Plane35.024
+    4300036: Plane35.023
+    4300038: Plane35.022
+    4300040: Plane35.014
+    4300042: Plane35
+    4300044: Plane35.045
+    4300046: Plane35.046
+    4300048: Plane35.053
+    4300050: Plane35.052
+    4300052: Plane35.051
+    4300054: Plane35.050
+    4300056: Plane35.049
+    4300058: Plane35.048
+    4300060: Plane35.047
+    10800000: Lamp
+    10800002: Point.001
+    10800004: Point.002
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
