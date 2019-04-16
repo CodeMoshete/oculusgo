@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
@@ -31,6 +29,7 @@ public class OculusGoControls : MonoBehaviour
 		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "TrackingSpace").transform;
         lastPlayerPosition = cameraObject.transform.position;
 
+        UpdateManager manager = UpdateManager.Instance;
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
     }

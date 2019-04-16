@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpdateManager : MonoBehaviour
 {
-    private HashSet<Action<float>> updateObservers;
+    private static HashSet<Action<float>> updateObservers;
 
     private static UpdateManager instance;
     public static UpdateManager Instance
@@ -27,17 +27,20 @@ public class UpdateManager : MonoBehaviour
 
     public UpdateManager()
     {
-        updateObservers = new HashSet<Action<float>>();
+        if (updateObservers == null)
+        {
+            updateObservers = new HashSet<Action<float>>();
+        }
         instance = this;
     }
 
-    /*public void Awake()
+    public void OnDestroy()
     {
-        if (instance == null)
+        if (instance == this)
         {
-            instance = this;
+            instance = null;
         }
-    }*/
+    }
 
     public void AddObserver(Action<float> observer)
     {
