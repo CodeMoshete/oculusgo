@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TextReveal : Text
 {
+    public Action OnShowComplete;
     private const float CHARS_PER_SEC = 80;
     private float totalDuration;
     private float currentTime;
@@ -41,6 +43,12 @@ public class TextReveal : Text
 
             string textToShow = content.Substring(0, charsToShow);
             base.text = textToShow;
+
+            if (pct >= 1f && OnShowComplete != null)
+            {
+                OnShowComplete();
+                OnShowComplete = null;
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ public class MultiDialoguePanel : MonoBehaviour
     public Animator Animator;
     public Image ProfileImage;
     public GameObject PingEffect;
-    public Text PromptText;
+    public TextReveal PromptText;
     public List<Image> OptionImages;
     public Text ResponseText;
 
@@ -50,6 +50,7 @@ public class MultiDialoguePanel : MonoBehaviour
             Panel.SetActive(true);
             ProfileImage.sprite = actionData.ProfileImage;
             PromptText.text = actionData.Prompt;
+            PromptText.OnShowComplete = PromptTextDisplayed;
             TriggerPing();
             Animator.SetBool("IsVisible", true);
 
@@ -58,6 +59,16 @@ public class MultiDialoguePanel : MonoBehaviour
             Service.TimerManager.CreateTimer(0.5f, TransitionInComplete, null);
         }
         return true;
+    }
+
+    private void PromptTextDisplayed()
+    {
+        Service.TimerManager.CreateTimer(1f, ShowChoice, null);
+    }
+
+    private void ShowChoice(object cookie)
+    {
+        Animator.SetBool("IsPlayerChoiceVisible", true);
     }
 
     private bool HideMultiDialogue(object cookie)
@@ -76,22 +87,22 @@ public class MultiDialoguePanel : MonoBehaviour
             currentOptionIndex = -1;
             SetOptionHighlighted(currentOptionIndex);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.4f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_1) > 0.75f && 
             currentOptionIndex != 0)
         {
             SetOptionHighlighted(0);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_2) > 0.4f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_2) > 0.75f && 
             currentOptionIndex != 1)
         {
             SetOptionHighlighted(1);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_3) > 0.4f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_3) > 0.75f && 
             currentOptionIndex != 2)
         {
             SetOptionHighlighted(2);
         }
-        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_4) > 0.4f && 
+        else if (Vector2.Dot(update.TouchpadPosition.normalized, OPTION_4) > 0.75f && 
             currentOptionIndex != 3)
         {
             SetOptionHighlighted(3);
