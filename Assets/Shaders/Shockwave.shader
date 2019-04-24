@@ -17,8 +17,9 @@
 		Blend SrcAlpha OneMinusSrcAlpha 
 		
 		CGPROGRAM
-			#pragma surface surf
+			#pragma surface surf Lambert nolightmap
 			#pragma target 3.0
+			#pragma glsl
 
 			struct Input
 			{
@@ -28,14 +29,14 @@
 				float3 Normal;
 			};
 			
-			struct EditorSurfaceOutput {
-				half3 Albedo;
-				half3 Normal;
-				half3 Emission;
-				half3 Gloss;
-				half Specular;
-				half Alpha;
-			};
+			//struct EditorSurfaceOutput {
+			//	half3 Albedo;
+			//	half3 Normal;
+			//	half3 Emission;
+			//	half3 Gloss;
+			//	half Specular;
+			//	half Alpha;
+			//};
 			
 			sampler2D _MainTex, _RampTex;
 			float _AlphaMult;
@@ -47,7 +48,7 @@
 			fixed4 _Color;
 			float NdotL;
 			
-			inline fixed4 LightingTF3(EditorSurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
+			inline fixed4 LightingTF3(SurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
 			{
 				fixed4 c;
 				float NdotL = min(_GlareIntensity, dot(s.Normal, lightDir));
@@ -59,12 +60,13 @@
 				return c;
 			}
 			
-			void surf (Input IN, inout EditorSurfaceOutput o)
+			void surf (Input IN, inout SurfaceOutput o)
 			{
 				o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb * _Color.rgb;
 				
 				float dotResult = dot(normalize(IN.viewDir), o.Normal) / 2;
-				fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult)).rgb;
+				//fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult)).rgb;
+				fixed3 ramp = tex2D(_RampTex, IN.uv_MainTex).rgb;
 //				if(dotResult > _RampThreshold)
 //				{
 //					o.Alpha = dotResult;//pow((_AlphaPadding - dotResult), _AlphaContrast) * _AlphaMult * ramp;

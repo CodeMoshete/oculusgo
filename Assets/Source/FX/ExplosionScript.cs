@@ -24,6 +24,6 @@ public class ExplosionScript : MonoBehaviour {
 
 	public void cleanup()
 	{
-		Destroy(this.transform.parent.gameObject);
+		//Destroy(this.transform.parent.gameObject);
 	}
 }

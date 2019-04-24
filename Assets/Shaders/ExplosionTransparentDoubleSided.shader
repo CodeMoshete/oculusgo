@@ -1,4 +1,4 @@
-﻿Shader "Custom/ExplosionTransparent2"
+﻿Shader "Custom/Explosion Transparent (Double Sided)"
 {
 	Properties
 	{
@@ -15,6 +15,9 @@
 		Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
 		LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
+		ZWrite Off
+		Lighting Off
+		Cull Off
 
 		Pass
 		{
