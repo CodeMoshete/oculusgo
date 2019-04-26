@@ -5,6 +5,7 @@ using UnityEngine;
 public class UpdateManager : MonoBehaviour
 {
     private static HashSet<Action<float>> updateObservers;
+    private static HashSet<Action<float>> observersToRemove;
 
     private static UpdateManager instance;
     public static UpdateManager Instance
@@ -31,6 +32,12 @@ public class UpdateManager : MonoBehaviour
         {
             updateObservers = new HashSet<Action<float>>();
         }
+
+        if (observersToRemove == null)
+        {
+            observersToRemove = new HashSet<Action<float>>();
+        }
+
         instance = this;
     }
 
@@ -51,12 +58,22 @@ public class UpdateManager : MonoBehaviour
     {
         if (updateObservers.Contains(observer))
         {
-            updateObservers.Remove(observer);
+            //updateObservers.Remove(observer);
+            observersToRemove.Add(observer);
         }
     }
 
     public void Update()
     {
+        foreach (Action<float> observer in observersToRemove)
+        {
+            updateObservers.Remove(observer);
+        }
+        if (observersToRemove.Count > 0)
+        {
+            observersToRemove.Clear();
+        }
+
         float dt = Time.deltaTime;
         foreach(Action<float> observer in updateObservers)
         {
