@@ -10,7 +10,8 @@ public enum EventId
     ShowDialogueText,
     DialogueTextDismissed,
     ShowChoiceDialogue,
-    ChoiceDialogueDismissed
+    ChoiceDialogueDismissed,
+    SetControlsEnabled
 }
 
 public delegate bool EventCallback(object cookie);

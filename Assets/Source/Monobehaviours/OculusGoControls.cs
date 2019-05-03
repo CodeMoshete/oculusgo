@@ -9,6 +9,9 @@ public class OculusGoControls : MonoBehaviour
     public Text ConsoleLine;
 	public float Sensitivity = 1f;
 
+    [HideInInspector]
+    public bool DisableMovement;
+
     private Transform backgroundCamera;
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
@@ -32,12 +35,20 @@ public class OculusGoControls : MonoBehaviour
         UpdateManager manager = UpdateManager.Instance;
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
+
+        Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
     }
 
     private void OnDestroy()
     {
         Service.Controls.RemoveTouchObserver(TouchUpdate);
         Service.Controls.RemoveBackButtonObserver(BackUpdate);
+    }
+
+    public bool OnControlsEnableSet(object cookie)
+    {
+        DisableMovement = (bool)cookie;
+        return true;
     }
 
     private void BackUpdate(BackButtonUpdate update)
@@ -55,8 +66,8 @@ public class OculusGoControls : MonoBehaviour
 
         bool isPressed = update.TouchpadPressState;
         bool isPressedThisFrame = update.TouchpadClicked;
-        bool MoveUp = isPressed && update.TouchpadPosition.y > 0.33;
-        bool MoveDown = isPressed && update.TouchpadPosition.y < -0.33;
+        bool MoveUp = isPressed && !DisableMovement && update.TouchpadPosition.y > 0.33;
+        bool MoveDown = isPressed && !DisableMovement && update.TouchpadPosition.y < -0.33;
         bool MoveLeft = isPressedThisFrame && update.TouchpadPosition.x < -0.33;
         bool MoveRight = isPressedThisFrame && update.TouchpadPosition.x > 0.33;
 

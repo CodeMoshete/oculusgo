@@ -34,6 +34,13 @@ public class ControlsManager
     private List<Action<TriggerUpdate>> triggerListeners;
     private List<Action<BackButtonUpdate>> backButtonListeners;
 
+    [HideInInspector]
+    public bool DisableTouchInput;
+    [HideInInspector]
+    public bool DisableTriggerInput;
+    [HideInInspector]
+    public bool DisableBackButtonInput;
+
     private static ControlsManager instance;
     public static ControlsManager Instance
     {
@@ -59,7 +66,7 @@ public class ControlsManager
     {
         OVRInput.Controller activeController = OVRInput.GetActiveController();
 
-        if (touchpadListeners.Count > 0)
+        if (!DisableTouchInput && touchpadListeners.Count > 0)
         {
             TouchpadUpdate touchUpdate = new TouchpadUpdate();
 #if UNITY_EDITOR
@@ -100,7 +107,7 @@ public class ControlsManager
             touchpadListeners[touchpadListeners.Count - 1](touchUpdate);
         }
 
-        if (triggerListeners.Count > 0)
+        if (!DisableTriggerInput && triggerListeners.Count > 0)
         {
             TriggerUpdate triggerUpdate = new TriggerUpdate();
 #if UNITY_EDITOR
@@ -113,7 +120,7 @@ public class ControlsManager
             triggerListeners[triggerListeners.Count - 1](triggerUpdate);
         }
 
-        if (backButtonListeners.Count > 0)
+        if (!DisableBackButtonInput && backButtonListeners.Count > 0)
         {
             BackButtonUpdate backButtonUpdate = new BackButtonUpdate();
 #if UNITY_EDITOR
