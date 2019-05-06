@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PhaserScript : MonoBehaviour {
 	public float SCALE_SPEED = 5.0f;

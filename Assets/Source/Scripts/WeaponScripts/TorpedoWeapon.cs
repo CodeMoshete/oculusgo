@@ -2,24 +2,32 @@
 
 public class TorpedoWeapon : WeaponBase
 {
-    public GameObject Explosion;
     private Vector3 movementDir;
 
-    public override void Fire(Vector3 target, float velocity)
+    public override void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
-        base.Fire(target, velocity);
-
-        movementDir = Vector3.Normalize(target - transform.position) * velocity;
+        base.Fire(fireAction, sourceParent, velocity);
+        transform.position = SourceParent.position;
+        movementDir = Vector3.Normalize(TargetPos - transform.position) * Velocity;
     }
 
     private void Update()
     {
-        transform.Translate(movementDir);
+        transform.Translate(movementDir * Time.deltaTime);
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Instantiate(Explosion, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (TargetCollider == null || other == TargetCollider)
+        {
+            if (OnHit != null)
+            {
+                OnHit.Invoke();
+            }
+
+            GameObject explosion = Instantiate(HitFX, transform.position, Quaternion.identity);
+            explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            Destroy(gameObject);
+        }
     }
 }
