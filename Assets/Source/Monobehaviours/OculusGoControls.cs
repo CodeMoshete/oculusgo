@@ -7,7 +7,7 @@ public class OculusGoControls : MonoBehaviour
     public float BackgroundCameraScale = 1f;
 
     public Text ConsoleLine;
-	public float Sensitivity = 1f;
+	public float Sensitivity = 50f;
 
     [HideInInspector]
     public bool DisableMovement;
@@ -110,11 +110,11 @@ public class OculusGoControls : MonoBehaviour
                 Vector3 mouseDelta = lastMousePos - Input.mousePosition;
                 lastMousePos = Input.mousePosition;
                 euler = bodyObject.transform.eulerAngles;
-                euler.y += dt * -mouseDelta.x * Sensitivity;
+                euler.y += dt * -((mouseDelta.x / Screen.width) * Sensitivity);
                 bodyObject.transform.eulerAngles = euler;
 
                 euler = cameraObject.eulerAngles;
-                euler.x += dt * mouseDelta.y * Sensitivity;
+                euler.x += dt * (mouseDelta.y / Screen.height) * Sensitivity;
                 cameraObject.eulerAngles = euler;
             }
         }
