@@ -4,6 +4,8 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_AddTex("Texture2", 2D) = "white" {}
+		_Reveal("Reveal Amount", Range(0,1)) = 1
+		_GradSize("Reveal Gradient Size", Range(0, 1)) = 0.2
 	}
 	SubShader
 	{
@@ -46,7 +48,9 @@
 			float4 _MainTex_ST;
 			sampler2D _AddTex;
 			float4 _AddTex_ST;
-			
+			float _Reveal;
+			float _GradSize;
+
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -63,7 +67,12 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				fixed4 add = tex2D(_AddTex, i.auv);
 				col.rgb = min(col.rgb, add.rgb);
-				col.a = min(col.rgb, add.rgb) * 2;
+
+				float gradValue = (1 - _Reveal) * _GradSize;
+				float lowerBound = (1 - _Reveal) - (_GradSize - gradValue);
+				float alphaRampVal = saturate((1 - i.uv.y - lowerBound) / _GradSize);
+				col.rgb *= alphaRampVal;
+
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col;

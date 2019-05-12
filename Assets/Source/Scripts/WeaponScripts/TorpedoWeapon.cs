@@ -8,7 +8,7 @@ public class TorpedoWeapon : WeaponBase
     {
         base.Fire(fireAction, sourceParent, velocity);
         transform.position = SourceParent.position;
-        movementDir = Vector3.Normalize(TargetPos - transform.position) * Velocity;
+        movementDir = Vector3.Normalize(InitialPosition - transform.position) * Velocity;
     }
 
     private void Update()

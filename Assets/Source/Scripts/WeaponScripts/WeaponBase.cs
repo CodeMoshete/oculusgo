@@ -8,14 +8,16 @@ public abstract class WeaponBase : MonoBehaviour
     [HideInInspector]
     public Action OnHit;
 
-    protected Vector3 TargetPos;
+    protected Vector3 InitialPosition;
+    protected Transform Target;
     protected float Velocity;
     protected Collider TargetCollider;
     protected Transform SourceParent;
 
     public virtual void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
-        TargetPos = fireAction.TargetPosition.position;
+        InitialPosition = fireAction.TargetPosition.position;
+        Target = fireAction.TargetPosition;
         Velocity = velocity;
         TargetCollider = fireAction.TargetCollider;
         SourceParent = sourceParent;

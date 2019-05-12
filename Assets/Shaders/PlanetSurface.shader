@@ -49,7 +49,7 @@
 			
 			inline fixed4 LightingTF3(EditorSurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
 			{
-				fixed4 c;
+				fixed4 c = fixed4(0,0,0,0);
 				float lightAmt = dot(s.Normal, lightDir);
 				fixed3 nightIllum = fixed3(0,0,0);
 				if(lightAmt > 0)

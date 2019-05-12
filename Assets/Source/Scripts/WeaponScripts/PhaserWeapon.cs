@@ -19,7 +19,7 @@ public class PhaserWeapon : WeaponBase
 
     private void Update()
     {
-        transform.LookAt(TargetPos);
+        transform.LookAt(InitialPosition);
 
         if (shouldDestroy)
         {
