@@ -12,7 +12,7 @@
 	}
 	SubShader
 	{
-		Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
+		Tags { "RenderType" = "Transparent" }
 		LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
 		Lighting Off

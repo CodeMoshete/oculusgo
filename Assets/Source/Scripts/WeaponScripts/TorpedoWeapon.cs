@@ -26,7 +26,6 @@ public class TorpedoWeapon : WeaponBase
             }
 
             GameObject explosion = Instantiate(HitFX, transform.position, Quaternion.identity);
-            explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             Destroy(gameObject);
         }
     }

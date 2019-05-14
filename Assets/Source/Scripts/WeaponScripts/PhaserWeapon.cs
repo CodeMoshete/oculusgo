@@ -3,7 +3,7 @@
 public class PhaserWeapon : WeaponBase
 {
     private readonly Vector3 SCALE_SPEED = new Vector3(0f, 0f, 5f);
-    private readonly Vector3 DESTROY_SCALE_SPEED = new Vector3(0.001f, 0.001f, 0f);
+    private readonly Vector3 DESTROY_SCALE_SPEED = new Vector3(0.5f, 0.5f, 0f);
 
     public Transform EndPoint;
     private float lifespan = 5f;
@@ -25,7 +25,7 @@ public class PhaserWeapon : WeaponBase
         {
             if (transform.localScale.x > 0)
             {
-                transform.localScale -= DESTROY_SCALE_SPEED;
+                transform.localScale -= (DESTROY_SCALE_SPEED * Time.deltaTime);
             }
             else
             {
