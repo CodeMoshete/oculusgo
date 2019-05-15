@@ -51,7 +51,19 @@ public class PhaserWeapon : WeaponBase
                 OnHit.Invoke();
             }
 
-            GameObject explosion = Instantiate(HitFX, EndPoint.position, Quaternion.identity);
+            Vector3 hitFxPoint = EndPoint.position;
+            Ray ray = new Ray(transform.position, EndPoint.position - transform.position);
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            for (int i = 0, count = hits.Length; i < count; ++i)
+            {
+                RaycastHit hit = hits[i];
+                if (hit.collider == TargetCollider)
+                {
+                    hitFxPoint = hit.point;
+                }
+            }
+
+            GameObject explosion = Instantiate(HitFX, hitFxPoint, Quaternion.identity);
             explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             shouldDestroy = true;
         }
