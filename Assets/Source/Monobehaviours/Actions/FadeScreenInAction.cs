@@ -3,6 +3,7 @@
 public class FadeScreenInAction : CustomAction
 {
     public OVRScreenFade ScreenFade;
+    public CustomAction OnComplete;
     public float Delay;
     public float Duration;
     private float totalDuration;
@@ -33,6 +34,10 @@ public class FadeScreenInAction : CustomAction
             {
                 Duration = 0f;
                 isInitialized = false;
+                if (OnComplete != null)
+                {
+                    OnComplete.Initiate();
+                }
             }
 
             float pct = Duration / totalDuration;
