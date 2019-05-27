@@ -34,4 +34,9 @@ public class FireWeaponAction : CustomAction
         FireAction action = (FireAction)cookie;
         weapon.Fire(action, SourceParent, WeaponVelocity);
     }
+
+    public void CeaseFire()
+    {
+        weapon.CeaseFire();
+    }
 }

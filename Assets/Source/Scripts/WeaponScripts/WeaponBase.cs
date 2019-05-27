@@ -22,4 +22,9 @@ public abstract class WeaponBase : MonoBehaviour
         TargetCollider = fireAction.TargetCollider;
         SourceParent = sourceParent;
     }
+
+    public virtual void CeaseFire()
+    {
+        // For override only.
+    }
 }
