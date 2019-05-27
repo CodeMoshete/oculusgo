@@ -1,83 +1,79 @@
-﻿Shader "Custom/Planets/Shockwave" {
-	Properties {
-		_Color ("Main Color", Color) = (1,1,1,1)
-		_MainTex ("Diffuse (RGB) Alpha (A)", 2D) = "white" {}
-		_RampTex ("Atmosphere Ramp (B/W) (L->R)", 2D) = "white" {}
-		_AlphaMult ("Alpha Multiplier", Range(0, 2)) = 1.0
-		_AlphaContrast ("Alpha Contrast", Range(1, 10)) = 1.0
-		_AlphaPadding ("Alpha Padding", Range(0,3)) = 1.1
-		_GlareIntensity ("Glare Intensity", Range(0,2)) = 0.7
-		_GlareFocus ("Glare Focus", Range(1,50)) = 4
-		_RampThreshold("Ramp Threshold", Range(0,0.1)) = 0.05
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/Shockwave"
+{
+	Properties
+	{
+		_MainTex("Texture", 2D) = "white" {}
+		_Alpha("Alpha", Range(0,1)) = 1
+		_Color("Color", Color) = (1,1,1,1)
 	}
+		SubShader
+		{
+			Tags { "Queue" = "Transparent" "RenderType" = "Opaque" }
+			LOD 100
 
-	SubShader{
-		Tags { "RenderType" = "Opaque" "Queue"="Transparent"}
-		
-		Blend SrcAlpha OneMinusSrcAlpha 
-		
-		CGPROGRAM
-			#pragma surface surf Lambert nolightmap
-			#pragma target 3.0
-			#pragma glsl
+			Blend One One
+			Lighting Off
+			//Cull Off
+			//ZTest Always
+			//ZWrite Off
+			Fog { Mode Off }
 
-			struct Input
+			Pass
 			{
-				float2 uv_MainTex;
-				float3 worldNormal;
-				fixed3 viewDir;
-				float3 Normal;
-			};
-			
-			//struct EditorSurfaceOutput {
-			//	half3 Albedo;
-			//	half3 Normal;
-			//	half3 Emission;
-			//	half3 Gloss;
-			//	half Specular;
-			//	half Alpha;
-			//};
-			
-			sampler2D _MainTex, _RampTex;
-			float _AlphaMult;
-			float _AlphaContrast;
-			float _AlphaPadding;
-			float _GlareIntensity;
-			float _GlareFocus;
-			float _RampThreshold;
-			fixed4 _Color;
-			float NdotL;
-			
-			inline fixed4 LightingTF3(SurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
-			{
-				fixed4 c;
-				float NdotL = min(_GlareIntensity, dot(s.Normal, lightDir));
-				if(NdotL > 0)
+				CGPROGRAM
+				#pragma vertex vert
+				#pragma fragment frag
+				// make fog work
+				#pragma multi_compile_fog
+
+				#include "UnityCG.cginc"
+
+				struct appdata
 				{
-					NdotL = pow(NdotL, _GlareFocus);
+					float4 vertex : POSITION;
+					float2 uv : TEXCOORD0;
+					float3 normal: NORMAL;
+				};
+
+				struct v2f
+				{
+					float2 uv : TEXCOORD0;
+					UNITY_FOG_COORDS(1)
+					float4 vertex : SV_POSITION;
+					float3 normal : NORMAL;
+
+				};
+
+				sampler2D _MainTex;
+				float4 _MainTex_ST;
+				float4 _Color;
+
+				v2f vert(appdata v)
+				{
+					v2f o;
+					o.vertex = UnityObjectToClipPos(v.vertex);
+					//o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+					o.normal = normalize(v.normal);
+					return o;
 				}
-				c.rgb = NdotL;
-				return c;
+
+				fixed4 frag(v2f i) : SV_Target
+				{
+					// sample the texture
+					float3 camPos = _WorldSpaceCameraPos;
+					float3 vertPos = mul(unity_ObjectToWorld, i.vertex);
+					float3 camVec = normalize(vertPos - camPos);
+					float3 viewDir = normalize(UNITY_MATRIX_IT_MV[2].xyz);
+					float3 test = float3(0, 1, 0);
+					float rampCoords = dot(float3(vertPos), test);
+					fixed4 col = tex2D(_MainTex, (0, 0.5));
+					col.rgb *= rampCoords;//_Color.a;
+					// apply fog
+					return col;
+				}
+				ENDCG
 			}
-			
-			void surf (Input IN, inout SurfaceOutput o)
-			{
-				o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb * _Color.rgb;
-				
-				float dotResult = dot(normalize(IN.viewDir), o.Normal) / 2;
-				//fixed3 ramp = tex2D(_RampTex, float2(1 - dotResult)).rgb;
-				fixed3 ramp = tex2D(_RampTex, IN.uv_MainTex).rgb;
-//				if(dotResult > _RampThreshold)
-//				{
-//					o.Alpha = dotResult;//pow((_AlphaPadding - dotResult), _AlphaContrast) * _AlphaMult * ramp;
-//				}
-//				else
-//				{
-//					o.Alpha = 0;
-//				}
-				o.Alpha = 0;
-			}
-		ENDCG
-	}
-	Fallback "Transparent/Cutout/Bumped Specular"
+		}
 }
