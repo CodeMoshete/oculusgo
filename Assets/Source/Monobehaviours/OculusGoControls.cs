@@ -20,7 +20,7 @@ public class OculusGoControls : MonoBehaviour
 
     private Vector3 lastPlayerPosition;
 
-	private bool isMouseCameraActive;
+	private bool isMouseCameraActive = true;
     private bool isJobsActive = true;
 
 	void Start ()
