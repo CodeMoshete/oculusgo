@@ -40,7 +40,7 @@ public class FadeScreenOutAction : CustomAction
                 }
             }
 
-            float pct = 1f - (Duration / totalDuration);
+            float pct = totalDuration > 0f ? 1f - (Duration / totalDuration) : 1f;
             ScreenFade.SetFadeLevel(pct);
         }
     }
