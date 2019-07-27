@@ -99,6 +99,7 @@ public class ControlsManager
                 Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.S) ||
                 Input.GetKey(KeyCode.D);
+            OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 #else
             touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
             touchUpdate.TouchpadPressState = OVRInput.Get(OVRInput.Button.PrimaryTouchpad);
