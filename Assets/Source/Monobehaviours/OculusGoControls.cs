@@ -1,10 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
 public class OculusGoControls : MonoBehaviour
 {
+    [System.Serializable]
+    public struct PlayerCameraMirror
+    {
+        public Transform MirrorCamera;
+        public float MovementScale;
+    }
+
     public float BackgroundCameraScale = 1f;
+
+    public List<PlayerCameraMirror> MirrorCameras;
 
     public Text ConsoleLine;
 	public float Sensitivity = 50f;
@@ -26,9 +36,12 @@ public class OculusGoControls : MonoBehaviour
 	void Start ()
     {
 		bodyObject = GameObject.Find ("OVRPlayerController").GetComponent<OVRPlayerController>();
-        backgroundCamera = GameObject.Find("OVRCameraRigBackground").transform;
-        backgroundCamera.transform.localScale = 
-            new Vector3(BackgroundCameraScale, BackgroundCameraScale, BackgroundCameraScale);
+        for (int i = 0, count = MirrorCameras.Count; i < count; ++i)
+        {
+            float scale = MirrorCameras[i].MovementScale;
+            MirrorCameras[i].MirrorCamera.localScale = new Vector3(scale, scale, scale);
+        }
+
 		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "TrackingSpace").transform;
         lastPlayerPosition = cameraObject.transform.position;
 
@@ -144,9 +157,13 @@ public class OculusGoControls : MonoBehaviour
             Debug.Log("Debug controls active: " + isMouseCameraActive);
 		}
 
-        Vector3 moveDist = (cameraObject.transform.position - lastPlayerPosition) * BackgroundCameraScale;
-        backgroundCamera.localPosition += moveDist;
-        backgroundCamera.localRotation = cameraObject.transform.rotation;
+        for (int i = 0, count = MirrorCameras.Count; i < count; ++i)
+        {
+            float scale = MirrorCameras[i].MovementScale;
+            Vector3 moveDist = (cameraObject.transform.position - lastPlayerPosition) * scale;
+            MirrorCameras[i].MirrorCamera.localPosition += moveDist;
+            MirrorCameras[i].MirrorCamera.localRotation = cameraObject.transform.rotation;
+        }
         lastPlayerPosition = cameraObject.transform.position;
     }
 
