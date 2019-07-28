@@ -191,6 +191,9 @@ public class OVRGearVrControllerTest : MonoBehaviour
 		Vector2 secondaryTouchpad = OVRInput.Get(OVRInput.Axis2D.SecondaryTouchpad);
 		data.AppendFormat("SecondaryTouchpad: ({0:F2}, {1:F2})\n", secondaryTouchpad.x, secondaryTouchpad.y);
 
+        Vector2 primaryThumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+        data.AppendFormat("PrimaryThumbstick : ({0:F2}, {1:F2})\n", primaryThumbstick.x, primaryThumbstick.y);
+
 		float indexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
 		data.AppendFormat("PrimaryIndexTriggerAxis1D: ({0:F2})\n", indexTrigger);
 

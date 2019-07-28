@@ -99,11 +99,18 @@ public class ControlsManager
                 Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.S) ||
                 Input.GetKey(KeyCode.D);
-            OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 #else
-            touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
-            touchUpdate.TouchpadPressState = OVRInput.Get(OVRInput.Button.PrimaryTouchpad);
-            touchUpdate.TouchpadClicked = OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad);
+
+            touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+            touchUpdate.TouchpadPressState = true;
+
+            // TODO: Determine actual device type.
+            if (touchUpdate.TouchpadPosition == Vector2.zero)
+            {
+                touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
+                touchUpdate.TouchpadPressState = OVRInput.Get(OVRInput.Button.PrimaryTouchpad);
+                touchUpdate.TouchpadClicked = OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad);
+            }
 #endif
             touchpadListeners[touchpadListeners.Count - 1](touchUpdate);
         }
@@ -128,8 +135,12 @@ public class ControlsManager
             backButtonUpdate.BackButtonClicked = Input.GetKeyDown(KeyCode.Escape);
             backButtonUpdate.BackButtonPressState = Input.GetKey(KeyCode.Escape);
 #else
-            backButtonUpdate.BackButtonPressState = OVRInput.Get(OVRInput.Button.Back);
-            backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.Button.Back);
+            backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.Button.Two);
+            if (!backButtonUpdate.BackButtonClicked)
+            {
+                backButtonUpdate.BackButtonPressState = OVRInput.Get(OVRInput.Button.Back);
+                backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.Button.Back);
+            }
 #endif
             backButtonListeners[backButtonListeners.Count - 1](backButtonUpdate);
         }
