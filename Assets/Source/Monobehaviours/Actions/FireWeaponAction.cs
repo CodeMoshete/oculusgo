@@ -10,7 +10,7 @@ public struct FireAction
     public CustomAction OnHit;
 }
 
-public class FireWeaponAction : CustomAction
+public class FireWeaponAction : FireWeaponBaseAction
 {
     public GameObject ProjectilePrefab;
     public float WeaponVelocity;
@@ -35,7 +35,7 @@ public class FireWeaponAction : CustomAction
         weapon.Fire(action, SourceParent, WeaponVelocity);
     }
 
-    public void CeaseFire()
+    public override void CeaseFire()
     {
         weapon.CeaseFire();
     }

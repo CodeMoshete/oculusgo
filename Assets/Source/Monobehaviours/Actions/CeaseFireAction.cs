@@ -1,6 +1,6 @@
 ﻿public class CeaseFireAction : CustomAction
 {
-    public FireWeaponAction WeaponAction;
+    public FireWeaponBaseAction WeaponAction;
     public CustomAction OnComplete;
 
     public override void Initiate()
