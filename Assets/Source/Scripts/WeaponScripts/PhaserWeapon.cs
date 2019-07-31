@@ -2,17 +2,20 @@
 
 public class PhaserWeapon : WeaponBase
 {
-    private readonly Vector3 SCALE_SPEED = new Vector3(0f, 0f, 5f);
     private readonly Vector3 DESTROY_SCALE_SPEED = new Vector3(0.5f, 0.5f, 0f);
+    private const float DEFAULT_SCALE_SPEED = 5f;
 
     public Transform EndPoint;
     private float lifespan = 5f;
+    private Vector3 scaleSpeed;
     private bool shouldDestroy = false;
 
     public override void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
         base.Fire(fireAction, sourceParent, velocity);
 
+        float zSpeed = Velocity > 0f ? Velocity : DEFAULT_SCALE_SPEED;
+        scaleSpeed = new Vector3(0f, 0f, zSpeed);
         transform.parent = SourceParent;
         transform.localPosition = Vector3.zero;
     }
@@ -25,18 +28,16 @@ public class PhaserWeapon : WeaponBase
         {
             if (transform.localScale.x > 0)
             {
-                Debug.Log("Scale: " + transform.localScale);
                 transform.localScale -= (DESTROY_SCALE_SPEED * Time.deltaTime);
             }
             else
             {
-                Debug.Log("Destroy projectile");
                 Destroy(gameObject);
             }
         }
         else
         {
-            transform.localScale += SCALE_SPEED;
+            transform.localScale += scaleSpeed;
 
             lifespan -= Time.deltaTime;
             shouldDestroy = lifespan <= 0f;
@@ -68,7 +69,6 @@ public class PhaserWeapon : WeaponBase
             GameObject explosion = Instantiate(HitFX, hitFxPoint, Quaternion.identity);
             explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             shouldDestroy = true;
-            Debug.Log("SHOULD Destroy projectile");
         }
     }
 }
