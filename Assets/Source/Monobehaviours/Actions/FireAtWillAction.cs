@@ -9,20 +9,6 @@ public struct WeaponPoint
     public Transform SourceParent;
     public float WeaponVelocity;
     public float ShotsPerMinute;
-
-    private WeaponBase weapon;
-    [HideInInspector]
-    public WeaponBase Weapon
-    {
-        get
-        {
-            if (weapon == null)
-            {
-                weapon = ProjectilePrefab.GetComponent<WeaponBase>();
-            }
-            return weapon;
-        }
-    }
 }
 
 [System.Serializable]
@@ -41,6 +27,7 @@ public class FireAtWillAction : FireWeaponBaseAction
 
     public override void Initiate()
     {
+        Debug.Log("FIRE AT WILL INIT");
         if (StartDelay > 0f)
         {
             Service.TimerManager.CreateTimer(StartDelay, StartFiring, null);
@@ -78,7 +65,10 @@ public class FireAtWillAction : FireWeaponBaseAction
                 FireAction fireAction = new FireAction();
                 fireAction.TargetPosition = randomTarget.TargetPoint;
                 fireAction.TargetCollider = randomTarget.TargetCollider;
-                WeaponPoints[i].Weapon.Fire(fireAction, WeaponPoints[i].SourceParent, WeaponPoints[i].WeaponVelocity);
+
+                GameObject projectile = Instantiate(WeaponPoints[i].ProjectilePrefab);
+                WeaponBase weapon = projectile.GetComponent<WeaponBase>();
+                weapon.Fire(fireAction, WeaponPoints[i].SourceParent, WeaponPoints[i].WeaponVelocity);
             }
         }
     }

@@ -25,10 +25,12 @@ public class PhaserWeapon : WeaponBase
         {
             if (transform.localScale.x > 0)
             {
+                Debug.Log("Scale: " + transform.localScale);
                 transform.localScale -= (DESTROY_SCALE_SPEED * Time.deltaTime);
             }
             else
             {
+                Debug.Log("Destroy projectile");
                 Destroy(gameObject);
             }
         }
@@ -66,6 +68,7 @@ public class PhaserWeapon : WeaponBase
             GameObject explosion = Instantiate(HitFX, hitFxPoint, Quaternion.identity);
             explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             shouldDestroy = true;
+            Debug.Log("SHOULD Destroy projectile");
         }
     }
 }
