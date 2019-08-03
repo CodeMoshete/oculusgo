@@ -30,6 +30,8 @@ public class AnimationAction : CustomAction
     public List<BoolTrigger> BoolTriggers;
     public List<StringTrigger> StringTriggers;
 
+    public CustomAction OnComplete;
+
     public override void Initiate()
     {
         int count = IntTriggers.Count;
@@ -48,6 +50,11 @@ public class AnimationAction : CustomAction
         for (int i = 0; i < count; ++i)
         {
             StringTriggers[i].Target.SetTrigger(StringTriggers[i].Trigger);
+        }
+
+        if (OnComplete != null)
+        {
+            OnComplete.Initiate();
         }
     }
 }
