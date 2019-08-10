@@ -50,6 +50,18 @@ public class OculusGoControls : MonoBehaviour
         Service.Controls.SetBackButtonObserver(BackUpdate);
 
         Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
+
+        //string[] joystickNames = Input.GetJoystickNames();
+        //string logStr = string.Empty;
+        //for (int i = 0, count = logStr.Length; i < count; ++i)
+        //{
+        //    logStr += joystickNames[i] + ", ";
+        //}
+        //Log("joystick names: " + logStr);
+
+        Log("Device name: " + SystemInfo.deviceName + 
+            "\nDevice model: " + SystemInfo.deviceModel +
+            "\nDevice Type: " + SystemInfo.deviceType);
     }
 
     private void OnDestroy()
