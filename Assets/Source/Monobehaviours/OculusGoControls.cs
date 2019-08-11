@@ -29,6 +29,7 @@ public class OculusGoControls : MonoBehaviour
     private bool isDebugMenuActive;
 
     private Vector3 lastPlayerPosition;
+    private bool hasPlayerTurned;
 
 	private bool isMouseCameraActive = true;
     private bool isJobsActive = true;
@@ -93,6 +94,23 @@ public class OculusGoControls : MonoBehaviour
         bool isPressedThisFrame = update.TouchpadClicked;
         bool MoveUp = isPressed && !DisableMovement && update.TouchpadPosition.y > 0.33;
         bool MoveDown = isPressed && !DisableMovement && update.TouchpadPosition.y < -0.33;
+
+        if (ControlsManager.Instance.CurrentHeadset == HeadsetModel.OculusQuest)
+        {
+            OVRInput.Controller activeController = OVRInput.GetActiveController();
+            Vector2 thumbPos = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick, activeController);
+            Log("xPos: " + Mathf.Abs(update.TouchpadPosition.x) + "\nxPos2: " + update.TouchpadPosition.x + "\nPos3: " + thumbPos.ToString());
+            if (!hasPlayerTurned && Mathf.Abs(update.TouchpadPosition.x) > 0.7)
+            {
+                isPressedThisFrame = true;
+                hasPlayerTurned = true;
+            }
+            else if (hasPlayerTurned && Mathf.Abs(update.TouchpadPosition.x) <= 0.7)
+            {
+                hasPlayerTurned = false;
+            }
+        }
+
         bool MoveLeft = isPressedThisFrame && update.TouchpadPosition.x < -0.33;
         bool MoveRight = isPressedThisFrame && update.TouchpadPosition.x > 0.33;
 

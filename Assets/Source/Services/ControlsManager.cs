@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum HeadsetModel
+{
+    None,
+    OculusGo,
+    OculusQuest
+}
+
 public enum ControlsType
 {
     Trigger,
@@ -41,6 +48,8 @@ public class ControlsManager
     [HideInInspector]
     public bool DisableBackButtonInput;
 
+    public HeadsetModel CurrentHeadset;
+
     private static ControlsManager instance;
     public static ControlsManager Instance
     {
@@ -56,6 +65,18 @@ public class ControlsManager
 
     public ControlsManager()
     {
+        string deviceModel = SystemInfo.deviceModel;
+        CurrentHeadset = HeadsetModel.None;
+        switch (deviceModel)
+        {
+            case Constants.DEVICE_TYPE_GO:
+                CurrentHeadset = HeadsetModel.OculusGo;
+                break;
+            case Constants.DEVICE_TYPE_QUEST:
+                CurrentHeadset = HeadsetModel.OculusQuest;
+                break;
+        }
+
         touchpadListeners = new List<Action<TouchpadUpdate>>();
         triggerListeners = new List<Action<TriggerUpdate>>();
         backButtonListeners = new List<Action<BackButtonUpdate>>();
@@ -99,17 +120,24 @@ public class ControlsManager
                 Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.S) ||
                 Input.GetKey(KeyCode.D);
-#else
+            //#else
 
-            touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-            touchUpdate.TouchpadPressState = true;
-
-            // TODO: Determine actual device type.
-            if (touchUpdate.TouchpadPosition == Vector2.zero)
+            if (CurrentHeadset == HeadsetModel.OculusGo)
             {
-                touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
-                touchUpdate.TouchpadPressState = OVRInput.Get(OVRInput.Button.PrimaryTouchpad);
-                touchUpdate.TouchpadClicked = OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad);
+                touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+                touchUpdate.TouchpadPressState = true;
+
+                if (touchUpdate.TouchpadPosition == Vector2.zero)
+                {
+                    touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
+                    touchUpdate.TouchpadPressState = OVRInput.Get(OVRInput.Button.PrimaryTouchpad);
+                    touchUpdate.TouchpadClicked = OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad);
+                }
+            }
+            else if (CurrentHeadset == HeadsetModel.OculusQuest)
+            {
+                touchUpdate.TouchpadPosition = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick, activeController);
+                touchUpdate.TouchpadPressState = touchUpdate.TouchpadPosition.sqrMagnitude > 0.3f;
             }
 #endif
             touchpadListeners[touchpadListeners.Count - 1](touchUpdate);

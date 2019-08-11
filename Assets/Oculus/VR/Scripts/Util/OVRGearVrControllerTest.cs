@@ -191,16 +191,22 @@ public class OVRGearVrControllerTest : MonoBehaviour
 		Vector2 secondaryTouchpad = OVRInput.Get(OVRInput.Axis2D.SecondaryTouchpad);
 		data.AppendFormat("SecondaryTouchpad: ({0:F2}, {1:F2})\n", secondaryTouchpad.x, secondaryTouchpad.y);
 
-        Vector2 primaryThumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-        data.AppendFormat("PrimaryThumbstick : ({0:F2}, {1:F2})\n", primaryThumbstick.x, primaryThumbstick.y);
-
 		float indexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
 		data.AppendFormat("PrimaryIndexTriggerAxis1D: ({0:F2})\n", indexTrigger);
 
 		float handTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
 		data.AppendFormat("PrimaryHandTriggerAxis1D: ({0:F2})\n", handTrigger);
 
-		for (int i = 0; i < monitors.Count; i++)
+        Vector2 thumbstickPos = OVRInput.Get(OVRInput.Axis2D.Any, activeController);
+        data.AppendFormat("Thumbstick1: ({0:F2}, {1:F2})\n", thumbstickPos.x, thumbstickPos.y);
+
+        Vector2 thumbstickPos2 = OVRInput.Get(OVRInput.RawAxis2D.Any, activeController);
+        data.AppendFormat("Thumbstick2: ({0:F2}, {1:F2})\n", thumbstickPos2.x, thumbstickPos2.y);
+
+        Vector2 thumbstickPos3 = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick, activeController);
+        data.AppendFormat("Thumbstick3: ({0:F2}, {1:F2})\n", thumbstickPos3.x, thumbstickPos3.y);
+
+        for (int i = 0; i < monitors.Count; i++)
 		{
 			monitors[i].Update();
 			monitors[i].AppendToStringBuilder(ref data);

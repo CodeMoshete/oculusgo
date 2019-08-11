@@ -94,7 +94,7 @@ namespace UnityEngine.EventSystems
         {}
 
 #if UNITY_EDITOR
-        protected void Reset()
+        protected override void Reset()
         {
             allowActivationOnMobileDevice = true;
         }
