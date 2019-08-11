@@ -99,7 +99,6 @@ public class OculusGoControls : MonoBehaviour
         {
             OVRInput.Controller activeController = OVRInput.GetActiveController();
             Vector2 thumbPos = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick, activeController);
-            Log("xPos: " + Mathf.Abs(update.TouchpadPosition.x) + "\nxPos2: " + update.TouchpadPosition.x + "\nPos3: " + thumbPos.ToString());
             if (!hasPlayerTurned && Mathf.Abs(update.TouchpadPosition.x) > 0.7)
             {
                 isPressedThisFrame = true;

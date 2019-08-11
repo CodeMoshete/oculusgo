@@ -15,6 +15,18 @@ public class LookAtObjectTrigger : MonoBehaviour
         testLayer = LayerMask.GetMask("Interactible");
     }
 
+    public void OnDisable()
+    {
+        if (isColliding)
+        {
+            isColliding = false;
+            if (OnInteract != null)
+            {
+                Service.Controls.RemoveTriggerObserver(OnTriggerUPdate);
+            }
+        }
+    }
+
     public void Update ()
     {
         RaycastHit hit;
@@ -28,6 +40,10 @@ public class LookAtObjectTrigger : MonoBehaviour
                     OnLookAt.Initiate();
                 }
                 isColliding = true;
+                if (OnInteract != null)
+                {
+                    Service.Controls.SetTriggerObserver(OnTriggerUPdate);
+                }
                 Debug.Log("LookAt");
             }
         }
@@ -37,22 +53,31 @@ public class LookAtObjectTrigger : MonoBehaviour
             {
                 OnLookAway.Initiate();
             }
+
+            if (OnInteract != null)
+            {
+                Service.Controls.RemoveTriggerObserver(OnTriggerUPdate);
+            }
+
             isColliding = false;
         }
 
-        if (OnInteract != null && isColliding)
-        {
-            bool isTriggerPressed = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
-            if (isTriggerPressed || Input.GetKeyDown(KeyCode.I))
-            {
-                OnInteract.Initiate();
-                Debug.Log("Interact");
-            }
-        }
+        //if (OnInteract != null && isColliding)
+        //{
+        //    bool isTriggerPressed = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
+        //    if (isTriggerPressed || Input.GetKeyDown(KeyCode.I))
+        //    {
+        //        OnInteract.Initiate();
+        //        Debug.Log("Interact");
+        //    }
+        //}
     }
 
-    public void OnDisable()
+    private void OnTriggerUPdate(TriggerUpdate update)
     {
-        isColliding = false;
+        if (update.TriggerClicked)
+        {
+            OnInteract.Initiate();
+        }
     }
 }

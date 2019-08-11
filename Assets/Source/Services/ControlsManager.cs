@@ -120,7 +120,7 @@ public class ControlsManager
                 Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.S) ||
                 Input.GetKey(KeyCode.D);
-            //#else
+#else
 
             if (CurrentHeadset == HeadsetModel.OculusGo)
             {
@@ -150,8 +150,16 @@ public class ControlsManager
             triggerUpdate.TriggerClicked = Input.GetKeyDown(KeyCode.I);
             triggerUpdate.TriggerPressState = Input.GetKey(KeyCode.I);
 #else
-            triggerUpdate.TriggerPressState = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
-            triggerUpdate.TriggerClicked = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
+            if (CurrentHeadset == HeadsetModel.OculusGo)
+            {
+                triggerUpdate.TriggerPressState = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+                triggerUpdate.TriggerClicked = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
+            }
+            else if (CurrentHeadset == HeadsetModel.OculusQuest)
+            {
+                triggerUpdate.TriggerPressState = OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
+                triggerUpdate.TriggerClicked = OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger);
+            }
 #endif
             triggerListeners[triggerListeners.Count - 1](triggerUpdate);
         }
@@ -163,11 +171,15 @@ public class ControlsManager
             backButtonUpdate.BackButtonClicked = Input.GetKeyDown(KeyCode.Escape);
             backButtonUpdate.BackButtonPressState = Input.GetKey(KeyCode.Escape);
 #else
-            backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.Button.Two);
-            if (!backButtonUpdate.BackButtonClicked)
+            if (CurrentHeadset == HeadsetModel.OculusGo)
             {
                 backButtonUpdate.BackButtonPressState = OVRInput.Get(OVRInput.Button.Back);
                 backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.Button.Back);
+            }
+            else if (CurrentHeadset == HeadsetModel.OculusQuest)
+            {
+                backButtonUpdate.BackButtonClicked = OVRInput.GetDown(OVRInput.RawButton.B);
+                backButtonUpdate.BackButtonPressState = OVRInput.Get(OVRInput.RawButton.B);
             }
 #endif
             backButtonListeners[backButtonListeners.Count - 1](backButtonUpdate);
