@@ -61,16 +61,6 @@ public class LookAtObjectTrigger : MonoBehaviour
 
             isColliding = false;
         }
-
-        //if (OnInteract != null && isColliding)
-        //{
-        //    bool isTriggerPressed = OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger);
-        //    if (isTriggerPressed || Input.GetKeyDown(KeyCode.I))
-        //    {
-        //        OnInteract.Initiate();
-        //        Debug.Log("Interact");
-        //    }
-        //}
     }
 
     private void OnTriggerUPdate(TriggerUpdate update)
