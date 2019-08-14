@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UpdateManager : MonoBehaviour
 {
+    private static HashSet<Action<float>> persistentUpdateObservers;
     private static HashSet<Action<float>> updateObservers;
     private static HashSet<Action<float>> observersToRemove;
 
@@ -33,6 +34,11 @@ public class UpdateManager : MonoBehaviour
             updateObservers = new HashSet<Action<float>>();
         }
 
+        if (persistentUpdateObservers == null)
+        {
+            persistentUpdateObservers = new HashSet<Action<float>>();
+        }
+
         if (observersToRemove == null)
         {
             observersToRemove = new HashSet<Action<float>>();
@@ -49,16 +55,22 @@ public class UpdateManager : MonoBehaviour
         }
     }
 
-    public void AddObserver(Action<float> observer)
+    public void AddObserver(Action<float> observer, bool isPersistent = false)
     {
-        updateObservers.Add(observer);
+        if (isPersistent)
+        {
+            persistentUpdateObservers.Add(observer);
+        }
+        else
+        {
+            updateObservers.Add(observer);
+        }
     }
 
     public void RemoveObserver(Action<float> observer)
     {
         if (updateObservers.Contains(observer))
         {
-            //updateObservers.Remove(observer);
             observersToRemove.Add(observer);
         }
     }
@@ -76,6 +88,11 @@ public class UpdateManager : MonoBehaviour
 
         float dt = Time.deltaTime;
         foreach(Action<float> observer in updateObservers)
+        {
+            observer.Invoke(dt);
+        }
+
+        foreach (Action<float> observer in persistentUpdateObservers)
         {
             observer.Invoke(dt);
         }

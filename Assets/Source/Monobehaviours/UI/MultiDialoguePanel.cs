@@ -5,14 +5,15 @@ using UnityEngine.UI;
 public class MultiDialoguePanel : MonoBehaviour
 {
     private const string DEFAULT_OPTION_TEXT = "<Select an option using the thumb-pad...>";
+    private const float SELECT_FILL_TIME = 3f;
 
     private readonly Color BUTTON_DEACTIVATED = new Color(1f, 0.698f, 0f, 0.663f);
     private readonly Color BUTTON_ACTIVATED = new Color(1f, 0.698f, 0f, 1f);
 
-    private readonly Vector2 OPTION_1 = (new Vector2(1f, 1f)).normalized;
-    private readonly Vector2 OPTION_2 = (new Vector2(1f, -1f)).normalized;
-    private readonly Vector2 OPTION_3 = (new Vector2(-1f, -1f)).normalized;
-    private readonly Vector2 OPTION_4 = (new Vector2(-1f, 1f)).normalized;
+    private readonly Vector2 OPTION_1 = Vector2.up;
+    private readonly Vector2 OPTION_2 = Vector2.right;
+    private readonly Vector2 OPTION_3 = Vector2.down;
+    private readonly Vector2 OPTION_4 = Vector2.left;
 
     public GameObject Panel;
     public Animator Animator;
@@ -21,10 +22,23 @@ public class MultiDialoguePanel : MonoBehaviour
     public TextReveal PromptText;
     public List<Image> OptionImages;
     public Text ResponseText;
+    public Image SelectionFill;
 
     private bool isTransitioning;
     private bool isShowingDialogue;
+
+    private float optionSelectPct;
     private int currentOptionIndex;
+    private bool isOptionSelectingTouch;
+    private bool isOptionSelectingTrigger;
+    private bool isOptionSelecting
+    {
+        get
+        {
+            return isOptionSelectingTouch || isOptionSelectingTrigger;
+        }
+    }
+
     private ShowBranchingDialogueAction actionData;
 
     public void Start()
@@ -45,6 +59,7 @@ public class MultiDialoguePanel : MonoBehaviour
         {
             Service.Controls.SetTouchObserver(OnTouchUpdate);
             Service.Controls.SetTriggerObserver(OnTriggerUpdate);
+            Service.UpdateManager.AddObserver(OnUpdate);
 
             actionData = (ShowBranchingDialogueAction)cookie;
             Panel.SetActive(true);
@@ -75,6 +90,7 @@ public class MultiDialoguePanel : MonoBehaviour
     {
         Service.Controls.RemoveTouchObserver(OnTouchUpdate);
         Service.Controls.RemoveTriggerObserver(OnTriggerUpdate);
+        Service.UpdateManager.RemoveObserver(OnUpdate);
         Animator.SetBool("IsVisible", false);
         Service.TimerManager.CreateTimer(0.5f, TransitionOutComplete, null);
         return true;
@@ -82,6 +98,8 @@ public class MultiDialoguePanel : MonoBehaviour
 
     private void OnTouchUpdate(TouchpadUpdate update)
     {
+        int prevOptionIndex = currentOptionIndex;
+
         if (update.TouchpadPosition == Vector2.zero && currentOptionIndex >= 0)
         {
             currentOptionIndex = -1;
@@ -107,15 +125,36 @@ public class MultiDialoguePanel : MonoBehaviour
         {
             SetOptionHighlighted(3);
         }
+
+        isOptionSelectingTouch = update.TouchpadPressState && currentOptionIndex != -1;
+        if (!isOptionSelecting || currentOptionIndex != prevOptionIndex)
+        {
+            optionSelectPct = 0f;
+        }
+    }
+
+    private void OnUpdate(float dt)
+    {
+        if (isOptionSelecting)
+        {
+            optionSelectPct += dt / SELECT_FILL_TIME;
+
+            if (optionSelectPct >= 1f)
+            {
+                Service.UpdateManager.RemoveObserver(OnUpdate);
+                SelectOption();
+            }
+        }
+        SelectionFill.fillAmount = optionSelectPct;
     }
 
     private void SetOptionHighlighted(int optionIndex)
     {
         int numOptions = actionData.Options.Count;
-        currentOptionIndex = optionIndex;
 
         if (optionIndex >= 0 && optionIndex < numOptions)
         {
+            currentOptionIndex = optionIndex;
             ResponseText.text = actionData.Options[optionIndex].OptionText;
         }
         else if (optionIndex == -1)
@@ -138,12 +177,16 @@ public class MultiDialoguePanel : MonoBehaviour
 
     private void OnTriggerUpdate(TriggerUpdate update)
     {
-        if (update.TriggerClicked && 
-            currentOptionIndex >= 0 && 
-            currentOptionIndex < actionData.Options.Count)
+        isOptionSelectingTrigger = update.TriggerPressState && currentOptionIndex != -1;
+        if (!isOptionSelecting)
         {
-            actionData.OnOptionSelected(currentOptionIndex);
+            optionSelectPct = 0f;
         }
+    }
+
+    private void SelectOption()
+    {
+        actionData.OnOptionSelected(currentOptionIndex);
     }
 
     private void TransitionInComplete(object cookie)

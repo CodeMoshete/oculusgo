@@ -17,7 +17,7 @@ public class TimerManager
     {
         timers = new List<TimerInstance>();
         timersToRemove = new Stack<TimerInstance>();
-        Service.UpdateManager.AddObserver(Update);
+        Service.UpdateManager.AddObserver(Update, true);
     }
 
     public void CreateTimer(float duration, Action<object> callback, object cookie)
