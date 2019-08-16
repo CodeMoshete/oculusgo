@@ -107,7 +107,7 @@ public class ShowLinearDialogueAction : CustomAction
             Service.Controls.RemoveTouchObserver(OnTouch);
             Service.Controls.RemoveTriggerObserver(OnTrigger);
 
-            if (isDone)
+            if (isDone && !(OnComplete is ShowLinearDialogueAction))
             {
                 Service.EventManager.SendEvent(EventId.DialogueTextDismissed, null);
             }

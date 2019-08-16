@@ -20,6 +20,8 @@ public class ShowBranchingDialogueAction : CustomAction
     public string Prompt;
     public Sprite ProfileImage;
     public float ShowDelay;
+    public float TimeLimit;
+    public CustomAction OnTimeRanOut;
     public List<DialogueOption> Options;
 
     public override void Initiate()
@@ -46,6 +48,15 @@ public class ShowBranchingDialogueAction : CustomAction
         if (selectedOption.OnSelected != null)
         {
             selectedOption.OnSelected.Initiate();
+        }
+    }
+
+    public void OnTimeOut()
+    {
+        Service.EventManager.SendEvent(EventId.ChoiceDialogueDismissed, null);
+        if (OnTimeRanOut != null)
+        {
+            OnTimeRanOut.Initiate();
         }
     }
 }

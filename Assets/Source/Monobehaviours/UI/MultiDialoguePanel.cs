@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class MultiDialoguePanel : MonoBehaviour
 {
-    private const string DEFAULT_OPTION_TEXT = "<Select an option using the thumb-pad...>";
-    private const float SELECT_FILL_TIME = 3f;
+    private const string DEFAULT_OPTION_TEXT_GO = "<Select an option using the thumb-pad...>";
+    private const string DEFAULT_OPTION_TEXT_QUEST = "<Select an option using the right joystick and gun trigger...>";
+    private const float SELECT_FILL_TIME = 1f;
 
     private readonly Color BUTTON_DEACTIVATED = new Color(1f, 0.698f, 0f, 0.663f);
     private readonly Color BUTTON_ACTIVATED = new Color(1f, 0.698f, 0f, 1f);
@@ -23,9 +24,17 @@ public class MultiDialoguePanel : MonoBehaviour
     public List<Image> OptionImages;
     public Text ResponseText;
     public Image SelectionFill;
+    public GameObject Timer;
+    public Image TimerFill;
+    public GameObject TimerTutorialText;
 
     private bool isTransitioning;
     private bool isShowingDialogue;
+
+    private bool isTimed;
+    private bool isCountingDown;
+    private float timeLeft;
+    private float totalTime;
 
     private float optionSelectPct;
     private int currentOptionIndex;
@@ -63,11 +72,21 @@ public class MultiDialoguePanel : MonoBehaviour
 
             actionData = (ShowBranchingDialogueAction)cookie;
             Panel.SetActive(true);
+
             ProfileImage.sprite = actionData.ProfileImage;
             PromptText.text = actionData.Prompt;
             PromptText.OnShowComplete = PromptTextDisplayed;
             TriggerPing();
             Animator.SetBool("IsVisible", true);
+
+            if (actionData.TimeLimit > 0f)
+            {
+                isTimed = true;
+                isCountingDown = false;
+                timeLeft = actionData.TimeLimit;
+                totalTime = timeLeft;
+            }
+            Timer.SetActive(isTimed);
 
             isShowingDialogue = true;
             isTransitioning = true;
@@ -84,6 +103,16 @@ public class MultiDialoguePanel : MonoBehaviour
     private void ShowChoice(object cookie)
     {
         Animator.SetBool("IsPlayerChoiceVisible", true);
+
+        if (isTimed)
+        {
+            Service.TimerManager.CreateTimer(1f, BeginCountdown, null);
+        }
+    }
+
+    private void BeginCountdown(object cookie)
+    {
+        isCountingDown = true;
     }
 
     private bool HideMultiDialogue(object cookie)
@@ -91,6 +120,7 @@ public class MultiDialoguePanel : MonoBehaviour
         Service.Controls.RemoveTouchObserver(OnTouchUpdate);
         Service.Controls.RemoveTriggerObserver(OnTriggerUpdate);
         Service.UpdateManager.RemoveObserver(OnUpdate);
+        isShowingDialogue = false;
         Animator.SetBool("IsVisible", false);
         Service.TimerManager.CreateTimer(0.5f, TransitionOutComplete, null);
         return true;
@@ -146,6 +176,17 @@ public class MultiDialoguePanel : MonoBehaviour
             }
         }
         SelectionFill.fillAmount = optionSelectPct;
+
+        if (isCountingDown)
+        {
+            timeLeft -= dt;
+            TimerFill.fillAmount = Mathf.Max(0f, timeLeft / totalTime);
+            if (timeLeft <= 0f && !isOptionSelecting)
+            {
+                Service.UpdateManager.RemoveObserver(OnUpdate);
+                actionData.OnTimeOut();
+            }
+        }
     }
 
     private void SetOptionHighlighted(int optionIndex)
@@ -159,7 +200,9 @@ public class MultiDialoguePanel : MonoBehaviour
         }
         else if (optionIndex == -1)
         {
-            ResponseText.text = DEFAULT_OPTION_TEXT;
+            string optionText = Service.Controls.CurrentHeadset == HeadsetModel.OculusQuest ? 
+                DEFAULT_OPTION_TEXT_QUEST : DEFAULT_OPTION_TEXT_GO;
+            ResponseText.text = optionText;
         }
 
         for (int i = 0; i < numOptions; ++i)
