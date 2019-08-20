@@ -79,10 +79,10 @@ public class MultiDialoguePanel : MonoBehaviour
             TriggerPing();
             Animator.SetBool("IsVisible", true);
 
-            if (actionData.TimeLimit > 0f)
+            isTimed = actionData.TimeLimit > 0f;
+            isCountingDown = false;
+            if (isTimed)
             {
-                isTimed = true;
-                isCountingDown = false;
                 timeLeft = actionData.TimeLimit;
                 totalTime = timeLeft;
             }
@@ -156,7 +156,11 @@ public class MultiDialoguePanel : MonoBehaviour
             SetOptionHighlighted(3);
         }
 
-        isOptionSelectingTouch = update.TouchpadPressState && currentOptionIndex != -1;
+        isOptionSelectingTouch = 
+            update.TouchpadPressState && 
+            currentOptionIndex != -1 && 
+            Service.Controls.CurrentHeadset != HeadsetModel.OculusQuest;
+
         if (!isOptionSelecting || currentOptionIndex != prevOptionIndex)
         {
             optionSelectPct = 0f;
