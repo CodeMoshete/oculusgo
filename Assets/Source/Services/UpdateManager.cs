@@ -7,6 +7,7 @@ public class UpdateManager : MonoBehaviour
     private static HashSet<Action<float>> persistentUpdateObservers;
     private static HashSet<Action<float>> updateObservers;
     private static HashSet<Action<float>> observersToRemove;
+    private static HashSet<Action<float>> observersToAdd;
 
     private static UpdateManager instance;
     public static UpdateManager Instance
@@ -44,6 +45,11 @@ public class UpdateManager : MonoBehaviour
             observersToRemove = new HashSet<Action<float>>();
         }
 
+        if (observersToAdd == null)
+        {
+            observersToAdd = new HashSet<Action<float>>();
+        }
+
         instance = this;
     }
 
@@ -63,7 +69,7 @@ public class UpdateManager : MonoBehaviour
         }
         else
         {
-            updateObservers.Add(observer);
+            observersToAdd.Add(observer);
         }
     }
 
@@ -84,6 +90,15 @@ public class UpdateManager : MonoBehaviour
         if (observersToRemove.Count > 0)
         {
             observersToRemove.Clear();
+        }
+
+        foreach (Action<float> observer in observersToAdd)
+        {
+            updateObservers.Add(observer);
+        }
+        if (observersToAdd.Count > 0)
+        {
+            observersToAdd.Clear();
         }
 
         float dt = Time.deltaTime;

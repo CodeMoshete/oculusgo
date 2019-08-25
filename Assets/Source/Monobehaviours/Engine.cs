@@ -51,7 +51,8 @@ public class Engine : MonoBehaviour
 
         controlSchemes = new Dictionary<ControlScheme, IControlScheme>();
         controlSchemes.Add(ControlScheme.Movement, new MovementControlScheme());
-        SetControlScheme(ControlScheme.Movement);
+        controlSchemes.Add(ControlScheme.Teleport, new TeleportControlScheme());
+        SetControlScheme(ControlScheme.Teleport);
 
         Vector3 cameraStartPos = HeadCamera.localPosition;
         switch(Service.Controls.CurrentHeadset)

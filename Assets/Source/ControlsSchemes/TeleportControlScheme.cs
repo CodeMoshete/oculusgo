@@ -4,18 +4,41 @@ using Utils;
 public class TeleportControlScheme : IControlScheme
 {
     private const string RIGHT_CONTROLLER_NAME = "RightControllerAnchor";
+    private const string TELEPORT_MARKER = "TeleportMarker";
+    private const string TELEPORT_MARKER_OBJ = "TeleportMarkerObj";
+    private const string TELEPORT_TAG = "Teleport";
+    private const string LAYER_AREA_TRIGGER = "AreaTrigger";
+    private const float SPHERECAST_RADIUS = 0.2f;
+    private const float PLAYER_HEIGHT = 1f;
+    private const float TELEPORT_TIME = 0.25f;
+    private const float RAYCAST_DIST = 50f;
+    private const float MAX_TELEPORT_SQR_DIST = 16f;
+    private readonly Color COLOR_TELEPORT_OK = Color.white;
+    private readonly Color COLOR_TELEPORT_BLOCKED = Color.red;
+    private readonly Color COLOR_TELEPORT_ACTION_LOC = Color.green;
 
     private bool disableMovement;
+
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
+    private OVRScreenFade screenFader;
     private Transform rightController;
+    private Vector3 lastMousePos;
+
+    private float sensitivity;
+    private bool isDebugMenuActive;
+
+    private GameObject teleportMarker;
+    private Material teleportMaterial;
+    private float currentTeleportTime;
+    private Vector3 targetTeleportPos;
+    private int raycastLayerMask;
+    private bool isTeleportingOut;
+    private bool isTeleporting;
+
 #if UNITY_EDITOR
     private Transform cameraEye;
 #endif
-    private bool wasPlayerTeleporting;
-    private Vector3 lastMousePos;
-    private float sensitivity;
-    private bool isDebugMenuActive;
 
     public void Initialize(OVRPlayerController body, Transform camera, float sensitivity)
     {
@@ -24,9 +47,17 @@ public class TeleportControlScheme : IControlScheme
         this.sensitivity = sensitivity;
 
         rightController = UnityUtils.FindGameObject(bodyObject.gameObject, RIGHT_CONTROLLER_NAME).transform;
+        GameObject centerEye = UnityUtils.FindGameObject(cameraObject.gameObject, "CenterEyeAnchor");
+        screenFader = centerEye.GetComponent<OVRScreenFade>();
 #if UNITY_EDITOR
-        cameraEye = UnityUtils.FindGameObject(cameraObject.gameObject, "CenterEyeAnchor").transform;
+        cameraEye = centerEye.transform;
 #endif
+        teleportMarker = GameObject.Instantiate(Resources.Load<GameObject>(TELEPORT_MARKER));
+        teleportMarker.SetActive(false);
+        GameObject teleportMarkerInner = UnityUtils.FindGameObject(teleportMarker, TELEPORT_MARKER_OBJ);
+        teleportMaterial = teleportMarkerInner.GetComponent<Renderer>().sharedMaterial;
+
+        raycastLayerMask =~ LayerMask.GetMask(LAYER_AREA_TRIGGER);
 
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
@@ -54,6 +85,9 @@ public class TeleportControlScheme : IControlScheme
 
     private void TouchUpdate(TouchpadUpdate update)
     {
+        if (isTeleporting || disableMovement)
+            return;
+
         float dt = Time.deltaTime;
 
         bool isPressed = update.TouchpadPressState;
@@ -64,17 +98,10 @@ public class TeleportControlScheme : IControlScheme
             OVRInput.Controller activeController = OVRInput.GetActiveController();
         }
 
-        Ray teleportRay;
-        if (isPressed)
-        {
-            teleportRay = new Ray(rightController.position, rightController.forward);
-        }
-
+        Ray testRay = new Ray(rightController.position, rightController.forward);
 #if UNITY_EDITOR
-        if (isPressed)
-        {
-            teleportRay = new Ray(cameraEye.position, cameraEye.forward);
-        }
+        isPressed = Input.GetKey(KeyCode.T);
+        testRay = new Ray(cameraEye.position, cameraEye.forward);
 
         Vector3 euler = bodyObject.transform.eulerAngles;
         if (Input.GetMouseButtonDown(1))
@@ -94,7 +121,78 @@ public class TeleportControlScheme : IControlScheme
             cameraObject.eulerAngles = euler;
         }
 #endif
+        if (isPressed)
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(testRay, SPHERECAST_RADIUS, out hit, RAYCAST_DIST, raycastLayerMask))
+            {
+                if (hit.collider.tag == TELEPORT_TAG)
+                {
+                    float sqrDist =
+                        Vector3.SqrMagnitude(teleportMarker.transform.position - bodyObject.transform.position);
 
-        wasPlayerTeleporting = isPressed;
+                    teleportMaterial.color = sqrDist > MAX_TELEPORT_SQR_DIST ?
+                        COLOR_TELEPORT_BLOCKED :
+                        COLOR_TELEPORT_OK;
+
+                    teleportMarker.transform.position = hit.point;
+                    teleportMarker.SetActive(true);
+                }
+                else
+                {
+                    //Debug.Log(hit.collider.gameObject.name);
+                    teleportMarker.SetActive(false);
+                }
+            }
+        }
+        else if (teleportMarker.activeInHierarchy)
+        {
+            teleportMarker.SetActive(false);
+
+            float sqrDist = 
+                Vector3.SqrMagnitude(teleportMarker.transform.position - bodyObject.transform.position);
+
+            if (sqrDist <= MAX_TELEPORT_SQR_DIST)
+            {
+                isTeleporting = true;
+                Vector3 teleportPos = teleportMarker.transform.position;
+                teleportPos.y += PLAYER_HEIGHT;
+                TeleportTo(teleportPos);
+            }
+        }
+    }
+
+    private void TeleportTo(Vector3 position)
+    {
+        currentTeleportTime = TELEPORT_TIME;
+        targetTeleportPos = position;
+        isTeleportingOut = true;
+        Service.UpdateManager.AddObserver(Update);
+    }
+
+    private void Update(float dt)
+    {
+        currentTeleportTime = Mathf.Max(0f, currentTeleportTime - dt);
+
+        float pct = isTeleportingOut ? 
+            1f - (currentTeleportTime / TELEPORT_TIME) :
+            currentTeleportTime / TELEPORT_TIME;
+
+        screenFader.SetFadeLevel(pct);
+
+        if (currentTeleportTime == 0f)
+        {
+            if (isTeleportingOut)
+            {
+                bodyObject.transform.position = targetTeleportPos;
+                currentTeleportTime = TELEPORT_TIME;
+                isTeleportingOut = false;
+            }
+            else
+            {
+                Service.UpdateManager.RemoveObserver(Update);
+                isTeleporting = false;
+            }
+        }
     }
 }
