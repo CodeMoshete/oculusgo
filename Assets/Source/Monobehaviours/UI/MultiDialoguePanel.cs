@@ -8,8 +8,9 @@ public class MultiDialoguePanel : MonoBehaviour
     private const string DEFAULT_OPTION_TEXT_QUEST = "<Select an option using the right joystick and gun trigger...>";
     private const float SELECT_FILL_TIME = 1f;
 
-    private readonly Color BUTTON_DEACTIVATED = new Color(1f, 0.698f, 0f, 0.663f);
-    private readonly Color BUTTON_ACTIVATED = new Color(1f, 0.698f, 0f, 1f);
+    private readonly Color BUTTON_DEACTIVATED = new Color(1f, 0.698f, 0f, 0f);
+    private readonly Color BUTTON_DESELECTED = new Color(1f, 0.698f, 0f, 0.34f);
+    private readonly Color BUTTON_SELECTED = new Color(1f, 0.698f, 0f, 1f);
 
     private readonly Vector2 OPTION_1 = Vector2.up;
     private readonly Vector2 OPTION_2 = Vector2.right;
@@ -213,11 +214,11 @@ public class MultiDialoguePanel : MonoBehaviour
         {
             if (i == optionIndex)
             {
-                OptionImages[i].color = BUTTON_ACTIVATED;
+                OptionImages[i].color = BUTTON_SELECTED;
             }
             else
             {
-                OptionImages[i].color = BUTTON_DEACTIVATED;
+                OptionImages[i].color = BUTTON_DESELECTED;
             }
         }
     }
