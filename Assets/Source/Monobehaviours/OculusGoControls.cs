@@ -22,6 +22,10 @@ public class OculusGoControls : MonoBehaviour
     [HideInInspector]
     public bool DisableMovement;
 
+    public Transform HeadCamera;
+    public float OculusGoCameraHeight;
+    public float OculusQuestCameraHeight;
+
     private Transform backgroundCamera;
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
@@ -50,15 +54,19 @@ public class OculusGoControls : MonoBehaviour
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
 
-        Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
+        Vector3 cameraStartPos = HeadCamera.localPosition;
+        switch(Service.Controls.CurrentHeadset)
+        {
+            case HeadsetModel.OculusGo:
+                cameraStartPos.y = OculusGoCameraHeight;
+                break;
+            case HeadsetModel.OculusQuest:
+                cameraStartPos.y = OculusQuestCameraHeight;
+                break;
+        }
+        HeadCamera.localPosition = cameraStartPos;
 
-        //string[] joystickNames = Input.GetJoystickNames();
-        //string logStr = string.Empty;
-        //for (int i = 0, count = logStr.Length; i < count; ++i)
-        //{
-        //    logStr += joystickNames[i] + ", ";
-        //}
-        //Log("joystick names: " + logStr);
+        Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
 
         Log("Device name: " + SystemInfo.deviceName + 
             "\nDevice model: " + SystemInfo.deviceModel +
