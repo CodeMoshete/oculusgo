@@ -75,6 +75,7 @@ public class OculusGoControls : MonoBehaviour
 
     private void OnDestroy()
     {
+        Service.EventManager.RemoveListener(EventId.SetControlsEnabled, OnControlsEnableSet);
         Service.Controls.RemoveTouchObserver(TouchUpdate);
         Service.Controls.RemoveBackButtonObserver(BackUpdate);
     }
