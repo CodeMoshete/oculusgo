@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
+using Utils;
 
 public class TeleportControlScheme : IControlScheme
 {
+    private const string RIGHT_CONTROLLER_NAME = "RightControllerAnchor";
+
     private bool disableMovement;
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
-    private bool hasPlayerTurned;
+    private Transform rightController;
+#if UNITY_EDITOR
+    private Transform cameraEye;
+#endif
+    private bool wasPlayerTeleporting;
     private Vector3 lastMousePos;
     private float sensitivity;
     private bool isDebugMenuActive;
@@ -15,6 +22,11 @@ public class TeleportControlScheme : IControlScheme
         bodyObject = body;
         cameraObject = camera;
         this.sensitivity = sensitivity;
+
+        rightController = UnityUtils.FindGameObject(bodyObject.gameObject, RIGHT_CONTROLLER_NAME).transform;
+#if UNITY_EDITOR
+        cameraEye = UnityUtils.FindGameObject(cameraObject.gameObject, "CenterEyeAnchor").transform;
+#endif
 
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
@@ -52,7 +64,18 @@ public class TeleportControlScheme : IControlScheme
             OVRInput.Controller activeController = OVRInput.GetActiveController();
         }
 
+        Ray teleportRay;
+        if (isPressed)
+        {
+            teleportRay = new Ray(rightController.position, rightController.forward);
+        }
+
 #if UNITY_EDITOR
+        if (isPressed)
+        {
+            teleportRay = new Ray(cameraEye.position, cameraEye.forward);
+        }
+
         Vector3 euler = bodyObject.transform.eulerAngles;
         if (Input.GetMouseButtonDown(1))
         {
@@ -71,5 +94,7 @@ public class TeleportControlScheme : IControlScheme
             cameraObject.eulerAngles = euler;
         }
 #endif
+
+        wasPlayerTeleporting = isPressed;
     }
 }
