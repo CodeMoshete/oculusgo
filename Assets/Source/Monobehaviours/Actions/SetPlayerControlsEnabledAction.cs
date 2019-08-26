@@ -13,7 +13,7 @@
         Service.Controls.DisableTouchInput = !TouchEnabled;
         Service.Controls.DisableTriggerInput = !TriggerEnabled;
         Service.Controls.DisableBackButtonInput = !BackButtonEnabled;
-        Service.EventManager.SendEvent(EventId.SetControlsEnabled, !PlayerMovementEnabled);
+        Service.EventManager.SendEvent(EventId.SetControlsEnabled, PlayerMovementEnabled);
 
         if (OnComplete != null)
         {

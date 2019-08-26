@@ -8,6 +8,8 @@ public class TeleportControlScheme : IControlScheme
     private const string TELEPORT_MARKER_OBJ = "TeleportMarkerObj";
     private const string TELEPORT_TAG = "Teleport";
     private const string LAYER_AREA_TRIGGER = "AreaTrigger";
+    private const string LAYER_BACKGROUND = "Background";
+    private const string TAG_AREA_LOCK = "AreaLock";
     private const float SPHERECAST_RADIUS = 0.2f;
     private const float PLAYER_HEIGHT = 1f;
     private const float TELEPORT_TIME = 0.25f;
@@ -57,7 +59,7 @@ public class TeleportControlScheme : IControlScheme
         GameObject teleportMarkerInner = UnityUtils.FindGameObject(teleportMarker, TELEPORT_MARKER_OBJ);
         teleportMaterial = teleportMarkerInner.GetComponent<Renderer>().sharedMaterial;
 
-        raycastLayerMask =~ LayerMask.GetMask(LAYER_AREA_TRIGGER);
+        raycastLayerMask = ~(LayerMask.GetMask(LAYER_AREA_TRIGGER) | LayerMask.GetMask(LAYER_BACKGROUND));
 
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
@@ -71,6 +73,7 @@ public class TeleportControlScheme : IControlScheme
 
     public void SetMovementEnabled(bool enabled)
     {
+        Debug.Log("Controls active: " + enabled);
         disableMovement = !enabled;
     }
 
@@ -85,6 +88,27 @@ public class TeleportControlScheme : IControlScheme
 
     private void TouchUpdate(TouchpadUpdate update)
     {
+#if UNITY_EDITOR
+        Vector3 euler = bodyObject.transform.eulerAngles;
+        if (Input.GetMouseButtonDown(1))
+        {
+            lastMousePos = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            float delta = Time.deltaTime;
+            Vector3 mouseDelta = lastMousePos - Input.mousePosition;
+            lastMousePos = Input.mousePosition;
+            euler = bodyObject.transform.eulerAngles;
+            euler.y += delta * -((mouseDelta.x / Screen.width) * sensitivity);
+            bodyObject.transform.eulerAngles = euler;
+
+            euler = cameraObject.eulerAngles;
+            euler.x += delta * (mouseDelta.y / Screen.height) * sensitivity;
+            cameraObject.eulerAngles = euler;
+        }
+#endif
+
         if (isTeleporting || disableMovement)
             return;
 
@@ -102,24 +126,6 @@ public class TeleportControlScheme : IControlScheme
 #if UNITY_EDITOR
         isPressed = Input.GetKey(KeyCode.T);
         testRay = new Ray(cameraEye.position, cameraEye.forward);
-
-        Vector3 euler = bodyObject.transform.eulerAngles;
-        if (Input.GetMouseButtonDown(1))
-        {
-            lastMousePos = Input.mousePosition;
-        }
-        else if (Input.GetMouseButton(1))
-        {
-            Vector3 mouseDelta = lastMousePos - Input.mousePosition;
-            lastMousePos = Input.mousePosition;
-            euler = bodyObject.transform.eulerAngles;
-            euler.y += dt * -((mouseDelta.x / Screen.width) * sensitivity);
-            bodyObject.transform.eulerAngles = euler;
-
-            euler = cameraObject.eulerAngles;
-            euler.x += dt * (mouseDelta.y / Screen.height) * sensitivity;
-            cameraObject.eulerAngles = euler;
-        }
 #endif
         if (isPressed)
         {
@@ -138,9 +144,27 @@ public class TeleportControlScheme : IControlScheme
                     teleportMarker.transform.position = hit.point;
                     teleportMarker.SetActive(true);
                 }
+                else if(hit.collider.tag == TAG_AREA_LOCK)
+                {
+                    Ray floorTestRay = new Ray(hit.collider.transform.position, -hit.collider.transform.up);
+                    RaycastHit floorHit;
+                    if (Physics.Raycast(floorTestRay, out floorHit, RAYCAST_DIST, raycastLayerMask))
+                    {
+                        teleportMarker.transform.position = floorHit.point;
+
+                        float sqrDist =
+                        Vector3.SqrMagnitude(teleportMarker.transform.position - bodyObject.transform.position);
+
+                        teleportMaterial.color = sqrDist > MAX_TELEPORT_SQR_DIST ?
+                            COLOR_TELEPORT_BLOCKED :
+                            COLOR_TELEPORT_ACTION_LOC;
+
+                        teleportMarker.SetActive(true);
+                    }
+                }
                 else
                 {
-                    //Debug.Log(hit.collider.gameObject.name);
+                    Debug.Log(hit.collider.gameObject.name);
                     teleportMarker.SetActive(false);
                 }
             }
