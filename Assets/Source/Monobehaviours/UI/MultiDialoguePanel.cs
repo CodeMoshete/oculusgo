@@ -89,11 +89,16 @@ public class MultiDialoguePanel : MonoBehaviour
             }
             Timer.SetActive(isTimed);
 
+            for (int i = 0, count = OptionImages.Count; i < count; ++i)
+            {
+                OptionImages[i].color = BUTTON_DEACTIVATED;
+            }
+
             isShowingDialogue = true;
             isTransitioning = true;
             Service.TimerManager.CreateTimer(0.5f, TransitionInComplete, null);
         }
-        return true;
+        return false;
     }
 
     private void PromptTextDisplayed()
@@ -124,7 +129,7 @@ public class MultiDialoguePanel : MonoBehaviour
         isShowingDialogue = false;
         Animator.SetBool("IsVisible", false);
         Service.TimerManager.CreateTimer(0.5f, TransitionOutComplete, null);
-        return true;
+        return false;
     }
 
     private void OnTouchUpdate(TouchpadUpdate update)

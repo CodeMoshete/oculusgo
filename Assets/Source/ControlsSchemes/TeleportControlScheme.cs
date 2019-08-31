@@ -63,6 +63,9 @@ public class TeleportControlScheme : IControlScheme
 
         Service.Controls.SetTouchObserver(TouchUpdate);
         Service.Controls.SetBackButtonObserver(BackUpdate);
+
+        Service.EventManager.AddListener(EventId.ShowChoiceDialogue, ChoiceDialogueShown);
+        Service.EventManager.AddListener(EventId.ChoiceDialogueDismissed, ChoiceDialogueHidden);
     }
 
     public void Deactivate()
@@ -71,10 +74,23 @@ public class TeleportControlScheme : IControlScheme
         Service.Controls.RemoveBackButtonObserver(BackUpdate);
     }
 
+    public bool ChoiceDialogueShown(object cookie)
+    {
+        SetMovementEnabled(false);
+        return false;
+    }
+
+    public bool ChoiceDialogueHidden(object cookie)
+    {
+        SetMovementEnabled(true);
+        return false;
+    }
+
     public void SetMovementEnabled(bool enabled)
     {
         Debug.Log("Controls active: " + enabled);
         disableMovement = !enabled;
+        teleportMarker.SetActive(false);
     }
 
     private void BackUpdate(BackButtonUpdate update)
