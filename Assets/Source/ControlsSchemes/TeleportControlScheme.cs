@@ -72,6 +72,8 @@ public class TeleportControlScheme : IControlScheme
     {
         Service.Controls.RemoveTouchObserver(TouchUpdate);
         Service.Controls.RemoveBackButtonObserver(BackUpdate);
+        Service.EventManager.RemoveListener(EventId.ShowChoiceDialogue, ChoiceDialogueShown);
+        Service.EventManager.RemoveListener(EventId.ChoiceDialogueDismissed, ChoiceDialogueHidden);
     }
 
     public bool ChoiceDialogueShown(object cookie)
