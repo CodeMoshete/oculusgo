@@ -66,6 +66,11 @@ public class PhaserWeapon : WeaponBase
                 }
             }
 
+            float distToPoint = Vector3.Distance(hitFxPoint, transform.position);
+            Vector3 scale = transform.localScale;
+            scale.z = distToPoint;
+            transform.localScale = scale;
+
             GameObject explosion = Instantiate(HitFX, hitFxPoint, Quaternion.identity);
             explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             shouldDestroy = true;

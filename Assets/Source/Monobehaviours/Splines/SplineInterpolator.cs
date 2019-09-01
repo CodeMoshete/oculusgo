@@ -8,7 +8,10 @@ public delegate void OnEndCallback();
 
 public class SplineInterpolator : MonoBehaviour
 {
-	eEndPointsMode mEndPointsMode = eEndPointsMode.AUTO;
+    public bool EaseIn;
+    public bool EaseOut;
+
+    eEndPointsMode mEndPointsMode = eEndPointsMode.AUTO;
 
 	internal class SplineNode
 	{
@@ -179,7 +182,20 @@ public class SplineInterpolator : MonoBehaviour
 			// Smooth the param
 			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
 
-			transform.position = GetHermiteInternal(mCurrentIdx, param);
+            float totalPct = ((mCurrentIdx - 1) + param) / (float)(mNodes.Count - 3);
+
+            if (EaseIn && mCurrentIdx == 1)
+            {
+                //param = Mathf.Pow(param, 2f);
+                param = Mathf.Sin(((param - 1f) * Mathf.PI) / 2f) + 1f;
+            }
+            else if (EaseOut && mCurrentIdx == mNodes.Count - 3)
+            {
+                //param = -(Mathf.Pow(param - 1f, 2f)) + 1f;
+                param = Mathf.Sin(0.5f * Mathf.PI * param);
+            }
+
+            transform.position = GetHermiteInternal(mCurrentIdx, param);
 
 			if (mRotations)
 			{
