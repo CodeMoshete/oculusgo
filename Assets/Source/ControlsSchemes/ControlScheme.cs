@@ -1,5 +1,6 @@
 ﻿public enum ControlScheme
 {
     Movement,
-    Teleport
+    Teleport,
+    Piloting
 }

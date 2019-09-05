@@ -52,6 +52,7 @@ public class Engine : MonoBehaviour
         controlSchemes = new Dictionary<ControlScheme, IControlScheme>();
         controlSchemes.Add(ControlScheme.Movement, new MovementControlScheme());
         controlSchemes.Add(ControlScheme.Teleport, new TeleportControlScheme());
+        controlSchemes.Add(ControlScheme.Piloting, new PilotingControlScheme());
         SetControlScheme(ControlScheme.Teleport);
 
         Vector3 cameraStartPos = HeadCamera.localPosition;
@@ -67,6 +68,7 @@ public class Engine : MonoBehaviour
         HeadCamera.localPosition = cameraStartPos;
 
         Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
+        Service.EventManager.AddListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
 
         Log("Device name: " + SystemInfo.deviceName + 
             "\nDevice model: " + SystemInfo.deviceModel +
@@ -94,6 +96,12 @@ public class Engine : MonoBehaviour
     {
         currentControlScheme.SetMovementEnabled((bool)cookie);
         return true;
+    }
+
+    private bool OnControlSchemeChanged(object cookie)
+    {
+        SetControlScheme((ControlScheme)cookie);
+        return false;
     }
 
 	void Update () 
