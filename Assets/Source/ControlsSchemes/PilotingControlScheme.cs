@@ -17,8 +17,16 @@ public class PilotingControlScheme : IControlScheme
     private Vector2 containerVel;
     private float sqrDistFromCenter;
 
+    private OVRPlayerController bodyObject;
+    private Transform cameraObject;
+    private Vector3 lastMousePos;
+    private float sensitivity;
+
     public void Initialize(OVRPlayerController body, Transform camera, float sensitivity)
     {
+        bodyObject = body;
+        cameraObject = camera;
+        this.sensitivity = sensitivity;
         pilotingContainer = GameObject.Find(PILOTING_CONTAINER_NAME).transform;
 
         if (pilotingContainer != null)
@@ -44,6 +52,27 @@ public class PilotingControlScheme : IControlScheme
 
     private void OnTouchUpdate(TouchpadUpdate update)
     {
+#if UNITY_EDITOR
+        Vector3 euler = bodyObject.transform.eulerAngles;
+        if (Input.GetMouseButtonDown(1))
+        {
+            lastMousePos = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            float delta = Time.deltaTime;
+            Vector3 mouseDelta = lastMousePos - Input.mousePosition;
+            lastMousePos = Input.mousePosition;
+            euler = bodyObject.transform.eulerAngles;
+            euler.y += delta * -((mouseDelta.x / Screen.width) * sensitivity);
+            bodyObject.transform.eulerAngles = euler;
+
+            euler = cameraObject.eulerAngles;
+            euler.x += delta * (mouseDelta.y / Screen.height) * sensitivity;
+            cameraObject.eulerAngles = euler;
+        }
+#endif
+
         bool isPressed = update.TouchpadPressState;
         if (isPressed)
         {
