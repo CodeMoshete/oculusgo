@@ -3,6 +3,7 @@
 public class PilotingControlScheme : IControlScheme
 {
     private const string PILOTING_CONTAINER_NAME = "PilotingContainer";
+    private const string LAYER_SHOOTABLE = "Shootable";
     private const float ACCELERATION = 0.01f;
     private const float DRAG = 0.92f;
     private const float MAX_SPEED_SQR = 0.0225f;
@@ -16,6 +17,7 @@ public class PilotingControlScheme : IControlScheme
     private Vector2 containerPos;
     private Vector2 containerVel;
     private float sqrDistFromCenter;
+    private int raycastLayerMask;
 
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
@@ -28,10 +30,12 @@ public class PilotingControlScheme : IControlScheme
         cameraObject = camera;
         this.sensitivity = sensitivity;
         pilotingContainer = GameObject.Find(PILOTING_CONTAINER_NAME).transform;
+        raycastLayerMask = LayerMask.GetMask(LAYER_SHOOTABLE);
 
         if (pilotingContainer != null)
         {
             Service.Controls.SetTouchObserver(OnTouchUpdate);
+            Service.Controls.SetTriggerObserver(OnTriggerClicked);
             Service.UpdateManager.AddObserver(OnUpdate);
         }
         else
@@ -46,6 +50,11 @@ public class PilotingControlScheme : IControlScheme
     }
 
     public void Deactivate()
+    {
+
+    }
+
+    private void OnTriggerClicked(TriggerUpdate update)
     {
 
     }

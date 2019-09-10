@@ -3,10 +3,11 @@ using Utils;
 
 public class HUDBehavior : MonoBehaviour
 {
-    private const float CAM_DIST = 0.6f;
-    private readonly Vector3 HUD_TARGET_OFFSET = new Vector3(0f, 0f, CAM_DIST);
     public Transform PlayerCamera;
     public float TrackingTime = 0.3f;
+    public float CamDist = 0.6f;
+    private float worldCamDist;
+    private Vector3 hudTargetOffset;
     private Transform hudReference;
     private Vector3 hudVelocity;
 
@@ -19,7 +20,11 @@ public class HUDBehavior : MonoBehaviour
         }
         hudReference = (new GameObject()).transform;
         hudReference.parent = PlayerCamera;
-        hudReference.transform.localPosition = HUD_TARGET_OFFSET;
+
+        hudTargetOffset = new Vector3(0f, 0f, CamDist);
+        hudReference.localPosition = hudTargetOffset;
+
+        worldCamDist = (hudReference.position - PlayerCamera.position).magnitude;
 	}
 	
 	public void Update ()
@@ -41,7 +46,7 @@ public class HUDBehavior : MonoBehaviour
 
     public void LateUpdate()
     {
-        Vector3 currentPos = (transform.position - PlayerCamera.position).normalized * CAM_DIST;
+        Vector3 currentPos = (transform.position - PlayerCamera.position).normalized * worldCamDist;
         transform.position = currentPos + PlayerCamera.position;
     }
 }
