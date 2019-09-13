@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MedDebrisBehavior : MonoBehaviour {
-	private float MAX_SPIN_RATE = 1.5f;
-	private float MAX_VELOCITY = 0.1f;
-	private float MIN_SCALE = 0.25f;
-	private float MAX_SCALE = 3.0f;
-	private float LIFESPAN = 15.0f;
-	private float LIFESPAN_VARIANCE = 10.0f;
+public class LargeDebrisBehavior : MonoBehaviour {
+    public float MAX_SPIN_RATE = 1.0f;
+	public float MAX_VELOCITY = 0.05f;
+    public float MIN_SCALE = 0.25f;
+    public float MAX_SCALE = 2.0f;
+    public float LIFESPAN = 15.0f;
+    public float LIFESPAN_VARIANCE = 10.0f;
 	
 	private Vector3 SpinRate;
 	private Vector3 Velocity;
