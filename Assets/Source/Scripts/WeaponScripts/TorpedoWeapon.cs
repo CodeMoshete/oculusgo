@@ -2,6 +2,7 @@
 
 public class TorpedoWeapon : WeaponBase
 {
+    public bool OrientTowardsTarget;
     private Vector3 movementDir;
 
     public override void Fire(FireAction fireAction, Transform sourceParent, float velocity)
@@ -9,11 +10,23 @@ public class TorpedoWeapon : WeaponBase
         base.Fire(fireAction, sourceParent, velocity);
         transform.position = SourceParent.position;
         movementDir = Vector3.Normalize(InitialPosition - transform.position) * Velocity;
+
+        if (OrientTowardsTarget)
+        {
+            transform.LookAt(transform.position + movementDir);
+        }
     }
 
     private void Update()
     {
-        transform.Translate(movementDir * Time.deltaTime);
+        if (OrientTowardsTarget)
+        {
+            transform.Translate(Vector3.forward * Velocity * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(movementDir * Time.deltaTime);
+        }
     }
 
     public void OnTriggerEnter(Collider other)

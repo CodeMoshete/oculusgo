@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using Utils;
 
 public class PilotingControlScheme : IControlScheme
 {
     private const string PILOTING_CONTAINER_NAME = "PilotingContainer";
+    private const string WEAPON_NAME = "Weapon";
     private const string LAYER_SHOOTABLE = "Shootable";
+    private const string BG_HUD_CANVAS = "BackgroundHUDCanvas";
+    private const string RETICLE_NAME = "Reticle";
     private const float ACCELERATION = 0.01f;
     private const float DRAG = 0.92f;
     private const float MAX_SPEED_SQR = 0.0225f;
@@ -18,6 +22,8 @@ public class PilotingControlScheme : IControlScheme
     private Vector2 containerVel;
     private float sqrDistFromCenter;
     private int raycastLayerMask;
+    private FireWeaponAction weapon;
+    private GameObject reticle;
 
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
@@ -31,6 +37,9 @@ public class PilotingControlScheme : IControlScheme
         this.sensitivity = sensitivity;
         pilotingContainer = GameObject.Find(PILOTING_CONTAINER_NAME).transform;
         raycastLayerMask = LayerMask.GetMask(LAYER_SHOOTABLE);
+        weapon = UnityUtils.FindGameObject(pilotingContainer.gameObject, WEAPON_NAME).GetComponent<FireWeaponAction>();
+        reticle = UnityUtils.FindGameObject(GameObject.Find(BG_HUD_CANVAS),RETICLE_NAME);
+        SetReticleEnabled(true);
 
         if (pilotingContainer != null)
         {
@@ -44,19 +53,38 @@ public class PilotingControlScheme : IControlScheme
         }
     }
 
+    private void SetReticleEnabled(bool enabled)
+    {
+        if (reticle != null)
+        {
+            reticle.SetActive(enabled);
+        }
+        else
+        {
+            Debug.LogWarning("No reticle found!");
+        }
+    }
+
     public void SetMovementEnabled(bool enabled)
     {
-
+        disableMovement = !enabled;
+        SetReticleEnabled(!disableMovement);
     }
 
     public void Deactivate()
     {
-
+        Service.Controls.RemoveTouchObserver(OnTouchUpdate);
+        Service.Controls.RemoveTriggerObserver(OnTriggerClicked);
+        Service.UpdateManager.RemoveObserver(OnUpdate);
+        SetReticleEnabled(false);
     }
 
     private void OnTriggerClicked(TriggerUpdate update)
     {
-
+        if (!disableMovement && update.TriggerClicked)
+        {
+            weapon.Initiate();
+        }
     }
 
     private void OnTouchUpdate(TouchpadUpdate update)
@@ -83,7 +111,7 @@ public class PilotingControlScheme : IControlScheme
 #endif
 
         bool isPressed = update.TouchpadPressState;
-        if (isPressed)
+        if (!disableMovement && isPressed)
         {
             Vector2 touchDir = update.TouchpadPosition;
             touchDir.x *= -1f;
