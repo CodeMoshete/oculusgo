@@ -18,6 +18,14 @@ ModelImporter:
     100024: Cylinder.019
     100026: Cylinder.020
     100028: //RootNode
+    100030: Camera
+    100032: Empty.000
+    100034: Empty.001
+    100036: Empty.002
+    100038: Lamp
+    100040: Lamp.001
+    100042: Lamp.002
+    100044: Lamp.003
     400000: Cylinder.000
     400002: Cylinder.001
     400004: Cylinder.003
@@ -33,6 +41,15 @@ ModelImporter:
     400024: Cylinder.019
     400026: Cylinder.020
     400028: //RootNode
+    400030: Camera
+    400032: Empty.000
+    400034: Empty.001
+    400036: Empty.002
+    400038: Lamp
+    400040: Lamp.001
+    400042: Lamp.002
+    400044: Lamp.003
+    2000000: Camera
     2100000: No Name
     2300000: Cylinder.000
     2300002: Cylinder.001
@@ -76,6 +93,10 @@ ModelImporter:
     4300022: Cylinder.001
     4300024: Cylinder.000
     4300026: Cylinder.010
+    10800000: Lamp
+    10800002: Lamp.001
+    10800004: Lamp.002
+    10800006: Lamp.003
   externalObjects: {}
   materials:
     importMaterials: 1
