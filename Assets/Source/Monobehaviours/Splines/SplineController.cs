@@ -59,7 +59,7 @@ public class SplineController : MonoBehaviour
 
 	void SetupSplineInterpolator(SplineInterpolator interp, Transform[] trans)
 	{
-		interp.Reset();
+        interp.Reset();
 
 		float step = (AutoClose) ? Duration / trans.Length :
 			Duration / (trans.Length - 1);

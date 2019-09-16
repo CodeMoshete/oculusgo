@@ -10,6 +10,7 @@ public class SplineInterpolator : MonoBehaviour
 {
     public bool EaseIn;
     public bool EaseOut;
+    public bool DebugOutput;
 
     eEndPointsMode mEndPointsMode = eEndPointsMode.AUTO;
 
@@ -30,9 +31,7 @@ public class SplineInterpolator : MonoBehaviour
 
 	OnEndCallback mOnEndCallback;
 
-
-
-	void Awake()
+	private void Awake()
 	{
 		Reset();
 	}
@@ -51,7 +50,11 @@ public class SplineInterpolator : MonoBehaviour
 
 	public void Reset()
 	{
-		mNodes.Clear();
+        if (DebugOutput)
+        {
+            Debug.Log("Reset!");
+        }
+        mNodes.Clear();
 		mState = "Reset";
 		mCurrentIdx = 1;
 		mCurrentTime = 0;
@@ -196,6 +199,11 @@ public class SplineInterpolator : MonoBehaviour
             }
 
             transform.position = GetHermiteInternal(mCurrentIdx, param);
+
+            if (DebugOutput)
+            {
+                Debug.Log(transform.position.ToString());
+            }
 
 			if (mRotations)
 			{
