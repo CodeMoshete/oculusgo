@@ -21,14 +21,16 @@ public class SplineController : MonoBehaviour
 
 	void OnDrawGizmos()
 	{
-		Transform[] trans = GetTransforms();
+        if (Application.IsPlaying(this))
+            return;
+
+        Transform[] trans = GetTransforms();
 		if (trans == null || trans.Length < 2)
 			return;
 
 		SplineInterpolator interp = GetComponent(typeof(SplineInterpolator)) as SplineInterpolator;
 		SetupSplineInterpolator(interp, trans);
 		interp.StartInterpolation(null, false, WrapMode);
-
 
 		Vector3 prevPos = trans[0].position;
 		for (int c = 1; c <= 100; c++)
@@ -129,7 +131,7 @@ public class SplineController : MonoBehaviour
 	/// </summary>
 	void FollowSpline()
 	{
-		if (mTransforms.Length > 0)
+		if (mTransforms != null && mTransforms.Length > 0)
 		{
 			SetupSplineInterpolator(mSplineInterp, mTransforms);
 			mSplineInterp.StartInterpolation(null, true, WrapMode);
