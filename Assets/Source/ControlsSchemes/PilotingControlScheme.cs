@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 
 public class PilotingControlScheme : IControlScheme
 {
     private const string PILOTING_CONTAINER_NAME = "PilotingContainer";
+    private const string PILOTING_CAMERA_NAME = "CenterEyeAnchor";
     private const string WEAPON_NAME = "Weapon";
-    private const string LAYER_SHOOTABLE = "Shootable";
+    private const string LAYER_SHOOTABLE = "BGShootable";
     private const string BG_HUD_CANVAS = "BackgroundHUDCanvas";
     private const string RETICLE_NAME = "Reticle";
     private const float ACCELERATION = 0.01f;
@@ -16,7 +18,9 @@ public class PilotingControlScheme : IControlScheme
     private const float MAX_CAM_TILT = 7.5f;
 
     private Transform pilotingContainer;
+    private Transform pilotingCamera;
     private bool disableMovement;
+    private bool disableTargeting;
     private bool isSteering;
     private Vector2 containerPos;
     private Vector2 containerVel;
@@ -24,6 +28,7 @@ public class PilotingControlScheme : IControlScheme
     private int raycastLayerMask;
     private FireWeaponAction weapon;
     private GameObject reticle;
+    private Image reticleImage;
 
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
@@ -36,16 +41,20 @@ public class PilotingControlScheme : IControlScheme
         cameraObject = camera;
         this.sensitivity = sensitivity;
         pilotingContainer = GameObject.Find(PILOTING_CONTAINER_NAME).transform;
+        pilotingCamera = UnityUtils.FindGameObject(pilotingContainer.gameObject, PILOTING_CAMERA_NAME).transform;
         raycastLayerMask = LayerMask.GetMask(LAYER_SHOOTABLE);
         weapon = UnityUtils.FindGameObject(pilotingContainer.gameObject, WEAPON_NAME).GetComponent<FireWeaponAction>();
         reticle = UnityUtils.FindGameObject(GameObject.Find(BG_HUD_CANVAS),RETICLE_NAME);
+        reticleImage = reticle.GetComponent<Image>();
         SetReticleEnabled(true);
+
 
         if (pilotingContainer != null)
         {
             Service.Controls.SetTouchObserver(OnTouchUpdate);
             Service.Controls.SetTriggerObserver(OnTriggerClicked);
             Service.UpdateManager.AddObserver(OnUpdate);
+            Service.EventManager.AddListener(EventId.TogglePilotingControls, OnControlsToggled);
         }
         else
         {
@@ -65,10 +74,18 @@ public class PilotingControlScheme : IControlScheme
         }
     }
 
+    private bool OnControlsToggled(object cookie)
+    {
+        TogglePilotingControlsAction toggleAction = (TogglePilotingControlsAction)cookie;
+        SetMovementEnabled(toggleAction.UseSteering);
+        disableTargeting = !toggleAction.UseTargeting;
+        reticle.SetActive(toggleAction.UseTargeting);
+        return true;
+    }
+
     public void SetMovementEnabled(bool enabled)
     {
         disableMovement = !enabled;
-        SetReticleEnabled(!disableMovement);
     }
 
     public void Deactivate()
@@ -76,12 +93,13 @@ public class PilotingControlScheme : IControlScheme
         Service.Controls.RemoveTouchObserver(OnTouchUpdate);
         Service.Controls.RemoveTriggerObserver(OnTriggerClicked);
         Service.UpdateManager.RemoveObserver(OnUpdate);
+        Service.EventManager.RemoveListener(EventId.TogglePilotingControls, OnControlsToggled);
         SetReticleEnabled(false);
     }
 
     private void OnTriggerClicked(TriggerUpdate update)
     {
-        if (!disableMovement && update.TriggerClicked)
+        if (!disableTargeting && update.TriggerClicked)
         {
             weapon.Initiate();
         }
@@ -165,5 +183,19 @@ public class PilotingControlScheme : IControlScheme
         euler.z = -containerVel.x / MAX_SPEED * MAX_CAM_TILT;
         euler.x = containerVel.y / MAX_SPEED * MAX_CAM_TILT;
         pilotingContainer.localEulerAngles = euler;
+
+        if (!disableTargeting)
+        {
+            Vector3 vectorToReticle = reticle.transform.position - pilotingCamera.position;
+            Ray targetRay = new Ray(pilotingCamera.position, vectorToReticle);
+            if (Physics.Raycast(targetRay, float.MaxValue, raycastLayerMask))
+            {
+                reticleImage.material.color = Color.red;
+            }
+            else
+            {
+                reticleImage.material.color = Color.white;
+            }
+        }
     }
 }

@@ -12,7 +12,8 @@ public enum EventId
     ShowChoiceDialogue,
     ChoiceDialogueDismissed,
     SetControlsEnabled,
-    SetNewControlScheme
+    SetNewControlScheme,
+    TogglePilotingControls
 }
 
 public delegate bool EventCallback(object cookie);

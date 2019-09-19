@@ -14,6 +14,7 @@ public class ShowLinearDialogueAction : CustomAction
 {
     public bool LockMovement;
     public List<LinearDialogueData> Dialogues;
+    public CustomAction OnStart;
     public CustomAction OnComplete;
 
     private LinearDialogueData currentDialogueStep;
@@ -38,6 +39,11 @@ public class ShowLinearDialogueAction : CustomAction
         else
         {
             ShowNextDialogue(null);
+        }
+
+        if (OnStart != null)
+        {
+            OnStart.Initiate();
         }
     }
 
