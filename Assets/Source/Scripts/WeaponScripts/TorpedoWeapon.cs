@@ -38,6 +38,11 @@ public class TorpedoWeapon : WeaponBase
                 OnHit.Invoke();
             }
 
+            if (OnHitCustomAction != null)
+            {
+                OnHitCustomAction.Initiate();
+            }
+
             GameObject explosion = Instantiate(HitFX, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

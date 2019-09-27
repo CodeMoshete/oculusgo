@@ -13,6 +13,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected float Velocity;
     protected Collider TargetCollider;
     protected Transform SourceParent;
+    protected CustomAction OnHitCustomAction;
 
     public virtual void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
@@ -21,6 +22,7 @@ public abstract class WeaponBase : MonoBehaviour
         Velocity = velocity;
         TargetCollider = fireAction.TargetCollider;
         SourceParent = sourceParent;
+        OnHitCustomAction = fireAction.OnHit;
     }
 
     public virtual void CeaseFire()

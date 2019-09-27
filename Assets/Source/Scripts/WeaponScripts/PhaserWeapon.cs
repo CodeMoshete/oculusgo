@@ -49,9 +49,9 @@ public class PhaserWeapon : WeaponBase
     {
         if (TargetCollider == null || other == TargetCollider)
         {
-            if (OnHit != null)
+            if (OnHitCustomAction != null)
             {
-                OnHit.Invoke();
+                OnHitCustomAction.Initiate();
             }
 
             Vector3 hitFxPoint = EndPoint.position;
