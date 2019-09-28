@@ -15,6 +15,7 @@ public class FireWeaponAction : FireWeaponBaseAction
     public GameObject ProjectilePrefab;
     public float WeaponVelocity;
     public Transform SourceParent;
+    public CustomAction OnStart;
     public List<FireAction> FireActions;
 
     private WeaponBase weapon;
@@ -24,6 +25,11 @@ public class FireWeaponAction : FireWeaponBaseAction
         for (int i = 0, count = FireActions.Count; i < count; ++i)
         {
             Service.TimerManager.CreateTimer(FireActions[i].Delay, ExecuteFireAction, FireActions[i]);
+        }
+
+        if (OnStart != null)
+        {
+            OnStart.Initiate();
         }
     }
 

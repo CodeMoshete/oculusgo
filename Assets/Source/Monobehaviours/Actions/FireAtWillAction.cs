@@ -24,6 +24,7 @@ public class FireAtWillAction : FireWeaponBaseAction
     public List<ProjectileTarget> TargetPoints;
     public float StartDelay;
     public float Duration;
+    public CustomAction OnStart;
 
     public override void Initiate()
     {
@@ -35,6 +36,11 @@ public class FireAtWillAction : FireWeaponBaseAction
         else
         {
             StartFiring(null);
+        }
+
+        if (OnStart != null)
+        {
+            OnStart.Initiate();
         }
     }
 
