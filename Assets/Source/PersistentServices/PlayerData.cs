@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public class PlayerData
 {
     public const string PLAYER_DATA_FILE = "./playerdata.txt";
 
     private Dictionary<string, int> PlayerStats;
 
-    public static PlayerData Instance { get; private set; }
+    private static PlayerData instance;
+    public static PlayerData Instance {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new PlayerData();
+            }
+            return instance;
+        }
+    }
 
-    public void Start()
+    public PlayerData()
     {
-        Instance = this;
         PlayerStats = new Dictionary<string, int>();
         LoadStats();
     }

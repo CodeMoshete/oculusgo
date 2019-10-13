@@ -11,6 +11,7 @@ public class FadeScreenOutAction : CustomAction
 
     public override void Initiate()
     {
+        Debug.Log("FADE OUT: " + gameObject.name);
         if (ScreenFade != null)
         {
             totalDuration = Duration;
