@@ -129,7 +129,7 @@ public class PilotingControlScheme : IControlScheme
 #endif
 
         bool isPressed = update.TouchpadPressState;
-        if (!disableMovement && isPressed)
+        if (false && !disableMovement && isPressed)
         {
             Vector2 touchDir = update.TouchpadPosition;
             touchDir.x *= -1f;

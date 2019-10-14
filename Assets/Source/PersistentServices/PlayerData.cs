@@ -87,6 +87,7 @@ public class PlayerData
                 PlayerStats.Add(splitStr[0], int.Parse(splitStr[1]));
                 line = reader.ReadLine();
             }
+            reader.Close();
         }
     }
 }

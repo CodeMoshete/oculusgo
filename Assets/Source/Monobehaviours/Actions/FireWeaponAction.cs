@@ -43,6 +43,9 @@ public class FireWeaponAction : FireWeaponBaseAction
 
     public override void CeaseFire()
     {
-        weapon.CeaseFire();
+        if (weapon != null)
+        {
+            weapon.CeaseFire();
+        }
     }
 }

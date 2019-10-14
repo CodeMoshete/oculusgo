@@ -2,13 +2,15 @@
 
 public class PhaserWeapon : WeaponBase
 {
-    private readonly Vector3 DESTROY_SCALE_SPEED = new Vector3(0.5f, 0.5f, 0f);
+    private const float DESTROY_TIME = 0.75f;
     private const float DEFAULT_SCALE_SPEED = 5f;
 
     public Transform EndPoint;
     private float lifespan = 5f;
     private Vector3 scaleSpeed;
+    private Vector3 startScale;
     private bool shouldDestroy = false;
+    private float destroyTime;
 
     public override void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
@@ -16,8 +18,10 @@ public class PhaserWeapon : WeaponBase
 
         float zSpeed = Velocity > 0f ? Velocity : DEFAULT_SCALE_SPEED;
         scaleSpeed = new Vector3(0f, 0f, zSpeed);
-        transform.parent = SourceParent;
+        transform.SetParent(SourceParent);
         transform.localPosition = Vector3.zero;
+        destroyTime = DESTROY_TIME;
+        startScale = transform.localScale;
     }
 
     private void Update()
@@ -26,9 +30,14 @@ public class PhaserWeapon : WeaponBase
 
         if (shouldDestroy)
         {
-            if (transform.localScale.x > 0)
+            if (destroyTime > 0f)
             {
-                transform.localScale -= (DESTROY_SCALE_SPEED * Time.deltaTime);
+                destroyTime -= Time.deltaTime;
+                float dt = destroyTime / DESTROY_TIME;
+                Vector3 localScale = transform.localScale;
+                localScale.x = startScale.x * dt;
+                localScale.y = startScale.y * dt;
+                transform.localScale = localScale;
             }
             else
             {
@@ -67,9 +76,12 @@ public class PhaserWeapon : WeaponBase
             }
 
             float distToPoint = Vector3.Distance(hitFxPoint, transform.position);
+            Transform cachedParent = transform.parent;
+            transform.SetParent(null);
             Vector3 scale = transform.localScale;
             scale.z = distToPoint;
             transform.localScale = scale;
+            transform.SetParent(cachedParent);
 
             GameObject explosion = Instantiate(HitFX, hitFxPoint, Quaternion.identity);
             explosion.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
