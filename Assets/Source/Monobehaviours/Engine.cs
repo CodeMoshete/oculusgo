@@ -20,6 +20,7 @@ public class Engine : MonoBehaviour
 	public float Sensitivity = 50f;
 
     public Transform HeadCamera;
+    public Transform TrackingSpace;
     public float OculusGoCameraHeight;
     public float OculusQuestCameraHeight;
 
@@ -104,15 +105,15 @@ public class Engine : MonoBehaviour
         return false;
     }
 
-	void Update () 
-	{
+    void Update()
+    {
         float dt = Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.U))
         {
             isDebugMenuActive = !isDebugMenuActive;
             Service.EventManager.SendEvent(EventId.DebugToggleConsole, isDebugMenuActive);
-		}
+        }
 
         if (isDebugMenuActive && Input.GetKeyDown(KeyCode.J))
         {
@@ -129,6 +130,10 @@ public class Engine : MonoBehaviour
             MirrorCameras[i].MirrorCamera.localRotation = cameraObject.transform.rotation;
         }
         lastPlayerPosition = cameraObject.transform.position;
+
+        Log("PlayerController: " + bodyObject.transform.localEulerAngles.ToString() + 
+            "\nCamera Rig: " + HeadCamera.localEulerAngles.ToString() + 
+            "\nTracking Space: " + TrackingSpace.localEulerAngles.ToString());
     }
 
     private void Log(string message)
