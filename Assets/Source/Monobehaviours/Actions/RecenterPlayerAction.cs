@@ -3,13 +3,13 @@
 public class RecenterPlayerAction : CustomAction
 {
     public CustomAction OnDone;
+    public Transform OVRPlayerController;
+    public float Rotation;
+    private bool displayExistedLastFrame;
 
     public override void Initiate()
     {
-        if (!TryRecenterDisplay())
-        {
-            Service.UpdateManager.AddObserver(OnUpdate);
-        }
+        Service.UpdateManager.AddObserver(OnUpdate);
 
         if (OnDone != null)
         {
@@ -17,23 +17,19 @@ public class RecenterPlayerAction : CustomAction
         }
     }
 
-    private bool TryRecenterDisplay()
+    private void RecenterDisplay()
     {
-        UnityEngine.XR.InputTracking.Recenter();
-        bool displayExists = OVRManager.display != null;
-        if (displayExists)
-        {
-            OVRManager.display.RecenterPose();
-        }
-        return displayExists;
+        OVRPlayerController.localEulerAngles = new Vector3(0f, Rotation, 0f);
     }
 
     private void OnUpdate(float dt)
     {
-        if (TryRecenterDisplay())
+        if (displayExistedLastFrame)
         {
-            Debug.Log("Display recentered!");
+            RecenterDisplay();
             Service.UpdateManager.RemoveObserver(OnUpdate);
         }
+
+        displayExistedLastFrame = OVRManager.display != null;
     }
 }

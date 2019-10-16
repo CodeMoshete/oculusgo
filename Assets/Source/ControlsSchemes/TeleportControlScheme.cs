@@ -11,7 +11,7 @@ public class TeleportControlScheme : IControlScheme
     private const string LAYER_BACKGROUND = "Background";
     private const string TAG_AREA_LOCK = "AreaLock";
     private const float SPHERECAST_RADIUS = 0.2f;
-    private const float PLAYER_HEIGHT = 1f;
+    private const float PLAYER_HEIGHT = 0.9f;
     private const float TELEPORT_TIME = 0.25f;
     private const float RAYCAST_DIST = 50f;
     private const float MAX_TELEPORT_SQR_DIST = 16f;

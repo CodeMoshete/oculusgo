@@ -19,8 +19,8 @@ public class WaitAction : CustomAction
         {
             if (currentTime <= 0)
             {
-                NextAction.Initiate();
                 isInitialized = false;
+                NextAction.Initiate();
             }
             else
             {
