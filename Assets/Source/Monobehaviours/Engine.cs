@@ -20,6 +20,8 @@ public class Engine : MonoBehaviour
 	public float Sensitivity = 50f;
 
     public Transform HeadCamera;
+    // public Transform TrackingSpace;
+    // public Transform Eyes;
     public float OculusGoCameraHeight;
     public float OculusQuestCameraHeight;
 
@@ -129,6 +131,11 @@ public class Engine : MonoBehaviour
             MirrorCameras[i].MirrorCamera.localRotation = cameraObject.transform.rotation;
         }
         lastPlayerPosition = cameraObject.transform.position;
+
+        //Log("Body: " + bodyObject.transform.position.ToString() + "\n" +
+        //    "Tracking Space: " + TrackingSpace.localPosition.ToString() + "\n" +
+        //    "Head: " + HeadCamera.localPosition.ToString() + "\n" +
+        //    "Eyes: " + Eyes.localPosition.ToString());
     }
 
     private void Log(string message)
