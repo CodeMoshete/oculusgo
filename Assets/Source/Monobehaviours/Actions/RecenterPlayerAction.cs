@@ -9,8 +9,11 @@ public class RecenterPlayerAction : CustomAction
 
     public override void Initiate()
     {
+#if UNITY_EDITOR
+        RecenterDisplay();
+#else
         Service.UpdateManager.AddObserver(OnUpdate);
-
+#endif
         if (OnDone != null)
         {
             OnDone.Initiate();
