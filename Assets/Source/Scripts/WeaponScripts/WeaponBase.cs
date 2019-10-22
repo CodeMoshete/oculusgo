@@ -17,12 +17,16 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void Fire(FireAction fireAction, Transform sourceParent, float velocity)
     {
-        InitialPosition = fireAction.TargetPosition.position;
-        Target = fireAction.TargetPosition;
-        Velocity = velocity;
-        TargetCollider = fireAction.TargetCollider;
-        SourceParent = sourceParent;
-        OnHitCustomAction = fireAction.OnHit;
+        // Weapon may have been fired just before a scene transition / cleanup.
+        if (fireAction.TargetPosition != null)
+        {
+            InitialPosition = fireAction.TargetPosition.position;
+            Target = fireAction.TargetPosition;
+            Velocity = velocity;
+            TargetCollider = fireAction.TargetCollider;
+            SourceParent = sourceParent;
+            OnHitCustomAction = fireAction.OnHit;
+        }
     }
 
     public virtual void CeaseFire()

@@ -49,6 +49,7 @@ public class AnimationAction : CustomAction
         count = StringTriggers.Count;
         for (int i = 0; i < count; ++i)
         {
+            Debug.Log("Setting string trigger " + StringTriggers[i].Trigger);
             StringTriggers[i].Target.SetTrigger(StringTriggers[i].Trigger);
         }
 

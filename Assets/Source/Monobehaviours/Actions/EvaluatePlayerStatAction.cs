@@ -1,4 +1,6 @@
-﻿public enum StatEvaluation
+﻿using UnityEngine;
+
+public enum StatEvaluation
 {
     GreaterThan,
     LessThan,
@@ -33,6 +35,9 @@ public class EvaluatePlayerStatAction : CustomAction
                 evalResult = currentStatValue != TestValue;
                 break;
         }
+
+        Debug.Log("Evaluated " + StatName + " as " + currentStatValue + 
+            " " + EvaluationType.ToString() + ": " + evalResult);
 
         if (evalResult && OnTrue)
         {

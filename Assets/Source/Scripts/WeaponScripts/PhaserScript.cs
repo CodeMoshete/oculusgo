@@ -2,7 +2,7 @@
 
 public class PhaserScript : MonoBehaviour {
 	public float SCALE_SPEED = 5.0f;
-	public float LIFESPAN_SEC = 5.0f;
+	public float LIFESPAN_SEC = 2f;
 
 	private Transform phaser;
 	
@@ -14,15 +14,18 @@ public class PhaserScript : MonoBehaviour {
 
 	public GameObject Launcher;
 
-	// Use this for initialization
 	void Start () {
+
 		phaser = this.transform;
 		scheduledDestroy = Time.fixedTime + LIFESPAN_SEC;
 		scaleSpd = new Vector3(0.0f, 0.0f, SCALE_SPEED);
-		//transform.localScale = new Vector3(2.0f, 2.0f, 10.0f);
-	}
+        if (target != null)
+        {
+            phaser.LookAt(target);
+        }
+        phaser.localScale = new Vector3(1f, 1f, 0f);
+    }
 	
-	// Update is called once per frame
 	void Update () {
 		if(target != null)
 		{

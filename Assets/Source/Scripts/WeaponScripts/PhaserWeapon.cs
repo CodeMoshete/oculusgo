@@ -22,6 +22,7 @@ public class PhaserWeapon : WeaponBase
         transform.localPosition = Vector3.zero;
         destroyTime = DESTROY_TIME;
         startScale = transform.localScale;
+        transform.localScale = new Vector3(1f, 1f, 0.001f);
     }
 
     private void Update()
