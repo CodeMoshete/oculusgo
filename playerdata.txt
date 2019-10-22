@@ -1,1 +1,2 @@
-DestroyBorg:0
+DestroyBorg:1
+HorizonReadiness:4
