@@ -26,9 +26,17 @@ public class AnimationAction : CustomAction
         public Animator Target;
     }
 
+    [System.Serializable]
+    public struct DirectPlay
+    {
+        public string AnimationName;
+        public Animator Target;
+    }
+
     public List<IntTrigger> IntTriggers;
     public List<BoolTrigger> BoolTriggers;
     public List<StringTrigger> StringTriggers;
+    public List<DirectPlay> DirectPlays;
 
     public CustomAction OnComplete;
 
@@ -49,8 +57,13 @@ public class AnimationAction : CustomAction
         count = StringTriggers.Count;
         for (int i = 0; i < count; ++i)
         {
-            Debug.Log("Setting string trigger " + StringTriggers[i].Trigger);
             StringTriggers[i].Target.SetTrigger(StringTriggers[i].Trigger);
+        }
+
+        count = DirectPlays.Count;
+        for (int i = 0; i < count; ++i)
+        {
+            DirectPlays[i].Target.Play(DirectPlays[i].AnimationName);
         }
 
         if (OnComplete != null)
