@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class PlayerData
 {
-    public const string PLAYER_DATA_FILE = "./playerdata.txt";
+    private static readonly string PLAYER_DATA_DIR = Path.Combine(Application.persistentDataPath, "player");
+    private const string PLAYER_DATA_FILE = "playerdata.txt";
+    private readonly string PLAYER_DATA_PATH = Path.Combine(PLAYER_DATA_DIR, PLAYER_DATA_FILE);
 
     private Dictionary<string, int> PlayerStats;
 
@@ -59,13 +62,18 @@ public class PlayerData
 
     private void SaveStats()
     {
+        if (!Directory.Exists(PLAYER_DATA_DIR))
+        {
+            Directory.CreateDirectory(PLAYER_DATA_DIR);
+        }
+
         if (!File.Exists(PLAYER_DATA_FILE))
         {
-            FileStream createStream = File.Create(PLAYER_DATA_FILE);
+            FileStream createStream = File.Create(PLAYER_DATA_PATH);
             createStream.Close();
         }
 
-        StreamWriter stream = new StreamWriter(PLAYER_DATA_FILE, false);
+        StreamWriter stream = new StreamWriter(PLAYER_DATA_PATH, false);
         foreach(KeyValuePair<string, int> pair in PlayerStats)
         {
             string line = pair.Key + ":" + pair.Value;
@@ -76,10 +84,10 @@ public class PlayerData
 
     private void LoadStats()
     {
-        if (File.Exists(PLAYER_DATA_FILE))
+        if (Directory.Exists(PLAYER_DATA_DIR) && File.Exists(PLAYER_DATA_FILE))
         {
             PlayerStats.Clear();
-            StreamReader reader = new StreamReader(PLAYER_DATA_FILE);
+            StreamReader reader = new StreamReader(PLAYER_DATA_PATH);
             string line = reader.ReadLine();
             while (line != null)
             {

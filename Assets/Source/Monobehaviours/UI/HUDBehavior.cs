@@ -3,7 +3,7 @@ using Utils;
 
 public class HUDBehavior : MonoBehaviour
 {
-    public Transform PlayerCamera;
+    public Transform CenterEyeAnchor;
     public float TrackingTime = 0.3f;
     public float CamDist = 0.6f;
     private float worldCamDist;
@@ -13,18 +13,18 @@ public class HUDBehavior : MonoBehaviour
 
 	public void Start ()
     {
-        if (PlayerCamera == null)
+        if (CenterEyeAnchor == null)
         {
             GameObject playerContainer = GameObject.Find("OVRPlayerController");
-            PlayerCamera = UnityUtils.FindGameObject(playerContainer, "CenterEyeAnchor").transform;
+            CenterEyeAnchor = UnityUtils.FindGameObject(playerContainer, "CenterEyeAnchor").transform;
         }
         hudReference = (new GameObject()).transform;
-        hudReference.parent = PlayerCamera;
+        hudReference.parent = CenterEyeAnchor;
 
         hudTargetOffset = new Vector3(0f, 0f, CamDist);
         hudReference.localPosition = hudTargetOffset;
 
-        worldCamDist = (hudReference.position - PlayerCamera.position).magnitude;
+        worldCamDist = (hudReference.position - CenterEyeAnchor.position).magnitude;
 	}
 	
 	public void Update ()
@@ -35,10 +35,10 @@ public class HUDBehavior : MonoBehaviour
             ref hudVelocity, 
             TrackingTime);
 
-        Vector3 vecToHud = transform.position - PlayerCamera.position;
+        Vector3 vecToHud = transform.position - CenterEyeAnchor.position;
         Vector3 upVector = Vector3.Cross(vecToHud, transform.right);
         transform.rotation = 
-            Quaternion.LookRotation(transform.position - PlayerCamera.position, upVector);
+            Quaternion.LookRotation(transform.position - CenterEyeAnchor.position, upVector);
         Vector3 euler = transform.eulerAngles;
         euler.z = 0f;
         transform.eulerAngles = euler;
@@ -46,7 +46,7 @@ public class HUDBehavior : MonoBehaviour
 
     public void LateUpdate()
     {
-        Vector3 currentPos = (transform.position - PlayerCamera.position).normalized * worldCamDist;
-        transform.position = currentPos + PlayerCamera.position;
+        Vector3 currentPos = (transform.position - CenterEyeAnchor.position).normalized * worldCamDist;
+        transform.position = currentPos + CenterEyeAnchor.position;
     }
 }
