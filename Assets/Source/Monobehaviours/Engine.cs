@@ -80,6 +80,7 @@ public class Engine : MonoBehaviour
     private void OnDestroy()
     {
         Service.EventManager.RemoveListener(EventId.SetControlsEnabled, OnControlsEnableSet);
+        Service.EventManager.RemoveListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
         currentControlScheme.Deactivate();
     }
 

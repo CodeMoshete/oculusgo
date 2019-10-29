@@ -20,6 +20,7 @@ public class TeleportControlScheme : IControlScheme
     private readonly Color COLOR_TELEPORT_ACTION_LOC = Color.green;
 
     private bool disableMovement;
+    private bool disableMovementForChoice;
 
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
@@ -78,13 +79,13 @@ public class TeleportControlScheme : IControlScheme
 
     public bool ChoiceDialogueShown(object cookie)
     {
-        SetMovementEnabled(false);
+        disableMovementForChoice = true;
         return false;
     }
 
     public bool ChoiceDialogueHidden(object cookie)
     {
-        SetMovementEnabled(true);
+        disableMovementForChoice = false;
         return false;
     }
 
@@ -127,7 +128,7 @@ public class TeleportControlScheme : IControlScheme
         }
 #endif
 
-        if (isTeleporting || disableMovement)
+        if (isTeleporting || disableMovement || disableMovementForChoice)
             return;
 
         float dt = Time.deltaTime;
