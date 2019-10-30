@@ -5,6 +5,9 @@ using Utils;
 
 public class Engine : MonoBehaviour
 {
+    public const float OCULUS_GO_HEIGHT = 0.5f;
+    public const float OCULUS_GO_SCALE = 1.2f;
+
     [System.Serializable]
     public struct PlayerCameraMirror
     {
@@ -20,10 +23,6 @@ public class Engine : MonoBehaviour
 	public float Sensitivity = 50f;
 
     public Transform HeadCamera;
-    // public Transform TrackingSpace;
-    // public Transform Eyes;
-    public float OculusGoCameraHeight;
-    public float OculusQuestCameraHeight;
 
     private Dictionary<ControlScheme, IControlScheme> controlSchemes;
     private IControlScheme currentControlScheme;
@@ -31,6 +30,7 @@ public class Engine : MonoBehaviour
     private Transform backgroundCamera;
 	private OVRPlayerController bodyObject;
 	private Transform cameraObject;
+    private Transform eyeObject;
     private bool isDebugMenuActive;
 
     private Vector3 lastPlayerPosition;
@@ -47,6 +47,7 @@ public class Engine : MonoBehaviour
         }
 
 		cameraObject = UnityUtils.FindGameObject(bodyObject.gameObject, "TrackingSpace").transform;
+        eyeObject = UnityUtils.FindGameObject(bodyObject.gameObject, "CenterEyeAnchor").transform;
         lastPlayerPosition = cameraObject.transform.position;
 
         UpdateManager manager = UpdateManager.Instance;
@@ -57,24 +58,21 @@ public class Engine : MonoBehaviour
         controlSchemes.Add(ControlScheme.Piloting, new PilotingControlScheme());
         SetControlScheme(ControlScheme.Teleport);
 
-        Vector3 cameraStartPos = HeadCamera.localPosition;
-        switch(Service.Controls.CurrentHeadset)
-        {
-            case HeadsetModel.OculusGo:
-                cameraStartPos.y = OculusGoCameraHeight;
-                break;
-            case HeadsetModel.OculusQuest:
-                cameraStartPos.y = OculusQuestCameraHeight;
-                break;
-        }
-        HeadCamera.localPosition = cameraStartPos;
-
         Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
         Service.EventManager.AddListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
 
-        Log("Device name: " + SystemInfo.deviceName + 
-            "\nDevice model: " + SystemInfo.deviceModel +
-            "\nDevice Type: " + SystemInfo.deviceType);
+        if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo)
+        {
+            ForceOculusGoCameraHeight();
+        }
+
+        //Log("Device name: " + SystemInfo.deviceName + 
+        //    "\nDevice model: " + SystemInfo.deviceModel +
+        //    "\nDevice Type: " + SystemInfo.deviceType +
+        //Log("eyPos: " + eyeObject.localPosition.ToString() +
+        //    "\nTrackingPos: " + cameraObject.localPosition.ToString() +
+        //    "\nCamPos: " + HeadCamera.localPosition.ToString() +
+        //    "\nTracking Type: " + ovrManager.trackingOriginType.ToString());
     }
 
     private void OnDestroy()
@@ -82,6 +80,17 @@ public class Engine : MonoBehaviour
         Service.EventManager.RemoveListener(EventId.SetControlsEnabled, OnControlsEnableSet);
         Service.EventManager.RemoveListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
         currentControlScheme.Deactivate();
+    }
+
+    private void ForceOculusGoCameraHeight()
+    {
+        OVRManager ovrManager = HeadCamera.GetComponent<OVRManager>();
+        Vector3 cameraStartPos = HeadCamera.localPosition;
+        bodyObject.useProfileData = false;
+        bodyObject.transform.localScale = new Vector3(OCULUS_GO_SCALE, OCULUS_GO_SCALE, OCULUS_GO_SCALE);
+        ovrManager.trackingOriginType = OVRManager.TrackingOrigin.EyeLevel;
+        cameraStartPos.y = OCULUS_GO_HEIGHT;
+        HeadCamera.localPosition = cameraStartPos;
     }
 
     private void SetControlScheme(ControlScheme type)
@@ -132,12 +141,21 @@ public class Engine : MonoBehaviour
             MirrorCameras[i].MirrorCamera.localRotation = cameraObject.transform.rotation;
         }
         lastPlayerPosition = cameraObject.transform.position;
-
-        //Log("Body: " + bodyObject.transform.position.ToString() + "\n" +
-        //    "Tracking Space: " + TrackingSpace.localPosition.ToString() + "\n" +
-        //    "Head: " + HeadCamera.localPosition.ToString() + "\n" +
-        //    "Eyes: " + Eyes.localPosition.ToString());
     }
+
+    //private void LateUpdate()
+    //{
+    //    Log("Body: " + bodyObject.transform.position.ToString() + "\n" +
+    //        "Tracking Space: " + cameraObject.localPosition.ToString() + "\n" +
+    //        "Head: " + HeadCamera.localPosition.ToString() + "\n" +
+    //        "Eyes: " + eyeObject.localPosition.ToString());
+
+    //    if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo &&
+    //        HeadCamera.localPosition.y != OCULUS_GO_HEIGHT)
+    //    {
+    //        ForceOculusGoCameraHeight();
+    //    }
+    //}
 
     private void Log(string message)
     {
