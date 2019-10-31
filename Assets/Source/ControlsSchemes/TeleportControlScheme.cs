@@ -21,6 +21,7 @@ public class TeleportControlScheme : IControlScheme
 
     private bool disableMovement;
     private bool disableMovementForChoice;
+    private bool wasMovementDisabledForChoice;
 
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
@@ -80,6 +81,8 @@ public class TeleportControlScheme : IControlScheme
     public bool ChoiceDialogueShown(object cookie)
     {
         disableMovementForChoice = true;
+        wasMovementDisabledForChoice = true;
+        teleportMarker.SetActive(false);
         return false;
     }
 
@@ -146,7 +149,7 @@ public class TeleportControlScheme : IControlScheme
         isPressed = Input.GetKey(KeyCode.T);
         testRay = new Ray(cameraEye.position, cameraEye.forward);
 #endif
-        if (isPressed)
+        if (isPressed && !wasMovementDisabledForChoice)
         {
             RaycastHit hit;
             if (Physics.SphereCast(testRay, SPHERECAST_RADIUS, out hit, RAYCAST_DIST, raycastLayerMask))
@@ -202,6 +205,11 @@ public class TeleportControlScheme : IControlScheme
                 teleportPos.y += PLAYER_HEIGHT;
                 TeleportTo(teleportPos);
             }
+        }
+
+        if (wasMovementDisabledForChoice && !isPressed)
+        {
+            wasMovementDisabledForChoice = false;
         }
     }
 
