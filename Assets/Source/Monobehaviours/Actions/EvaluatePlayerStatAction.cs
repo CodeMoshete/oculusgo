@@ -39,11 +39,11 @@ public class EvaluatePlayerStatAction : CustomAction
         Debug.Log("Evaluated " + StatName + " as " + currentStatValue + 
             " " + EvaluationType.ToString() + ": " + evalResult);
 
-        if (evalResult && OnTrue)
+        if (evalResult && OnTrue != null)
         {
             OnTrue.Initiate();
         }
-        else if (!evalResult && OnFalse)
+        else if (!evalResult && OnFalse != null)
         {
             OnFalse.Initiate();
         }
