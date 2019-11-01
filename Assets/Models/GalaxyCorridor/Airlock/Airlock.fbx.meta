@@ -38,6 +38,48 @@ ModelImporter:
     100064: Plane35.051
     100066: Plane35.052
     100068: Plane35.053
+    100070: $$$DUMMY.Leaves45
+    100072: $$$DUMMY.Leaves46
+    100074: $$$DUMMY.Leaves47
+    100076: $$$DUMMY.Leaves48
+    100078: $$$DUMMY.Leaves49
+    100080: $$$DUMMY.Leaves50
+    100082: $$$DUMMY.Leaves51
+    100084: $$$DUMMY.Leaves52
+    100086: $$$DUMMY.Leaves53
+    100088: $$$DUMMY.Leaves54
+    100090: $$$DUMMY.Leaves55
+    100092: $$$DUMMY.Leaves56
+    100094: $$$DUMMY.Leaves57
+    100096: $$$DUMMY.Leaves58
+    100098: $$$DUMMY.Leaves59
+    100100: $$$DUMMY.Leaves60
+    100102: $$$DUMMY.Leaves61
+    100104: $$$DUMMY.Leaves62
+    100106: Plane35.001
+    100108: Plane35.002
+    100110: Plane35.003
+    100112: Plane35.004
+    100114: Plane35.005
+    100116: Plane35.006
+    100118: Plane35.007
+    100120: Plane35.008
+    100122: Plane35.009
+    100124: Plane35.010
+    100126: Plane35.011
+    100128: Plane35.012
+    100130: Plane35.013
+    100132: Plane35.015
+    100134: Plane35.016
+    100136: Plane35.017
+    100138: Plane35.018
+    100140: Plane35.019
+    100142: Plane35.020
+    100144: Plane35.021
+    100146: Plane35.042
+    100148: Plane35.043
+    100150: Plane35.044
+    100152: Plane35.054
     400000: //RootNode
     400002: Lamp
     400004: Plane35
@@ -73,10 +115,55 @@ ModelImporter:
     400064: Plane35.051
     400066: Plane35.052
     400068: Plane35.053
+    400070: $$$DUMMY.Leaves45
+    400072: $$$DUMMY.Leaves46
+    400074: $$$DUMMY.Leaves47
+    400076: $$$DUMMY.Leaves48
+    400078: $$$DUMMY.Leaves49
+    400080: $$$DUMMY.Leaves50
+    400082: $$$DUMMY.Leaves51
+    400084: $$$DUMMY.Leaves52
+    400086: $$$DUMMY.Leaves53
+    400088: $$$DUMMY.Leaves54
+    400090: $$$DUMMY.Leaves55
+    400092: $$$DUMMY.Leaves56
+    400094: $$$DUMMY.Leaves57
+    400096: $$$DUMMY.Leaves58
+    400098: $$$DUMMY.Leaves59
+    400100: $$$DUMMY.Leaves60
+    400102: $$$DUMMY.Leaves61
+    400104: $$$DUMMY.Leaves62
+    400106: Plane35.001
+    400108: Plane35.002
+    400110: Plane35.003
+    400112: Plane35.004
+    400114: Plane35.005
+    400116: Plane35.006
+    400118: Plane35.007
+    400120: Plane35.008
+    400122: Plane35.009
+    400124: Plane35.010
+    400126: Plane35.011
+    400128: Plane35.012
+    400130: Plane35.013
+    400132: Plane35.015
+    400134: Plane35.016
+    400136: Plane35.017
+    400138: Plane35.018
+    400140: Plane35.019
+    400142: Plane35.020
+    400144: Plane35.021
+    400146: Plane35.042
+    400148: Plane35.043
+    400150: Plane35.044
+    400152: Plane35.054
     2100000: 09 - Default.001
     2100002: 13 - Default.001
     2100004: 01 - Default.001
     2100006: 01 - Defaultwe
+    2100008: 13 - Default
+    2100010: 07 - Default.001
+    2100012: 03 - Default
     2300000: Plane35
     2300002: Plane35.014
     2300004: Plane35.022
@@ -108,6 +195,30 @@ ModelImporter:
     2300056: Plane35.051
     2300058: Plane35.052
     2300060: Plane35.053
+    2300062: Plane35.001
+    2300064: Plane35.002
+    2300066: Plane35.003
+    2300068: Plane35.004
+    2300070: Plane35.005
+    2300072: Plane35.006
+    2300074: Plane35.007
+    2300076: Plane35.008
+    2300078: Plane35.009
+    2300080: Plane35.010
+    2300082: Plane35.011
+    2300084: Plane35.012
+    2300086: Plane35.013
+    2300088: Plane35.015
+    2300090: Plane35.016
+    2300092: Plane35.017
+    2300094: Plane35.018
+    2300096: Plane35.019
+    2300098: Plane35.020
+    2300100: Plane35.021
+    2300102: Plane35.042
+    2300104: Plane35.043
+    2300106: Plane35.044
+    2300108: Plane35.054
     3300000: Plane35
     3300002: Plane35.014
     3300004: Plane35.022
@@ -139,6 +250,30 @@ ModelImporter:
     3300056: Plane35.051
     3300058: Plane35.052
     3300060: Plane35.053
+    3300062: Plane35.001
+    3300064: Plane35.002
+    3300066: Plane35.003
+    3300068: Plane35.004
+    3300070: Plane35.005
+    3300072: Plane35.006
+    3300074: Plane35.007
+    3300076: Plane35.008
+    3300078: Plane35.009
+    3300080: Plane35.010
+    3300082: Plane35.011
+    3300084: Plane35.012
+    3300086: Plane35.013
+    3300088: Plane35.015
+    3300090: Plane35.016
+    3300092: Plane35.017
+    3300094: Plane35.018
+    3300096: Plane35.019
+    3300098: Plane35.020
+    3300100: Plane35.021
+    3300102: Plane35.042
+    3300104: Plane35.043
+    3300106: Plane35.044
+    3300108: Plane35.054
     4300000: Plane35.041
     4300002: Plane35.040
     4300004: Plane35.039
@@ -170,6 +305,30 @@ ModelImporter:
     4300056: Plane35.049
     4300058: Plane35.048
     4300060: Plane35.047
+    4300062: Plane35.054
+    4300064: Plane35.044
+    4300066: Plane35.043
+    4300068: Plane35.042
+    4300070: Plane35.009
+    4300072: Plane35.008
+    4300074: Plane35.005
+    4300076: Plane35.003
+    4300078: Plane35.021
+    4300080: Plane35.020
+    4300082: Plane35.019
+    4300084: Plane35.018
+    4300086: Plane35.017
+    4300088: Plane35.016
+    4300090: Plane35.015
+    4300092: Plane35.013
+    4300094: Plane35.012
+    4300096: Plane35.011
+    4300098: Plane35.010
+    4300100: Plane35.007
+    4300102: Plane35.006
+    4300104: Plane35.004
+    4300106: Plane35.002
+    4300108: Plane35.001
     10800000: Lamp
     10800002: Point.001
     10800004: Point.002
@@ -208,6 +367,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -232,6 +392,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -246,7 +409,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

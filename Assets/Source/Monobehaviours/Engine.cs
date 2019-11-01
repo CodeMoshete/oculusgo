@@ -5,8 +5,8 @@ using Utils;
 
 public class Engine : MonoBehaviour
 {
-    public const float OCULUS_GO_HEIGHT = 0.5f;
-    public const float OCULUS_GO_SCALE = 1.2f;
+    public const float OCULUS_GO_HEIGHT = 0.48f;
+    public const float OCULUS_GO_SCALE = 1.15f;
 
     [System.Serializable]
     public struct PlayerCameraMirror
