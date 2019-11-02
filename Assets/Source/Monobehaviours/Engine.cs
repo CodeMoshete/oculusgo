@@ -143,19 +143,19 @@ public class Engine : MonoBehaviour
         lastPlayerPosition = cameraObject.transform.position;
     }
 
-    //private void LateUpdate()
-    //{
-    //    Log("Body: " + bodyObject.transform.position.ToString() + "\n" +
-    //        "Tracking Space: " + cameraObject.localPosition.ToString() + "\n" +
-    //        "Head: " + HeadCamera.localPosition.ToString() + "\n" +
-    //        "Eyes: " + eyeObject.localPosition.ToString());
+    private void LateUpdate()
+    {
+        Log("Body: " + bodyObject.transform.localEulerAngles.ToString() + "\n" +
+            "Tracking Space: " + cameraObject.localEulerAngles.ToString() + "\n" +
+            "Head: " + HeadCamera.localEulerAngles.ToString() + "\n" +
+            "Eyes: " + eyeObject.localEulerAngles.ToString());
 
     //    if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo &&
     //        HeadCamera.localPosition.y != OCULUS_GO_HEIGHT)
     //    {
     //        ForceOculusGoCameraHeight();
     //    }
-    //}
+    }
 
     private void Log(string message)
     {
