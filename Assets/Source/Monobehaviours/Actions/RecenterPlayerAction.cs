@@ -4,11 +4,13 @@ using Utils;
 
 public class RecenterPlayerAction : CustomAction
 {
-    public CustomAction OnDone;
     public Transform OVRPlayerController;
+    public CustomAction OnDone;
+    public CustomAction OnPlayerRecentered;
+    public float CompletionDelay;
+    public float Rotation;
     private Transform centerEyeAnchor;
     private Vector3 initialRotation;
-    public float Rotation;
     private bool displayExistedLastFrame;
     private bool wasCameraUpdated;
 
@@ -24,6 +26,18 @@ public class RecenterPlayerAction : CustomAction
         OVRPlayerController.GetComponent<OVRPlayerController>().CameraUpdated += OnCameraUpdated;
         Service.UpdateManager.AddObserver(OnUpdate);
 #endif
+        if (CompletionDelay <= 0f)
+        {
+            ExecuteCallback(null);
+        }
+        else
+        {
+            Service.TimerManager.CreateTimer(CompletionDelay, ExecuteCallback, null);
+        }
+    }
+
+    private void ExecuteCallback(object cookie)
+    {
         if (OnDone != null)
         {
             OnDone.Initiate();
@@ -47,8 +61,14 @@ public class RecenterPlayerAction : CustomAction
             yield return null;
         }
         yield return new WaitForEndOfFrame();
+        Debug.Log("Camera position reset PRE: " + OVRPlayerController.localEulerAngles.ToString());
         OVRPlayerController.localEulerAngles = new Vector3(0f, Rotation, 0f);
-        Debug.Log("Camera position reset!");
+        Debug.Log("Camera position reset POST: " + OVRPlayerController.localEulerAngles.ToString());
+
+        if (OnPlayerRecentered != null)
+        {
+            OnPlayerRecentered.Initiate();
+        }
     }
 
     private void OnUpdate(float dt)

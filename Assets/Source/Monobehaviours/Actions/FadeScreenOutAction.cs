@@ -14,8 +14,19 @@ public class FadeScreenOutAction : CustomAction
         Debug.Log("FADE OUT: " + gameObject.name);
         if (ScreenFade != null)
         {
-            totalDuration = Duration;
-            isInitialized = true;
+            if (Duration > 0f)
+            {
+                totalDuration = Duration;
+                isInitialized = true;
+            }
+            else
+            {
+                ScreenFade.SetFadeLevel(1f);
+                if (OnComplete != null)
+                {
+                    OnComplete.Initiate();
+                }
+            }
         }
     }
 

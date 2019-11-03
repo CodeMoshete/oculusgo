@@ -13,7 +13,8 @@ public enum EventId
     ChoiceDialogueDismissed,
     SetControlsEnabled,
     SetNewControlScheme,
-    TogglePilotingControls
+    TogglePilotingControls,
+    LogDebugMessage
 }
 
 public delegate bool EventCallback(object cookie);

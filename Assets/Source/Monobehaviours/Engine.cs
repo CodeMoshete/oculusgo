@@ -5,8 +5,8 @@ using Utils;
 
 public class Engine : MonoBehaviour
 {
-    public const float OCULUS_GO_HEIGHT = 0.48f;
-    public const float OCULUS_GO_SCALE = 1.15f;
+    public const float OCULUS_GO_HEIGHT = 0.5f;
+    public const float OCULUS_GO_SCALE = 1.25f;
 
     [System.Serializable]
     public struct PlayerCameraMirror
@@ -60,6 +60,7 @@ public class Engine : MonoBehaviour
 
         Service.EventManager.AddListener(EventId.SetControlsEnabled, OnControlsEnableSet);
         Service.EventManager.AddListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
+        Service.EventManager.AddListener(EventId.LogDebugMessage, OnLogDebugMessage);
 
         if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo)
         {
@@ -79,6 +80,7 @@ public class Engine : MonoBehaviour
     {
         Service.EventManager.RemoveListener(EventId.SetControlsEnabled, OnControlsEnableSet);
         Service.EventManager.RemoveListener(EventId.SetNewControlScheme, OnControlSchemeChanged);
+        Service.EventManager.RemoveListener(EventId.LogDebugMessage, OnLogDebugMessage);
         currentControlScheme.Deactivate();
     }
 
@@ -145,16 +147,22 @@ public class Engine : MonoBehaviour
 
     private void LateUpdate()
     {
-        Log("Body: " + bodyObject.transform.localEulerAngles.ToString() + "\n" +
-            "Tracking Space: " + cameraObject.localEulerAngles.ToString() + "\n" +
-            "Head: " + HeadCamera.localEulerAngles.ToString() + "\n" +
-            "Eyes: " + eyeObject.localEulerAngles.ToString());
+        //Log("Body: " + bodyObject.transform.localEulerAngles.ToString() + "\n" +
+        //    "Tracking Space: " + cameraObject.localEulerAngles.ToString() + "\n" +
+        //    "Head: " + HeadCamera.localEulerAngles.ToString() + "\n" +
+        //    "Eyes: " + eyeObject.localEulerAngles.ToString());
 
     //    if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo &&
     //        HeadCamera.localPosition.y != OCULUS_GO_HEIGHT)
     //    {
     //        ForceOculusGoCameraHeight();
     //    }
+    }
+
+    private bool OnLogDebugMessage(object cookie)
+    {
+        Log((string)cookie);
+        return true;
     }
 
     private void Log(string message)

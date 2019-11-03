@@ -23,6 +23,14 @@ public class TeleportControlScheme : IControlScheme
     private bool disableMovementForChoice;
     private bool wasMovementDisabledForChoice;
 
+    private float playerHeightOculusGo
+    {
+        get
+        {
+            return Engine.OCULUS_GO_HEIGHT * 2f;
+        }
+    }
+
     private OVRPlayerController bodyObject;
     private Transform cameraObject;
     private OVRScreenFade screenFader;
@@ -40,22 +48,22 @@ public class TeleportControlScheme : IControlScheme
     private bool isTeleportingOut;
     private bool isTeleporting;
 
-#if UNITY_EDITOR
+    private Transform camController;
+    private Transform camRig;
     private Transform cameraEye;
-#endif
 
     public void Initialize(OVRPlayerController body, Transform camera, float sensitivity)
     {
         bodyObject = body;
         cameraObject = camera;
+        camController = camera.parent;
         this.sensitivity = sensitivity;
 
         rightController = UnityUtils.FindGameObject(bodyObject.gameObject, RIGHT_CONTROLLER_NAME).transform;
         GameObject centerEye = UnityUtils.FindGameObject(cameraObject.gameObject, "CenterEyeAnchor");
         screenFader = centerEye.GetComponent<OVRScreenFade>();
-#if UNITY_EDITOR
         cameraEye = centerEye.transform;
-#endif
+
         teleportMarker = GameObject.Instantiate(Resources.Load<GameObject>(TELEPORT_MARKER));
         teleportMarker.SetActive(false);
         GameObject teleportMarkerInner = UnityUtils.FindGameObject(teleportMarker, TELEPORT_MARKER_OBJ);
@@ -202,8 +210,22 @@ public class TeleportControlScheme : IControlScheme
             {
                 isTeleporting = true;
                 Vector3 teleportPos = teleportMarker.transform.position;
-                teleportPos.y += PLAYER_HEIGHT;
+                float originalHeight = teleportPos.y;
+                float finalHeight = 
+                    Service.Controls.CurrentHeadset == HeadsetModel.OculusGo ? playerHeightOculusGo : PLAYER_HEIGHT;
+                teleportPos.y += finalHeight;
                 TeleportTo(teleportPos);
+
+                //Transform centerEye = UnityUtils.FindGameObject(cameraObject.gameObject, "CenterEyeAnchor").transform;
+                //Transform camRig = cameraObject.parent.transform;
+                //string message =
+                //    "FinalHeight: " + finalHeight +
+                //    "\nTeleportPos: " + teleportPos.y +
+                //    "\nOriginalHeight: " + originalHeight +
+                //    "\nCenterEye: " + centerEye.localPosition.y +
+                //    "\nCamRig: " + camRig.localPosition.y +
+                //    "\nBody: " + bodyObject.transform.position.y;
+                //Service.EventManager.SendEvent(EventId.LogDebugMessage, message);
             }
         }
 
@@ -236,6 +258,15 @@ public class TeleportControlScheme : IControlScheme
             if (isTeleportingOut)
             {
                 bodyObject.transform.position = targetTeleportPos;
+
+                if (Service.Controls.CurrentHeadset == HeadsetModel.OculusGo)
+                {
+                    cameraEye.localPosition = Vector3.zero;
+                    Vector3 camRigPos = camController.localPosition;
+                    camRigPos.y = Engine.OCULUS_GO_HEIGHT;
+                    camController.localPosition = camRigPos;
+                }
+
                 currentTeleportTime = TELEPORT_TIME;
                 isTeleportingOut = false;
             }

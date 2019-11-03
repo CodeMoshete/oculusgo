@@ -1,4 +1,5 @@
 ﻿using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class ChangeSceneAction : CustomAction
 {
@@ -6,6 +7,7 @@ public class ChangeSceneAction : CustomAction
 
     public override void Initiate()
     {
+        Debug.Log("Changing Scene: " + NextSceneName);
         SceneManager.LoadScene(NextSceneName);
     }
 }
