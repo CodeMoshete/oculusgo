@@ -65,14 +65,19 @@ public class ControlsManager
 
     public ControlsManager()
     {
-        string deviceModel = SystemInfo.deviceModel;
         CurrentHeadset = HeadsetModel.None;
-        switch (deviceModel)
+        switch (OVRPlugin.GetSystemHeadsetType())
         {
-            case Constants.DEVICE_TYPE_GO:
-                CurrentHeadset = HeadsetModel.OculusGo;
-                break;
-            case Constants.DEVICE_TYPE_QUEST:
+            case OVRPlugin.SystemHeadset.Oculus_Quest:
+            case OVRPlugin.SystemHeadset.Oculus_Quest_2:
+            case OVRPlugin.SystemHeadset.Meta_Quest_Pro:
+            case OVRPlugin.SystemHeadset.Meta_Quest_3:
+            case OVRPlugin.SystemHeadset.Meta_Quest_3S:
+            case OVRPlugin.SystemHeadset.Oculus_Link_Quest:
+            case OVRPlugin.SystemHeadset.Oculus_Link_Quest_2:
+            case OVRPlugin.SystemHeadset.Meta_Link_Quest_Pro:
+            case OVRPlugin.SystemHeadset.Meta_Link_Quest_3:
+            case OVRPlugin.SystemHeadset.Meta_Link_Quest_3S:
                 CurrentHeadset = HeadsetModel.OculusQuest;
                 break;
         }

@@ -251,7 +251,7 @@ public class TeleportControlScheme : IControlScheme
             1f - (currentTeleportTime / TELEPORT_TIME) :
             currentTeleportTime / TELEPORT_TIME;
 
-        screenFader.SetFadeLevel(pct);
+        screenFader.SetExplicitFade(pct);
 
         if (currentTeleportTime == 0f)
         {

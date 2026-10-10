@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto">
-    <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" /><!-- Request the headset DoF mode -->
-    <application
-        android:allowBackup="false">
-        <activity
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:configChanges="locale|fontScale|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
-            android:launchMode="singleTask"
-            android:name="com.unity3d.player.UnityPlayerActivity"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.INFO"/>
-            </intent-filter>
-        </activity>
-        <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="false" />
-    </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" xmlns:horizonos="http://schemas.horizonos/sdk" xmlns:tools="http://schemas.android.com/tools">
+  <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
+  <!-- Request the headset DoF mode -->
+  <application android:allowBackup="false" android:label="@string/app_name" android:icon="@mipmap/app_icon">
+    <activity android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" android:configChanges="locale|fontScale|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode" android:launchMode="singleTask" android:name="com.unity3d.player.UnityPlayerGameActivity" android:excludeFromRecents="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.INFO" />
+        <category android:name="com.oculus.intent.category.VR" />
+      </intent-filter>
+      <meta-data android:name="com.oculus.vr.focusaware" android:value="true" />
+    </activity>
+    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="false" />
+    <meta-data android:name="com.oculus.ossplash.background" android:value="black" />
+    <meta-data android:name="com.oculus.supportedDevices" android:value="quest|quest2|questpro|quest3|quest3s" tools:replace="android:value" />
+    <meta-data android:name="com.oculus.telemetry.project_guid" android:value="ff1a8e97-5591-4552-9612-7928e97f3a0a" />
+  </application>
+  <horizonos:uses-horizonos-sdk horizonos:minSdkVersion="60" horizonos:targetSdkVersion="205" />
 </manifest>
