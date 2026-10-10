@@ -56,7 +56,7 @@
 			{
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
-				col.rgb *= _Color.a;
+				col.rgb *= col.a * _Color.a;
 				// apply fog
 				return col;
 			}
